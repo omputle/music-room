@@ -8,4 +8,5 @@ import { hello } from '../controllers/userController'
 //expose router to server
 export default router
 
+//routes
 .get('/', hello)
