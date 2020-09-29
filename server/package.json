@@ -1,0 +1,30 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "backend server for music-room",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon -r esm server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ksefeane/music-room.git"
+  },
+  "keywords": [
+    "music",
+    "room"
+  ],
+  "author": "ksefeane omputle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ksefeane/music-room/issues"
+  },
+  "homepage": "https://github.com/ksefeane/music-room#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "esm": "^3.2.25",
+    "express": "^4.17.1"
+  }
+}
