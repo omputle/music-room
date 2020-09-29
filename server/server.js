@@ -10,6 +10,9 @@ const port = 5000
 //initialize database
 
 //api routes
+import users from './routes/users'
+
+app.use('/users/', users)
 
 //listen
 app.listen(port, () => console.log(`server listening on port ${port}...`))
