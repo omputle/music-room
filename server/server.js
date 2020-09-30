@@ -8,8 +8,8 @@ const port = 5000
 //setup middleware
 
 //initialize database
-import db from './models/db'
-db.init()
+import { init } from './models/db'
+init()
 
 //api routes
 import users from './routes/users'
