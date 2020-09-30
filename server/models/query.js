@@ -1,5 +1,6 @@
 import { query } from './db'
 
+//insert data function
 export const insert = (t_name, params, vals) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -14,11 +15,10 @@ export const insert = (t_name, params, vals) => {
     })
 }
 
+//fetch data function for 1 search criteria
 export const fetchOne = (t_name, vals, param, pval) => {
     return new Promise(async (resolve, reject) => {
-        try {
-            let sql = `SELECT ${vals} FROM ${t_name} WHERE ${param} =\'${pval}\'`
-            resolve(await query(sql))
-        } catch (e) {reject({'error':e.sqlMessage})}
+        try {resolve(await query(`SELECT ${vals} FROM ${t_name} WHERE ${param} =\'${pval}\'`))} 
+        catch (e) {reject({'error':e.sqlMessage})}
     })
 }
