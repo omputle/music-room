@@ -9,3 +9,4 @@ export async function hello(req, res) {
     .catch(e => {console.log(e)})
     res.send({'msg':'hello'})
 }
+//time to work
