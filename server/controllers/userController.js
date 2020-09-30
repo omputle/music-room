@@ -8,3 +8,4 @@ export async function hello(req, res) {
     .then(console.log('success'))
     res.send({'msg':'hello'})
 }
+//time to work
