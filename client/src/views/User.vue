@@ -1,25 +1,30 @@
 <template>
     <div>
         <h2>user account</h2>
-        <profile :user="{'username':'ksefeane'}"/>
-        <!-- <p>profile(details)</p>
-        <p>playlists</p>
-        <p>friends</p>
-        <p>settings(devices,access rights)</p> -->
+        <profile :username="'ksefeane'" />
+        <playlists :username="'ksefeane'" />
+        <friends :username="'ksefeane'" />
+        <settings :username="'ksefeane'" />
     </div>
 </template>
 
 <script>
 //import components
 import profile from '@/components/profile'
+import playlists from '@/components/playlists'
+import friends from '@/components/friends'
+import settings from '@/components/settings'
 
 //import modules
 
 export default {
     components: {
-        profile
-    }
-    
+        profile,
+        playlists,
+        friends,
+        settings
+    },
+    Setup() {}
 }
 </script>
 
