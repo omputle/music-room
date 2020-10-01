@@ -27,4 +27,14 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+.info_bar {
+    background-color: teal;
+    color: white;
+    border: black 1px solid;
+    width: 40%;
+    height: 100%;
+    margin: 0 auto;
+    margin-bottom: 5px;
+}
 </style>
