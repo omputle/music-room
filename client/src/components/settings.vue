@@ -1,7 +1,6 @@
 <template>
-    <div class="info_bar">
+    <div class="panel_item">
         <h3>settings</h3>
-        
     </div>
 </template>
 

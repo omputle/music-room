@@ -1,5 +1,5 @@
 <template>
-    <div class="info_bar">
+    <div class="panel_item">
         <h3>playlists</h3>
     </div>
 </template>

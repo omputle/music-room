@@ -10,6 +10,11 @@ app.use(passport.session());
 //setup path
 
 //setup middleware
+import { json, urlencoded } from 'body-parser'
+import cors from 'cors'
+app.use(json())
+app.use(urlencoded({ extended: true }))
+app.use(cors())
 
 //initialize database
 import { init } from './models/db'

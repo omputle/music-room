@@ -28,13 +28,25 @@
   color: #42b983;
 }
 
-.info_bar {
-    background-color: teal;
-    color: white;
-    border: black 1px solid;
-    width: 40%;
-    height: 100%;
-    margin: 0 auto;
-    margin-bottom: 5px;
+.main_panel {
+    display: grid;
+    grid-gap: 10px;
+    background-color: inherit;
+}
+
+.panel_item {
+    padding: 20px;
+    margin-right: 10px;
+    margin-bottom: 3px;
+    background-color:navajowhite;
+    border-radius: 5px;
+    border: 1px solid black;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.panel_item:hover {
+    transform: scale(1.01, 1.1)
 }
 </style>

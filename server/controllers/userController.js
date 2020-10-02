@@ -1,9 +1,9 @@
 import { insert, fetchOne } from '../models/query'
 //test json controller
-export async function hello(req, res) {
-    let ans = await fetchOne('tokens', ['username', 'token'], 'username', 'kori')
-    .then(ans => {console.log(ans)})
-    .catch(e => {console.log(e)})
-    res.send({'msg':'hello'})
+export async function getProfile(req, res) {
+    const params = ['username', 'first_name','last_name', 'email']
+    let ans = await fetchOne('users', params, 'username', req.params.username)
+    .then(ans => {res.send(ans[0])})
+    .catch(e => {res.send(e)})
 }
 //time to work

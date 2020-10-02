@@ -4,13 +4,13 @@ const router = Router()
 
 const passport = require('passport');
 //import controllers
-import { hello } from '../controllers/userController'
+import { getProfile } from '../controllers/userController'
 
 //expose router to server
 export default router
 
 //routes
-.get('/', hello)
+.get('/:username', getProfile)
 .get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}))
 // callback route
 .get('/auth/google/redirect', passport.authenticate('google'), (req, res) => {
