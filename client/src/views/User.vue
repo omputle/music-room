@@ -2,9 +2,9 @@
     <div class="profile">
         <profile :username="username" />
         <div>
-            <playlists :username="'ksefeane'" />
-            <friends :username="'ksefeane'" />
-            <settings :username="'ksefeane'" />
+            <playlists :username="username" />
+            <friends :username="username" />
+            <settings :username="username" />
         </div>
     </div>
 </template>
