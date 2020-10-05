@@ -6,9 +6,13 @@ const keys = require('../configs/keys');
 export async function findOrCreate(user_data) {
     var user = await fetchOne('users', ['id', 'username', 'email', 'type'], 'email', user_data.email)
     if (Object.keys(user).length === 0) {
-        console.log("inserting")
         let insertion = await insert('users', ['username', 'first_name', 'last_name', 'email', 'password', 'type'], [user_data.username, user_data.name, user_data.surname, user_data.email, '$Abc1234', 'oauth'])
-        return insertion
+        var user = {
+            id: insertion.success.insertId, 
+            username: user_data.username,
+            email: user_data.email
+        }
+        return user
     }
     return (user[0])
 }

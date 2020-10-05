@@ -7,6 +7,7 @@
             <settings :username="username" />
         </div>
     </div>
+    
 </template>
 
 <script>
@@ -18,7 +19,7 @@ import settings from '@/components/settings'
 
 //import modules
 import { useRoute } from 'vue-router'
-
+import axios from 'axios'
 
 export default {
     name: 'User',
@@ -36,10 +37,20 @@ export default {
     methods: {
         setUsername() {
             this.username = useRoute().params.user
+            console.log(this.username)
+        },
+        async getDeezerProfile() {
+            var cors = 'https://cors-anywhere.herokuapp.com'
+            var deez = 'https://api.deezer.com/user/me'
+            var token = 'frlfrPrR43RAgn7ZDLGG8OtPfmAd7kjrA9OHTwy5sLT6cxoJ6Xi'
+            let res = await axios.get(`${cors}/${deez}?access_token=${token}`)
+            .catch(e => {console.log(e)})
+            console.log(res.data)
         }
     },
     created() {
         this.setUsername()
+        this.getDeezerProfile()
     }
 }
 </script>

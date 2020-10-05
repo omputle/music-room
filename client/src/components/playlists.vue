@@ -23,7 +23,7 @@ export default {
         }
     },
     created(){
-        this.getMusic()
+        //this.getMusic()
     }
 }
 </script>
