@@ -4,7 +4,7 @@ const router = Router()
 
 const passport = require('passport');
 //import controllers
-import { getProfile } from '../controllers/userController'
+import { getProfile, fetchDeezerAccessToken } from '../controllers/userController'
 
 //expose router to server
 export default router
@@ -16,3 +16,9 @@ export default router
 .get('/auth/google/redirect', passport.authenticate('google'), (req, res) => {
     res.send("You will be redirected to login")
 })
+.get('/auth/deezer-pass', passport.authenticate('deezer', {scope: ['profile', 'email']}))
+.get('/auth/deezer-pass/redirect', passport.authenticate('deezer'), (req, res) => {
+    res.send("You will be redirected to login, deezer")
+})
+// callback route
+.get('/auth/deezer/redirect', fetchDeezerAccessToken)
