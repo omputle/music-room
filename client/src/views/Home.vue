@@ -9,7 +9,8 @@
 </template>
 
 <script>
-// @ is an alias to /src
+//import modules
+import axios from 'axios'
 
 export default {
   name: 'Home',
@@ -25,6 +26,24 @@ export default {
     }
   },
   methods: {
+      async sendUrl() {
+          let path = 'http://localhost:5000/auth/url'
+          let data = {'url':document.URL}
+          axios.post(path, data).catch(e => {console.log(e)})
+      },
+      async getToken () {
+          let t = this.$route.query.t
+          let options = {
+              method: 'get',
+              url: `http://localhost:5000/auth/jwt/${t}`
+          }
+          axios(options)
+          .then(res => {console.log(res.data)})
+          .catch(e => {console.log(e)})
+      }
+  },
+  created() {
+      this.getToken()
   }
 }
 </script>

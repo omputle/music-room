@@ -6,6 +6,7 @@ var token = 'frRx5sqgfTE8VMBKLC4SSqwSx5sjH3lfZmMxKQDahcmn5dQpwsM'
 
 //get profile
 export async function getProfile(req, res) {
+    console.log(req.user)
     const params = ['username', 'first_name','last_name', 'email']
     fetchOne('users', params, 'username', req.params.username)
     .then(ans => {res.send(ans[0])})

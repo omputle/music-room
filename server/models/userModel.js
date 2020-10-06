@@ -1,7 +1,7 @@
 import { fetchOne, insert } from './query'
-const axios = require('axios')
+import axios from 'axios'
+import jwt from 'njwt'
 const keys = require('../configs/keys');
-// import { hash, compare } from 'bcrypt'
 
 export async function findOrCreate(user_data) {
     var user = await fetchOne('users', ['id', 'username', 'email', 'type'], 'email', user_data.email)
@@ -32,4 +32,13 @@ export async function getDeezerAccessToken(code) {
     } catch (error) {
         console.log("oops: ", error)
     }
+}
+//login user & create jwt token & insert token into database
+export async function loginUser(user) {
+    let token = jwt.create(user, 'secret')
+    return (token.compact())
+}
+//find token user in database
+export async function findToken(token) {
+    
 }

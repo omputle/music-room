@@ -41,8 +41,13 @@ export default {
             console.log(this.username)
         },
         getProfile() {
-            let path = `http://localhost:5000/user/${this.username}`
-            axios.get(path)
+            let token = localStorage.getItem("jwt")
+            let payload = {
+                method: 'get',
+                url: `http://localhost:5000/user/me`,
+                headers: {'Authorization': token}
+            }
+            axios.get(payload)
             .then(res => {console.log(res.data)})
             .catch(e => {console.log(e)})
         }

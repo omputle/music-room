@@ -35,11 +35,9 @@ passport.use(
 )
 
 passport.serializeUser((user, done) => {
-    console.log(user)
     done(null, user.id);
 })
 
 passport.deserializeUser(async (uid, done) => {
-    console.log(uid)
     done(null, await fetchUser(uid));
 })

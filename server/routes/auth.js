@@ -3,12 +3,16 @@ import { Router } from 'express'
 import passport from 'passport'
 
 //import controllers
-import { fetchDeezerAccessToken, googleRedirect, deezerRedirect 
+import { 
+    fetchDeezerAccessToken, googleRedirect, deezerRedirect, jwtRedirect 
 } from '../controllers/authController'
 
 //create & expose router to server
 const router = Router()
 export default router
+
+//jwt auth
+.get('/jwt/:token', jwtRedirect)
 
 //google oauth
 .get('/google', passport.authenticate('google', {scope: ['profile', 'email']}))
