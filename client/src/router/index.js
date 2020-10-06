@@ -4,6 +4,8 @@ import User from '@/views/User'
 import Search from '@/views/Search'
 import Welcome from '@/views/Welcome'
 import AlbumInfo from '@/views/AlbumInfo'
+import PlaySong from '@/views/PlaySong'
+import ArtistInfo from '@/views/ArtistInfo'
 
 const routes = [
   {
@@ -27,6 +29,14 @@ const routes = [
   {
     path: '/album/:id',
     component: AlbumInfo
+  },
+  {
+    path: '/play-song/:id',
+    component: PlaySong
+  },
+  {
+    path: '/artist/:id',
+    component: ArtistInfo
   }
 ]
 
