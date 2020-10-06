@@ -1,31 +1,39 @@
 <template>
     <div>
         <h1>Search Songs</h1>
-        <p>{{artist}}</p>
-        <input type="search" name="" id="" v-model="artist">
-        <button @click="search">Search</button>
+        <input type="search" name="" id="" v-model="track" placeholder="Search Song">
+        <button @click="search_track">Search Song</button>
         <div>
             <input type="search" name="" id="" v-model="album" placeholder="Search Album">
             <button @click="search_album">Search Album</button>
         </div>
+        <div>
+            <input type="search" name="" id="" v-model="singer" placeholder="Search Artist">
+            <button @click="search_singer">Search Artist</button>
+        </div>
 
-        <div v-for="file in info" :key="file">
+        <div v-for="track_found in tracks_found" :key="track_found">
             <div>
-                <router-link :to="'/album/' + file.album.id">
-                <img :src="file.album.cover" alt="">
-                <p>{{file.title}}</p>
-                <p>{{file.artist.name}}</p>
-                <small>Album: {{file.album.title}}</small>
+                <router-link :to="'/play-song/' + track_found.id">
+                <img :src="track_found.album.cover" alt="">
+                <p>{{track_found.title}}</p>
+                <p>{{track_found.artist.name}}</p>
+                <small>Album: {{track_found.album.title}}</small>
                 </router-link>
             </div>
             <hr>
         </div>
-
-        <div v-for="info in albums_found" :key="info">
-            <router-link :to="'/album/' + info.album.id">
-                <img :src="info.album.cover_medium" alt="">
-                <p>{{info.title}}</p>
-                <small>{{info.artist.name}}</small>
+        <div v-for="album_found in albums_found" :key="album_found">
+            <router-link :to="'/album/' + album_found.id">
+                <img :src="album_found.cover_medium" alt="">
+                <p>{{album_found.title}}</p>
+                <small>{{album_found.artist.name}}</small>
+            </router-link>
+        </div>
+        <div v-for="singer in singers_found" :key="singer">
+            <router-link :to="'/artist/' + singer.id">
+                <img :src="singer.picture_medium" alt="">
+                <p>{{singer.name}}</p>
             </router-link>
         </div>
     </div>
@@ -37,35 +45,54 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            artist: '',
+            track: '',
             album: '',
-            albums_found: {},
-            info: []
+            singer: '',
+            albums_found: [],
+            singers_found: [],
+            tracks_found: []
         }
     },
     methods: {
-        search() {
-            let url = 'https://cors-anywhere.herokuapp.com/http://api.deezer.com/search?q=' + this.artist
+        search_track() {
+            let url = 'https://cors-anywhere.herokuapp.com/http://api.deezer.com/search/track?q=' + this.track
             // (https://stackoverflow.com/questions/52985844/failed-call-to-deezer-api-with-react-and-axios)
 
             // const headers = {
             //     "Access-Control-Allow-Origin": "*"
             // }
+            this.clear_inputs()
             axios.get(url).then((res) => {
                 console.log(res.data.data)
-                this.info = res.data.data
+                this.tracks_found = res.data.data
             }).catch((err) => {
                 console.log(err)
             })
         },
         search_album() {
-            let url = 'https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q=album:"'+ this.album +'"'
+            this.clear_inputs()
+            let url = 'https://cors-anywhere.herokuapp.com/https://api.deezer.com/search/album?q='+ this.album
             axios.get(url).then((res) => {
                 console.log(res)
                 this.albums_found = res.data.data
             }).catch((err) => {
                 console.log(err)
             })
+        },
+        search_singer() {
+            this.clear_inputs()
+            let url = 'https://cors-anywhere.herokuapp.com/https://api.deezer.com/search/artist?q='+ this.singer
+            axios.get(url).then((res) => {
+                console.log(res)
+                this.singers_found = res.data.data
+            }).catch((err) => {
+                console.log(err)
+            })
+        },
+        clear_inputs() {
+            this.albums_found = []
+            this.tracks_found = []
+            this.singers_found = []
         }
     }
 }
