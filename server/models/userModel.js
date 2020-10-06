@@ -1,7 +1,7 @@
 import { fetchOne, insert, delOne } from './query'
 import axios from 'axios'
 import jwt from 'njwt'
-const keys = require('../configs/keys');
+import keys from '../configs/keys'
 
 export async function findOrCreate(user_data) {
     var user = await fetchOne('users', ['id', 'username', 'email', 'type'], 'email', user_data.email)
@@ -28,7 +28,7 @@ export async function getDeezerAccessToken(code) {
         let response = await axios.get(access_url)
         let data = response.data.split("=")[1]
         let access_code = data.split("&")[0]
-        console.log("Access code:", access_code);
+        return (access_code)
     } catch (error) {
         console.log("oops: ", error)
     }
@@ -36,7 +36,7 @@ export async function getDeezerAccessToken(code) {
 
 //login user & create jwt token & insert token into database
 export async function loginUser(user) {
-    let token = jwt.create({'name':user}, 'secret')
+    let token = jwt.create({'name':user}, keys.jwt)
     token = token.compact()
     insert('tokens', ['username', 'token', 'type'], [user, token, 'jwt'])
     .catch(e => {console.log(e)})
@@ -54,4 +54,15 @@ export async function findUserToken(token) {
             } else {no({"error":"not authorized"})}
         }).catch(e => {no({"error":"not authorized"})})
     })
+}
+
+export async function connectDeezer(access_token) {
+    return new Promise((yes, no) => {
+        try {
+            let token = jwt.create({'token':access_token}, keys.jwt)
+            token = token.compact()
+            yes(token)
+        } catch (e) {no({'error':e})}
+    })
+    
 }

@@ -26,15 +26,22 @@ export default {
         }
     },
     methods: {
-        async verifyUrl() {
-        let path = 'http://localhost:5000/auth/jwt'
-        let data = {'url':document.URL}
-        axios.post(path, data)
-        .then(res => {
-            localStorage.setItem("jwt", res.data.token)
-            console.log(res.data)
-        })
-        .catch(e => {console.log(e)})
+        verifyUrl() {
+            let path = 'http://localhost:5000/auth/jwt'
+            let data = {'url':document.URL}
+            axios.post(path, data)
+            .then(res => {
+                //localStorage.setItem("jwt", res.data.token)
+                console.log(res.data)
+                if (res.data.google) {
+                    localStorage.setItem("jwt", res.data.google)
+                    window.location.href = this.deezer + this.app_id 
+                        + this.redirect_uri + this.perms
+                } else if (res.data.deezer) {
+                    localStorage.setItem("deez", res.data.deezer)
+                    this.$router.push('/user')
+                }
+            }).catch(e => {console.log(e)})
         }
     },
     created() {

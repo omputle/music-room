@@ -2,15 +2,18 @@ import { insert, fetchOne } from '../models/query'
 import { getDeezerAccessToken } from "../models/userModel";
 import axios from 'axios'
 
-var token = 'frRx5sqgfTE8VMBKLC4SSqwSx5sjH3lfZmMxKQDahcmn5dQpwsM'
-
-//get profile
+//get profile from deezer api
 export async function getProfile(req, res) {
-    console.log(req.user)
-    const params = ['username', 'first_name','last_name', 'email']
-    fetchOne('users', params, 'username', req.params.username)
-    .then(ans => {res.send(ans[0])})
-    .catch(e => {res.send(e)})
+    try {
+        axios.get(`http://api.deezer.com/user/me?access_token=${req.token}`)
+        .then(r => {
+            res.send({
+                'first_name':r.data.firstname,
+                'last_name': r.data.lastname,
+                'email': r.data.email
+            })
+        }).catch(e => {res.send(e)})
+    } catch (e) {res.send(e)}
 }
 //add playlist
 export async function postplaylist(req, res) {

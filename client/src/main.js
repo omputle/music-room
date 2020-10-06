@@ -11,7 +11,7 @@ router.beforeEach((to, from, next) => {
         if (!token) {
             next({ path: '/' })
         } else {
-            jwt.verify(token, 'secret', (err) => {
+            jwt.verify(token, 'edswhateds', (err) => {
                 if (err) {
                     localStorage.removeItem('jwt')
                     next({ path:'/' })

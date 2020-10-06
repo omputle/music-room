@@ -3,9 +3,9 @@ import { Router } from 'express'
 import passport from 'passport'
 
 //import controllers
-import { getProfile, postplaylist, getplaylist 
-} from '../controllers/userController'
 import { jwtauth } from '../controllers/authController'
+import { getProfile
+} from '../controllers/userController'
 
 //create & expose router to server
 const router = Router()

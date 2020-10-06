@@ -1,11 +1,11 @@
 <template>
     <div class="profile">
-        <profile :username="username" />
-        <div>
+        <profile :user="user" />
+        <!-- <div>
             <playlists :username="username" />
             <friends :username="username" />
             <settings :username="username" />
-        </div>
+        </div> -->
     </div>
     
 </template>
@@ -13,33 +13,32 @@
 <script>
 //import components
 import profile from '@/components/profile'
-import playlists from '@/components/playlists'
-import friends from '@/components/friends'
-import settings from '@/components/settings'
+// import playlists from '@/components/playlists'
+// import friends from '@/components/friends'
+// import settings from '@/components/settings'
 
 //import modules
-import { useRoute } from 'vue-router'
 import axios from 'axios'
+import jwt from 'njwt'
 
 export default {
     name: 'User',
     components: {
-        profile,
-        playlists,
-        friends,
-        settings
+        profile
+        // playlists,
+        // friends,
+        // settings
     },
     data() {
         return {
-            username:''
+            user: {}
         }
     },
     methods: {
-        setUsername() {
-            this.username = useRoute().params.user
-        },
         getProfile() {
-            let token = localStorage.getItem("jwt")
+            let token = localStorage.getItem("deez")
+            let username = localStorage.getItem("jwt")
+            username = jwt.verify(username, 'edswhateds')
             let options = {
                 method: 'get',
                 url: `http://localhost:5000/user/me`,
@@ -48,12 +47,13 @@ export default {
             axios(options)
             .then(res => {
                 console.log(res.data)
+                this.user = res.data
+                this.user.username = username.body.name
             })
-            .catch(e => {console.log(e.message)})
+            .catch(e => {console.log(e)})
         }
     },
     created() {
-        this.setUsername()
         this.getProfile()
     }
 }

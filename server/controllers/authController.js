@@ -1,5 +1,6 @@
-import { getDeezerAccessToken, loginUser, findUserToken } from "../models/userModel";
+import { getDeezerAccessToken, loginUser, findUserToken, connectDeezer } from "../models/userModel";
 import jwt from 'njwt'
+import keys from '../configs/keys'
 
 var clientUrl = ''
 
@@ -7,8 +8,8 @@ var clientUrl = ''
 export async function jwtauth(req, res, next) {
     try {
         const token = req.headers.authorization.replace("Bearer ", "")
-        const decode = jwt.verify(token, 'secret')
-        req.user = decode.body.name
+        const decode = jwt.verify(token, keys.jwt)
+        req.token = decode.body.token
         next()
     } catch (e) {
         return res.status(401).json({message: "authentication failed"})
@@ -18,10 +19,19 @@ export async function jwtauth(req, res, next) {
 export async function jwtUrl(req, res) {
     const url = new URL(req.body.url)
     clientUrl = url.origin
-    findUserToken(url.searchParams.get('t'))
-    .then(token => {
-        res.send({"token":token})
-    }).catch(e => {res.send(e)})
+    let token = url.searchParams.get('t')
+    if (token) {
+        findUserToken(token)
+        .then(token => {
+            res.send({"google":token})
+        }).catch(e => {res.send(e)})
+    } else {
+        try {
+            token = url.searchParams.get('d')
+            const decode = jwt.verify(token, keys.jwt)
+            res.send({"deezer":token})
+        } catch (e) {res.send(e)}
+    }
 }
 
 //oauth redirects
@@ -36,15 +46,15 @@ export async function googleRedirect(req, res) {
 export async function deezerRedirect(req, res) {
     res.redirect(clientUrl)
 }
-export function fetchDeezerAccessToken(req, res) {
+export async function fetchDeezerAccessToken(req, res) {
     let error = req.query.error_reason
     let code = req.query.code
-    console.log("Error:", req.query.error_reason)
-    console.log("Code: ", req.query.code)
+    //console.log("Error:", req.query.error_reason)
+    //console.log("Code: ", req.query.code)
     if (code) {
-        getDeezerAccessToken(code);
-        res.redirect(clientUrl)
-    } else if (error) {
-        res.send("Authentication error")
-    }
+        let access = await getDeezerAccessToken(code);
+        connectDeezer(access)
+        .then(token => {res.redirect(`${clientUrl}?d=${token}`)})
+        .catch(e => {console.log(e)})
+    } else if (error) {res.send("Authentication error")}
 }

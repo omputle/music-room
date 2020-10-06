@@ -27,7 +27,7 @@ passport.use(
         clientID: keys.deezer.clientID,
         clientSecret: keys.deezer.clientSecret,
         callbackURL: '/auth/deezer-pass/redirect',
-    }, (accessToken, refreshToken, profile, done) => {
+    }, async (accessToken, refreshToken, profile, done) => {
         console.log('Access token', accessToken)
         console.log('Refresh token', refreshToken)
         console.log('Profile', profile)
