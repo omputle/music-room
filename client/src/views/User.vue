@@ -31,7 +31,8 @@ export default {
     },
     data() {
         return {
-            username:''
+            username:'',
+            token: 'frRx5sqgfTE8VMBKLC4SSqwSx5sjH3lfZmMxKQDahcmn5dQpwsM'
         }
     },
     methods: {
@@ -39,18 +40,16 @@ export default {
             this.username = useRoute().params.user
             console.log(this.username)
         },
-        async getDeezerProfile() {
-            var cors = 'https://cors-anywhere.herokuapp.com'
-            var deez = 'https://api.deezer.com/user/me'
-            var token = 'frlfrPrR43RAgn7ZDLGG8OtPfmAd7kjrA9OHTwy5sLT6cxoJ6Xi'
-            let res = await axios.get(`${cors}/${deez}?access_token=${token}`)
+        getProfile() {
+            let path = `http://localhost:5000/user/${this.username}`
+            axios.get(path)
+            .then(res => {console.log(res.data)})
             .catch(e => {console.log(e)})
-            console.log(res.data)
         }
     },
     created() {
         this.setUsername()
-        this.getDeezerProfile()
+        this.getProfile()
     }
 }
 </script>

@@ -6,7 +6,7 @@ import { findOrCreate, fetchUser } from "../models/userModel";
 
 passport.use(
     new GoogleStrategy({
-        callbackURL: '/users/auth/google/redirect',
+        callbackURL: '/auth/google/redirect',
         clientID: keys.google.clientID,
         clientSecret: keys.google.clientSecret
     }, async (accessToken, refreshToken, profile, done) => {
@@ -26,7 +26,7 @@ passport.use(
     new DeezerStrategy({
         clientID: keys.deezer.clientID,
         clientSecret: keys.deezer.clientSecret,
-        callbackURL: '/users/auth/deezer-pass/redirect',
+        callbackURL: '/auth/deezer-pass/redirect',
     }, (accessToken, refreshToken, profile, done) => {
         console.log('Access token', accessToken)
         console.log('Refresh token', refreshToken)

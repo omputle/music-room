@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+//import axios from 'axios'
 
 export default {
     name: 'Profile',
@@ -24,15 +24,15 @@ export default {
         }
     },
     methods: {
-        async getProfile() {
-            let path = `http://localhost:5000/users/${this.username}`
-            let pro = await axios.get(path)
-            .catch(e => {console.log(e)})
-            pro.data ? this.User = pro.data : 0
-        }
+        // async getProfile() {
+        //     let path = `http://localhost:5000/users/${this.username}`
+        //     let pro = await axios.get(path)
+        //     .catch(e => {console.log(e)})
+        //     pro.data ? this.User = pro.data : 0
+        // }
     },
     created() {
-        this.getProfile()
+        //this.getProfile()
     }
 }
 </script>

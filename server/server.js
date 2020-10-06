@@ -21,9 +21,11 @@ import { init } from './models/db'
 init()
 
 //api routes
+import auth from './routes/auth'
 import users from './routes/users'
 
-app.use('/users/', users)
+app.use('/auth/', auth)
+app.use('/user/', users)
 
 //listen
 app.listen(port, () => console.log(`server listening on port ${port}...`))
