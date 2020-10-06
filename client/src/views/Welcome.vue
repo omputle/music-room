@@ -20,9 +20,11 @@
         <div class="tracks">
             <h3>Top Tracks</h3>
             <div v-for="track in tracks" :key="track">
+                <router-link :to="'/play-song/' + track.id">
                 <img :src="track.artist.picture_medium" alt="">
                 <p>{{track.title}}</p>
                 <small>{{track.artist.name}}</small>
+                </router-link>
             </div>
         </div>
     </div>

@@ -1,6 +1,8 @@
 <template>
     <div>
-        <h2>{{artist}}</h2>
+        <router-link :to="'/artist/' + artist_id">
+            <h2>{{artist}}</h2>
+        </router-link>
         <img :src="cover" alt="">
         <div class="info">
             <ol >
@@ -27,6 +29,7 @@ export default {
             album_id: this.$route.params.id,
             cover: '',
             artist: '',
+            artist_id: '',
             tracks: [],
             play: '',
             check: false
@@ -38,6 +41,7 @@ export default {
             axios.get(url + this.album_id).then((results) => {
                 console.log(results)
                 this.artist = results.data.artist.name;
+                this.artist_id = results.data.artist.id;
                 this.cover = results.data.cover_big
                 this.tracks = results.data.tracks.data
             }).catch((err) => {
