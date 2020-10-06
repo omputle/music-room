@@ -2,11 +2,13 @@
 import express from 'express'
 const app = express()
 const port = 5000
-const passport = require('passport')
 
+//setup passport
+const passport = require('passport')
 const passportSetup = require('./configs/passport-setup');
 app.use(passport.initialize());
 app.use(passport.session());
+
 //setup path
 
 //setup middleware
@@ -22,10 +24,10 @@ init()
 
 //api routes
 import auth from './routes/auth'
-import users from './routes/users'
+import user from './routes/user'
 
 app.use('/auth/', auth)
-app.use('/user/', users)
+app.use('/user/', user)
 
 //listen
 app.listen(port, () => console.log(`server listening on port ${port}...`))

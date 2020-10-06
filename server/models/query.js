@@ -22,3 +22,11 @@ export const fetchOne = (t_name, vals, param, pval) => {
         catch (e) {reject({'error':e.sqlMessage})}
     })
 }
+
+//delete data function for 1 search criteria
+export const delOne = (t_name, param, pval) => {
+    return new Promise(async (resolve, reject) => {
+        try {resolve(await query(`DELETE FROM ${t_name} WHERE ${param} =\'${pval}\'`))}
+        catch (e) {reject({"error":e.sqlMessage})}
+    })
+}

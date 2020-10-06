@@ -16,7 +16,8 @@ const routes = [
   {
     path: '/u/:user',
     name: 'User',
-    component: User
+    component: User,
+    meta: {requiresAuth: true}
   },
   {
     path: '/search',

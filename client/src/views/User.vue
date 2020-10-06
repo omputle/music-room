@@ -31,25 +31,25 @@ export default {
     },
     data() {
         return {
-            username:'',
-            token: 'frRx5sqgfTE8VMBKLC4SSqwSx5sjH3lfZmMxKQDahcmn5dQpwsM'
+            username:''
         }
     },
     methods: {
         setUsername() {
             this.username = useRoute().params.user
-            console.log(this.username)
         },
         getProfile() {
             let token = localStorage.getItem("jwt")
-            let payload = {
+            let options = {
                 method: 'get',
                 url: `http://localhost:5000/user/me`,
-                headers: {'Authorization': token}
+                headers: {'Authorization': `Bearer ${token}`}
             }
-            axios.get(payload)
-            .then(res => {console.log(res.data)})
-            .catch(e => {console.log(e)})
+            axios(options)
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(e => {console.log(e.message)})
         }
     },
     created() {
