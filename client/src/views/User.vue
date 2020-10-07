@@ -42,7 +42,8 @@ export default {
                 method: 'get',
                 url: `http://localhost:5000/user/me`,
                 headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`}
-            }).then(res => {this.user = res.data})
+            })
+            .then(res => {this.user = res.data})
             .catch(e => {console.log(e)})
         },
         getFriends() {
@@ -51,7 +52,6 @@ export default {
                 url: `http://localhost:5000/user/followers`,
                 headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`}
             }).then(res => {
-                console.log(res.data)
                 this.followers = res.data.followers,
                 this.followings = res.data.followings
             })
