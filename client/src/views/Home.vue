@@ -3,7 +3,7 @@
     <div>
         <a href="http://localhost:5000/auth/google/">Google</a> | 
         <!-- <a href="http://localhost:5000/users/auth/deezer-pass/">Deezer (Passport)</a> |  -->
-        <a :href="deezer + app_id + redirect_uri + perms">Deezer Oauth</a>
+        <a :href="deezer + app_id + redirect_uri + perms">login</a>
     </div>
   </div>
 </template>

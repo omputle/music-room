@@ -1,6 +1,6 @@
 <template>
         <div class="profile_panel">
-            <h3>profile</h3>
+            <h4>profile</h4>
             <p>{{user.username}}</p>
             <p>{{user.first_name}}</p>
             <p>{{user.last_name}}</p>

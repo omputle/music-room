@@ -10,20 +10,7 @@
 export default {
     name: 'Playlists',
     props: {
-        username: String
-    },
-    data() {
-        return {
-            playlists: []
-        }
-    },
-    methods: {
-        async getMusic() {
-            console.log('test')
-        }
-    },
-    created(){
-        //this.getMusic()
+        playlists: []
     }
 }
 </script>

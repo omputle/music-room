@@ -64,5 +64,4 @@ export async function connectDeezer(access_token) {
             yes(token)
         } catch (e) {no({'error':e})}
     })
-    
 }

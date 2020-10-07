@@ -1,11 +1,11 @@
 <template>
     <div class="profile">
         <profile :user="user" />
-        <!-- <div>
-            <playlists :username="username" />
-            <friends :username="username" />
-            <settings :username="username" />
-        </div> -->
+        <div>
+            <!-- <playlists /> -->
+            <friends :followers="followers" :followings="followings" />
+            <settings />
+        </div>
     </div>
     
 </template>
@@ -13,48 +13,54 @@
 <script>
 //import components
 import profile from '@/components/profile'
-// import playlists from '@/components/playlists'
-// import friends from '@/components/friends'
-// import settings from '@/components/settings'
+//import playlists from '@/components/playlists'
+import friends from '@/components/friends'
+import settings from '@/components/settings'
 
 //import modules
 import axios from 'axios'
-import jwt from 'njwt'
+//import jwt from 'njwt'
 
 export default {
     name: 'User',
     components: {
-        profile
-        // playlists,
-        // friends,
-        // settings
+        profile,
+        //playlists,
+        friends,
+        settings
     },
     data() {
         return {
-            user: {}
+            user: {},
+            followers: [],
+            followings: []
         }
     },
     methods: {
         getProfile() {
-            let token = localStorage.getItem("deez")
-            let username = localStorage.getItem("jwt")
-            username = jwt.verify(username, 'edswhateds')
-            let options = {
+            axios({
                 method: 'get',
                 url: `http://localhost:5000/user/me`,
-                headers: {'Authorization': `Bearer ${token}`}
-            }
-            axios(options)
-            .then(res => {
+                headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`}
+            }).then(res => {this.user = res.data})
+            .catch(e => {console.log(e)})
+        },
+        getFriends() {
+            axios({
+                method: 'get',
+                url: `http://localhost:5000/user/followers`,
+                headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`}
+            }).then(res => {
                 console.log(res.data)
-                this.user = res.data
-                this.user.username = username.body.name
+                this.followers = res.data.followers,
+                this.followings = res.data.followings
             })
             .catch(e => {console.log(e)})
         }
     },
     created() {
         this.getProfile()
+        this.getFriends()
     }
 }
 </script>

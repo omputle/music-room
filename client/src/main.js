@@ -6,14 +6,14 @@ import jwt from 'njwt'
 
 
 router.beforeEach((to, from, next) => {
-    let token = localStorage.getItem("jwt")
+    let token = localStorage.getItem("deez")
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!token) {
             next({ path: '/' })
         } else {
             jwt.verify(token, 'edswhateds', (err) => {
                 if (err) {
-                    localStorage.removeItem('jwt')
+                    localStorage.removeItem('deez')
                     next({ path:'/' })
                 }
                 next()
