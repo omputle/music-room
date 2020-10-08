@@ -8,7 +8,9 @@
         <router-link :to="'/album/' + album_id" v-if="album_id">
             <p>{{album_name}}</p>
         </router-link>
-        <audio :src="preview" controls></audio>
+        <!-- <audio :src="preview" controls></audio> -->
+        <iframe scrolling="no" frameborder="0" allowTransparency="true" :src="music">
+        </iframe>
     </div>
 </template>
 
@@ -24,7 +26,8 @@ export default {
             song_name: '',
             album_name: '',
             preview: '',
-            album_id: ''
+            album_id: '',
+            music: ''
         }
     },
     methods: {
@@ -41,10 +44,10 @@ export default {
                 this.album_name = results.data.album.title
                 this.preview = results.data.preview
                 this.album_id = results.data.album.id
-            }).catch((err) => {
-                console.log(err)
-            })
-        },
+                this.music = `https://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=true&width=700&height=1000&color=EF5466&layout=dark&size=medium&type=tracks&id=${results.data.id}&app_id=1" width="700" height="24`
+
+            }).catch((err) => {console.log(err)})
+        }
     },
     created() {
         this.fetch_data()

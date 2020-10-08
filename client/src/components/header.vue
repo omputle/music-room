@@ -1,0 +1,41 @@
+<template>
+    <div>
+        <div v-if="login">
+            <button @click="logout">log out</button> |
+            <router-link to="/user">User</router-link> |
+            <router-link to='/search'>Search</router-link> | 
+            <router-link to='/welcome'>Welcome</router-link>
+        </div>
+        <div v-else>
+            <a href="http://localhost:5000/auth/google/">login</a>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'header',
+    data() {
+        return {
+            login: true
+        }
+    },
+    methods: {
+        isLoggedIn() {
+            if (localStorage.getItem("jwt"))
+                this.login = true
+            else
+                this.login = false
+        },
+        logout() {
+            localStorage.removeItem("jwt")
+            localStorage.removeItem("deez")
+            this.login = false
+            this.$router.push('/')
+        }
+    },
+    created() {
+        this.isLoggedIn()
+    }
+}
+</script>

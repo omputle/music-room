@@ -1,9 +1,9 @@
 <template>
   <div>
     <div>
-        <a href="http://localhost:5000/auth/google/">Google</a> | 
-        <!-- <a href="http://localhost:5000/users/auth/deezer-pass/">Deezer (Passport)</a> |  -->
-        <a :href="deezer + app_id + redirect_uri + perms">login</a>
+        <!-- <a href="http://localhost:5000/auth/google/">Google</a> | 
+        <a href="http://localhost:5000/users/auth/deezer-pass/">Deezer (Passport)</a> | 
+        <a :href="deezer + app_id + redirect_uri + perms">login</a> -->
     </div>
   </div>
 </template>
@@ -31,8 +31,6 @@ export default {
             let data = {'url':document.URL}
             axios.post(path, data)
             .then(res => {
-                //localStorage.setItem("jwt", res.data.token)
-                console.log(res.data)
                 if (res.data.google) {
                     localStorage.setItem("jwt", res.data.google)
                     window.location.href = this.deezer + this.app_id 
