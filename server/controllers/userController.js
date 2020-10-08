@@ -36,13 +36,11 @@ export async function getFriends(req, res) {
 
 //add playlist
 export async function postplaylist(req, res) {
-    console.log(req.body)
-    let token = req.body.token
     let path = `https://api.deezer.com/user/me/playlists`
     let access = `?access_token=${token}`
     var pay = req.body
     console.log(pay)
-    axios.post(path+access, {"title":"limitless"})
+    axios.post(path+access, {"title":"testing2"})
     .then(res => {console.log(res.data)})
     .catch(e => {console.log(e)})
 }
