@@ -4,7 +4,7 @@ import passport from 'passport'
 
 //import controllers
 import { jwtauth } from '../controllers/authController'
-import { getProfile, getFriends
+import { getProfile, getFriends, getplaylist
 } from '../controllers/userController'
 
 //create & expose router to server
@@ -15,3 +15,5 @@ export default router
 .get('/me', jwtauth, getProfile)
 .get('/followers', jwtauth, getFriends)
 //.post('/postlist', postplaylist)
+
+.get('/get-playlist', jwtauth, getplaylist)
