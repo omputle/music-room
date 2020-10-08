@@ -15,7 +15,7 @@ export default router
 //routes
 .get('/me', jwtauth, getProfile)
 .get('/followers', jwtauth, getFriends)
-.post('/postlist', postplaylist)
+//.post('/postlist', postplaylist)
 
 .get('/get-playlist', jwtauth, getplaylist)
 .get('/album-info/:id', getAlbumInfo)
