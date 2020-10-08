@@ -47,9 +47,11 @@ export async function postplaylist(req, res) {
 //get playlists
 export async function getplaylist(req, res) {
     let path = `https://api.deezer.com/user/me/playlists`
-    let access = `?access_token=${token}`
-    axios.get(path+access)
-    .then(res => {console.log(res.data)})
-    .catch(e => {console.log(e)})
+    let access = `?access_token=${req.token}`
+    // axios.get(path+access)
+    // .then(result => res.send({"success": result}))
+    // .catch(e => {console.log(e)})
+    let result = await axios.get(path + access)
+    res.send(result.data)
 }
 
