@@ -29,12 +29,14 @@ export default {
     },
     methods: {
         fetch_data() {
-            let url = 'https://cors-anywhere.herokuapp.com/https://api.deezer.com/track/';
-            axios.get(url + this.song_id).then((results) => {
+            axios({
+                method: 'get',
+                url: 'http://localhost:5000/user/song-info/' + this.song_id
+            }).then((results) => {
                 console.log(results)
                 this.artist_name = results.data.artist.name
                 this.artist_id = results.data.artist.id
-                this.cover = results.data.artist.picture_big
+                this.cover = results.data.album.cover_big
                 this.song_name = results.data.title
                 this.album_name = results.data.album.title
                 this.preview = results.data.preview
@@ -49,3 +51,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+audio {
+    width: 100%;
+}
+</style>

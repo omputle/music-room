@@ -55,14 +55,11 @@ export default {
     },
     methods: {
         search_track() {
-            let url = 'https://cors-anywhere.herokuapp.com/http://api.deezer.com/search/track?q=' + this.track
-            // (https://stackoverflow.com/questions/52985844/failed-call-to-deezer-api-with-react-and-axios)
-
-            // const headers = {
-            //     "Access-Control-Allow-Origin": "*"
-            // }
             this.clear_inputs()
-            axios.get(url).then((res) => {
+            axios({
+                method: 'get',
+                url: 'http://localhost:5000/user/search-track/' + this.track
+            }).then((res) => {
                 console.log(res.data.data)
                 this.tracks_found = res.data.data
             }).catch((err) => {
@@ -71,8 +68,10 @@ export default {
         },
         search_album() {
             this.clear_inputs()
-            let url = 'https://cors-anywhere.herokuapp.com/https://api.deezer.com/search/album?q='+ this.album
-            axios.get(url).then((res) => {
+            axios({
+                method: 'get',
+                url: 'http://localhost:5000/user/search-album/' + this.album
+            }).then((res) => {
                 console.log(res)
                 this.albums_found = res.data.data
             }).catch((err) => {
@@ -81,8 +80,10 @@ export default {
         },
         search_singer() {
             this.clear_inputs()
-            let url = 'https://cors-anywhere.herokuapp.com/https://api.deezer.com/search/artist?q='+ this.singer
-            axios.get(url).then((res) => {
+            axios({
+                method: 'get',
+                url: 'http://localhost:5000/user/search-artist/' + this.singer
+            }).then((res) => {
                 console.log(res)
                 this.singers_found = res.data.data
             }).catch((err) => {
