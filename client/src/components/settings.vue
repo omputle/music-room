@@ -1,6 +1,9 @@
 <template>
     <div class="panel_item">
         <h3>settings</h3>
+        <small v-for="(setting, index) in settings" :key="index">
+            <p>{{index}} - {{setting}}</p>
+        </small>
     </div>
 </template>
 
@@ -9,7 +12,7 @@
 export default {
     name: 'Settings',
     props: {
-        username: String
+        settings: Object
     }
 }
 </script>

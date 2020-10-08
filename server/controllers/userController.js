@@ -9,6 +9,7 @@ export async function getProfile(req, res) {
     try {
         axios.get(`${deezer}/user/me?access_token=${req.token}`)
         .then(r => {
+            console.log(req.token)
             res.send({
                 'username':r.data.name,
                 'first_name':r.data.firstname,
@@ -31,6 +32,15 @@ export async function getFriends(req, res) {
         })
     } catch (e) {res.send(e)}
 }
+//get settings
+export async function getSettings(req, res) {
+    try {
+        axios.get(`${deezer}/user/me/options?access_token=${req.token}`)
+        .then(r => {res.send(r.data)})
+        .catch(e => {console.log(e)})
+    } catch (e) {res.send(e)}
+}
+
 //follow a user
 
 //add playlist

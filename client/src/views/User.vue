@@ -2,9 +2,8 @@
     <div class="profile">
         <profile :user="user" />
         <div>
-            <!-- <playlists /> -->
             <friends :followers="followers" :followings="followings" />
-            <settings />
+            <settings :settings="settings" />
         </div>
     </div>
     
@@ -13,13 +12,11 @@
 <script>
 //import components
 import profile from '@/components/profile'
-//import playlists from '@/components/playlists'
 import friends from '@/components/friends'
 import settings from '@/components/settings'
 
 //import modules
 import axios from 'axios'
-//import jwt from 'njwt'
 
 export default {
     name: 'User',
@@ -33,7 +30,8 @@ export default {
         return {
             user: {},
             followers: [],
-            followings: []
+            followings: [],
+            settings: {}
         }
     },
     methods: {
@@ -42,18 +40,27 @@ export default {
                 method: 'get',
                 url: `http://localhost:5000/user/me`,
                 headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`}
-            })
-            .then(res => {this.user = res.data})
+            }).then(res => {this.user = res.data})
             .catch(e => {console.log(e)})
         },
         getFriends() {
             axios({
                 method: 'get',
-                url: `http://localhost:5000/user/followers`,
+                url: `http://localhost:5000/user/friends`,
                 headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`}
             }).then(res => {
                 this.followers = res.data.followers,
                 this.followings = res.data.followings
+            })
+            .catch(e => {console.log(e)})
+        },
+        getSettings() {
+            axios({
+                method: 'get',
+                url: `http://localhost:5000/user/settings`,
+                headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`}
+            }).then(r => {
+                this.settings = r.data
             })
             .catch(e => {console.log(e)})
         }
@@ -61,6 +68,7 @@ export default {
     created() {
         this.getProfile()
         this.getFriends()
+        this.getSettings()
     }
 }
 </script>
