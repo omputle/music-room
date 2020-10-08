@@ -59,9 +59,7 @@ export default {
                 method: 'get',
                 url: `http://localhost:5000/user/settings`,
                 headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`}
-            }).then(r => {
-                this.settings = r.data
-            })
+            }).then(r => {this.settings = r.data})
             .catch(e => {console.log(e)})
         }
     },

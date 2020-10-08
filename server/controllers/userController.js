@@ -36,7 +36,10 @@ export async function getFriends(req, res) {
 export async function getSettings(req, res) {
     try {
         axios.get(`${deezer}/user/me/options?access_token=${req.token}`)
-        .then(r => {res.send(r.data)})
+        .then(r => {
+            delete r.data.type
+            res.send(r.data)
+        })
         .catch(e => {console.log(e)})
     } catch (e) {res.send(e)}
 }
