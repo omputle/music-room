@@ -6,6 +6,8 @@ import Welcome from '@/views/Welcome'
 import AlbumInfo from '@/views/AlbumInfo'
 import PlaySong from '@/views/PlaySong'
 import ArtistInfo from '@/views/ArtistInfo'
+import Okay from '@/views/okay'
+import Playlist from '@/views/Playlist'
 
 const routes = [
   {
@@ -38,6 +40,14 @@ const routes = [
   {
     path: '/artist/:id',
     component: ArtistInfo
+  },
+  {
+    path: '/playlist/:id',
+    component: Playlist
+  },
+  {
+    path: '/okay',
+    component: Okay
   }
 ]
 
