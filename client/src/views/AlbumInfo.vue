@@ -37,8 +37,10 @@ export default {
     },
     methods: {
         fetch_data() {
-            let url = 'https://cors-anywhere.herokuapp.com/https://api.deezer.com/album/';
-            axios.get(url + this.album_id).then((results) => {
+            axios({
+                method: 'get',
+                url: 'http://localhost:5000/user/album-info/' + this.album_id
+            }).then((results) => {
                 console.log(results)
                 this.artist = results.data.artist.name;
                 this.artist_id = results.data.artist.id;

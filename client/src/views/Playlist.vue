@@ -62,4 +62,7 @@ li:hover {
 .songs {
     float: right;
 }
+audio {
+    width: 100%;
+}
 </style>

@@ -36,17 +36,17 @@ export default {
     data() {
         return {
             albums: [],
-            // artists: [],
             tracks: []
         }
     },
     methods: {
         get_list() {
-            let url = 'https://cors-anywhere.herokuapp.com/https://api.deezer.com/chart'
-            axios.get(url).then((res) => {
+            axios({
+                method: 'get',
+                url: 'http://localhost:5000/user/chart'
+            }).then((res) => {
                 console.log(res)
                 this.albums = res.data.albums.data
-                // this.artists = res.data.artists.data
                 this.tracks = res.data.tracks.data
             }).catch((err) => {
                 console.log(err)
