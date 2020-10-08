@@ -64,3 +64,43 @@ export async function getplaylist(req, res) {
     res.send(result.data)
 }
 
+export async function getAlbumInfo(req, res) {
+    let path = 'https://api.deezer.com/album/'
+    let album_id = req.params.id
+    let result = await axios.get(path + album_id)
+    res.send(result.data)
+}
+
+export async function getSongInfo(req, res) {
+    let path = 'https://api.deezer.com/track/'
+    let song_id = req.params.id
+    let result = await axios.get(path + song_id)
+    res.send(result.data)
+}
+
+export async function searchTrack(req, res) {
+    let path = 'http://api.deezer.com/search/track?q='
+    let track = req.params.track
+    let result = await axios.get(path + track)
+    res.send(result.data)
+}
+
+export async function searchAlbum(req, res) {
+    let path = 'http://api.deezer.com/search/album?q='
+    let album = req.params.album
+    let result = await axios.get(path + album)
+    res.send(result.data)
+}
+
+export async function searchArtist(req, res) {
+    let path = 'http://api.deezer.com/search/artist?q='
+    let artist = req.params.artist
+    let result = await axios.get(path + artist)
+    res.send(result.data)
+}
+
+export async function getChart(req, res) {
+    let path = 'https://api.deezer.com/chart'
+    let result = await axios.get(path)
+    res.send(result.data)
+}
