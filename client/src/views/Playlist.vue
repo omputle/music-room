@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>{{playlist_name}}</h2>
+        <!-- <h2>{{playlist_name}}</h2>
         <img :src="cover" alt=""> <br>
         <p>{{creator}}</p>
         <div class="songs">
@@ -9,9 +9,10 @@
                     <li @click="play_track(song)">{{song.title}} - {{song.artist.name}}</li>
                 </div>
             </ol>
-        </div>
+        </div> -->
         <div>
-            <audio :src="play" controls v-if="play" autoplay></audio>
+            <iframe scrolling="yes" frameborder="0" allowTransparency="true" :src="music"></iframe>
+            <!-- <audio :src="play" controls v-if="play" autoplay></audio> -->
         </div>
     </div>
 </template>
@@ -26,7 +27,8 @@ export default {
             creator: '',
             cover: '',
             playlist_name: '',
-            play: ''
+            play: '',
+            music: ''
         }
     },
     methods: {
@@ -44,10 +46,12 @@ export default {
         },
         play_track(song) {
             this.play = song.preview
+            
         }
     },
     created() {
         this.fetch_data()
+        this.music = `https://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=true&width=700&height=1000&color=EF5466&layout=dark&size=medium&type=playlist&id=${this.playlist_id}&app_id=1" width="700" height="30"`
     }
 }
 </script>
@@ -62,7 +66,8 @@ li:hover {
 .songs {
     float: right;
 }
-audio {
+iframe {
     width: 100%;
+    height: 500px;
 }
 </style>

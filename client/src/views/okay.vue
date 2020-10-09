@@ -1,7 +1,6 @@
 <template>
     <div>
-        <button @click="fetch_list">Fetch Playlists</button> <br>
-        {{playlists[0]}}
+        <!-- <button @click="fetch_list">Fetch Playlists</button> <br> -->
         <div v-for="playlist in playlists" :key="playlist">
             <div>
                 <router-link :to="'/playlist/' + playlist.id">
@@ -44,6 +43,9 @@ export default {
                 console.log(err)
             })
         }
+    },
+    created() {
+        this.fetch_list()
     }
 }
 </script>
