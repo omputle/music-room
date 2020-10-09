@@ -9,6 +9,8 @@ import ArtistInfo from '@/views/ArtistInfo'
 import Okay from '@/views/okay'
 import Playlist from '@/views/Playlist'
 import Music from '@/views/Music'
+import RemoveSong from '@/views/RemoveSong'
+import AddSongs from '@/views/AddSongs'
 
 const routes = [
   {
@@ -55,6 +57,14 @@ const routes = [
       name: 'Music',
       component: Music,
       meta: {requiresAuth: true}
+  },
+  {
+    path: '/playlist/:id/remove',
+    component: RemoveSong
+  },
+  {
+    path: '/playlist/:id/add',
+    component: AddSongs
   }
 ]
 

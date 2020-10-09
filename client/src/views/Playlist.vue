@@ -1,15 +1,17 @@
 <template>
     <div>
-        <!-- <h2>{{playlist_name}}</h2>
+        <h2>{{playlist_name}}</h2>
         <img :src="cover" alt=""> <br>
         <p>{{creator}}</p>
+        <router-link :to="'/playlist/' + playlist_id + '/add'">Add songs to {{playlist_name}}</router-link> | 
+        <router-link :to="'/playlist/' + playlist_id + '/remove'">Remove songs from {{playlist_name}}</router-link>
         <div class="songs">
             <ol>
                 <div v-for="song in songs" :key="song">
                     <li @click="play_track(song)">{{song.title}} - {{song.artist.name}}</li>
                 </div>
             </ol>
-        </div> -->
+        </div>
         <div>
             <iframe scrolling="yes" frameborder="0" allowTransparency="true" :src="music"></iframe>
             <!-- <audio :src="play" controls v-if="play" autoplay></audio> -->
@@ -33,8 +35,11 @@ export default {
     },
     methods: {
         fetch_data() {
-            let url = 'https://cors-anywhere.herokuapp.com/https://api.deezer.com/playlist/'
-            axios.get(url + this.playlist_id).then((results) => {
+            axios({
+                method: 'get',
+                url: 'http://localhost:5000/music/playlist-info/' + this.playlist_id,
+                headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`}
+            }).then((results) => {
                 console.log(results)
                 this.playlist_name = results.data.title
                 this.creator = results.data.creator.name
@@ -51,7 +56,7 @@ export default {
     },
     created() {
         this.fetch_data()
-        this.music = `https://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=true&width=700&height=1000&color=EF5466&layout=dark&size=medium&type=playlist&id=${this.playlist_id}&app_id=1" width="700" height="30"`
+        this.music = `https://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=true&width=700&height=1000&color=EF5466&layout=dark&size=medium&type=playlist&id=${this.playlist_id}&app_id= 437882"`
     }
 }
 </script>
