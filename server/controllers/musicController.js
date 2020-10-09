@@ -1,50 +1,6 @@
-import { insert, fetchOne } from '../models/query'
-import { getDeezerAccessToken } from "../models/userModel";
 import axios from 'axios'
 
 const deezer = 'https://api.deezer.com'
-
-//get profile from deezer api
-export async function getProfile(req, res) {
-    try {
-        axios.get(`${deezer}/user/me?access_token=${req.token}`)
-        .then(r => {
-            console.log('get profile: '+req.token)
-            res.send({
-                'username':r.data.name,
-                'first_name':r.data.firstname,
-                'last_name': r.data.lastname,
-                'email': r.data.email
-            })
-        }).catch(e => {console.log(e)})
-    } catch (e) {res.send(e)}
-}
-//get friends (followers & followings)
-export async function getFriends(req, res) {
-    try {
-        let followers = axios.get(`${deezer}/user/me/followers?access_token=${req.token}`)
-        let followings = axios.get(`${deezer}/user/me/followings?access_token=${req.token}`)
-        let friends = await Promise.all([followers, followings])
-        .catch(e => {console.log(e)})
-        res.send({
-            'followers':friends[0].data.data, 
-            'followings':friends[1].data.data
-        })
-    } catch (e) {res.send(e)}
-}
-//get settings
-export async function getSettings(req, res) {
-    try {
-        axios.get(`${deezer}/user/me/options?access_token=${req.token}`)
-        .then(r => {
-            delete r.data.type
-            res.send(r.data)
-        })
-        .catch(e => {console.log(e)})
-    } catch (e) {res.send(e)}
-}
-
-//follow a user
 
 //add playlist
 export async function postplaylist(req, res) {

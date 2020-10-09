@@ -34,7 +34,7 @@ export default {
         fetch_data() {
             axios({
                 method: 'get',
-                url: 'http://localhost:5000/user/song-info/' + this.song_id
+                url: 'http://localhost:5000/music/song-info/' + this.song_id
             }).then((results) => {
                 console.log(results)
                 this.artist_name = results.data.artist.name

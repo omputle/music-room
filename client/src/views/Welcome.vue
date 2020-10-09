@@ -43,7 +43,7 @@ export default {
         get_list() {
             axios({
                 method: 'get',
-                url: 'http://localhost:5000/user/chart'
+                url: 'http://localhost:5000/music/chart'
             }).then((res) => {
                 console.log(res)
                 this.albums = res.data.albums.data

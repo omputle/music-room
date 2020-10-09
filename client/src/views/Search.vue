@@ -58,7 +58,7 @@ export default {
             this.clear_inputs()
             axios({
                 method: 'get',
-                url: 'http://localhost:5000/user/search-track/' + this.track
+                url: 'http://localhost:5000/music/search-track/' + this.track
             }).then((res) => {
                 console.log(res.data.data)
                 this.tracks_found = res.data.data
@@ -70,7 +70,7 @@ export default {
             this.clear_inputs()
             axios({
                 method: 'get',
-                url: 'http://localhost:5000/user/search-album/' + this.album
+                url: 'http://localhost:5000/music/search-album/' + this.album
             }).then((res) => {
                 console.log(res)
                 this.albums_found = res.data.data
@@ -82,7 +82,7 @@ export default {
             this.clear_inputs()
             axios({
                 method: 'get',
-                url: 'http://localhost:5000/user/search-artist/' + this.singer
+                url: 'http://localhost:5000/music/search-artist/' + this.singer
             }).then((res) => {
                 console.log(res)
                 this.singers_found = res.data.data

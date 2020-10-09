@@ -40,7 +40,7 @@ export default {
         fetch_data() {
             axios({
                 method: 'get',
-                url: 'http://localhost:5000/user/album-info/' + this.album_id
+                url: 'http://localhost:5000/music/album-info/' + this.album_id
             }).then((results) => {
                 console.log(results)
                 this.artist = results.data.artist.name;

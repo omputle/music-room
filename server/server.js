@@ -25,9 +25,11 @@ init()
 //api routes
 import auth from './routes/auth'
 import user from './routes/user'
+import music from './routes/music'
 
 app.use('/auth/', auth)
 app.use('/user/', user)
+app.use('/music', music)
 
 //listen
 app.listen(port, () => console.log(`server listening on port ${port}...`))

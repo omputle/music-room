@@ -18,11 +18,3 @@ export default router
 .get('/settings', jwtauth, getSettings)
 
 //.post('/postlist', postplaylist)
-
-.get('/get-playlist', jwtauth, getplaylist)
-.get('/album-info/:id', getAlbumInfo)
-.get('/song-info/:id', getSongInfo)
-.get('/search-track/:track', searchTrack)
-.get('/search-album/:album', searchAlbum)
-.get('/search-artist/:artist', searchArtist)
-.get('/chart', getChart)

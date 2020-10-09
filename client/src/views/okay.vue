@@ -34,7 +34,7 @@ export default {
             // })
             axios({
                 method: 'get',
-                url: 'http://localhost:5000/user/get-playlist',
+                url: 'http://localhost:5000/music/get-playlist',
                 headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`}
             }).then((results) => {
                 console.log(results)
