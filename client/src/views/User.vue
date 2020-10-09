@@ -22,7 +22,6 @@ export default {
     name: 'User',
     components: {
         profile,
-        //playlists,
         friends,
         settings
     },

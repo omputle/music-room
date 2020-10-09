@@ -63,3 +63,35 @@ export async function getChart(req, res) {
     let result = await axios.get(path)
     res.send(result.data)
 }
+
+//experimental music functions
+
+//get playlists
+export async function getPlaylist2(req, res) {
+    try {
+        axios.get(`${deezer}/user/me/playlists?access_token=${req.token}`)
+        .then(r => {
+            res.send(r.data.data)
+        }).catch(e => {console.log(e)})
+    } catch (e) {res.send(e)}
+}
+//add track to playlist
+export async function addToPlaylist(req, res) {
+    try {
+        let url = `${deezer}/playlist/${req.body.playlist_id}/tracks?access_token=${req.token}`
+        let data = `&songs=${req.body.track_id}&request_method=POST`
+        axios.get(url+data)
+        .then(r => {res.send(r.data)})
+        .catch(e => {console.log(e)})
+    } catch (e) {res.send(e)}
+}
+//remove track to playlist
+export async function removeFromPlaylist(req, res) {
+    try {
+        let url = `${deezer}/playlist/${req.body.playlist_id}/tracks?access_token=${req.token}`
+        let data = `&songs=${req.body.track_id}&request_method=DELETE`
+        axios.get(url+data)
+        .then(r => {res.send(r.data)})
+        .catch(e => {console.log(e)})
+    } catch (e) {res.send(e)}
+}

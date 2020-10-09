@@ -5,7 +5,8 @@
             <router-link to="/user">User</router-link> |
             <router-link to='/search'>Search</router-link> | 
             <router-link to='/welcome'>Welcome</router-link> |
-            <router-link to='/okay'>Playlists</router-link>
+            <router-link to='/okay'>Playlists</router-link> |
+            <router-link to='/music'>Music</router-link>
         </div>
         <div v-else>
             <a href="http://localhost:5000/auth/google/">login</a>

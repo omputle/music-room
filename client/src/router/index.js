@@ -8,6 +8,7 @@ import PlaySong from '@/views/PlaySong'
 import ArtistInfo from '@/views/ArtistInfo'
 import Okay from '@/views/okay'
 import Playlist from '@/views/Playlist'
+import Music from '@/views/Music'
 
 const routes = [
   {
@@ -48,6 +49,12 @@ const routes = [
   {
     path: '/okay',
     component: Okay
+  },
+  {
+      path: '/music',
+      name: 'Music',
+      component: Music,
+      meta: {requiresAuth: true}
   }
 ]
 
