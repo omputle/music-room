@@ -1,6 +1,9 @@
 <template>
     <div>
-        <!-- <button @click="fetch_list">Fetch Playlists</button> <br> -->
+        <div>
+            <input type="search" name="" id="" placeholder="Playlist Name" v-model="playlist_name">
+            <button @click="create_playlist">Create Playlist</button>
+        </div>
         <div v-for="playlist in playlists" :key="playlist">
             <div>
                 <router-link :to="'/playlist/' + playlist.id">
@@ -18,20 +21,12 @@ import axios from "axios"
 export default {
     data() {
         return {
-            playlists: []
+            playlists: [],
+            playlist_name: ''
         }
     },
     methods: {
         fetch_list() {
-            // let url = 'http://localhost:5000/user/get-playlist'
-            // axios.post(url, {
-            //     'token': access_token
-            // }).then((results) => {
-            //     console.log(results)
-            //     this.playlists = results.data.data
-            // }).catch((err) => {
-            //     console.log(err)
-            // })
             axios({
                 method: 'get',
                 url: 'http://localhost:5000/music/get-playlist',
@@ -39,6 +34,21 @@ export default {
             }).then((results) => {
                 console.log(results)
                 this.playlists = results.data.data
+            }).catch((err) => {
+                console.log(err)
+            })
+        },
+        create_playlist() {
+            axios({
+                method: 'post',
+                url: 'http://localhost:5000/music/create-playlist',
+                headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`},
+                data: {
+                    'playlist_name': this.playlist_name
+                }
+            }).then((results) => {
+                console.log(results.data)
+                this.fetch_list()
             }).catch((err) => {
                 console.log(err)
             })

@@ -113,3 +113,27 @@ export async function getplaylistInfo(req, res) {
         console.log(error)
     }
 }
+
+export async function createPlaylist(req, res) {
+    try {
+        let name = req.body.playlist_name
+        let data = `&request_method=POST&title=${name}`
+        let access = `?access_token=${req.token}`
+        let result = await axios.get(`${deezer}/user/me/playlists${access}${data}`)
+        res.send(result.data)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export async function deletePlaylist(req, res) {
+    try {
+        let playlist_id = req.body.playlist_id
+        let access = `?access_token=${req.token}`
+        let method = `&request_method=delete`
+        let result = axios.get(`${deezer}/playlist/${playlist_id}${access}${method}`)
+        res.send(result.data)
+    } catch (error) {
+        console.log(error)
+    }
+}

@@ -16,6 +16,7 @@
             <iframe scrolling="yes" frameborder="0" allowTransparency="true" :src="music"></iframe>
             <!-- <audio :src="play" controls v-if="play" autoplay></audio> -->
         </div>
+        <button @click="delete_playlist">Delete playlist {{playlist_name}}</button>
     </div>
 </template>
 
@@ -47,6 +48,19 @@ export default {
                 this.songs = results.data.tracks.data
             }).catch((err) => {
                 console.log(err)
+            })
+        },
+        delete_playlist() {
+            axios({
+                method: 'delete',
+                url: 'http://localhost:5000/music/delete-playlist',
+                headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`},
+                data: {
+                    'playlist_id': this.playlist_id
+                }
+            }).then((results) => {
+                console.log(results)
+                this.$router.push('/okay')
             })
         },
         play_track(song) {
