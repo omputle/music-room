@@ -56,7 +56,7 @@ export default {
 </script>
 
 <style scoped>
-audio {
+iframe {
     width: 100%;
 }
 </style>
