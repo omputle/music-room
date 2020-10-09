@@ -38,6 +38,12 @@ export default {
   color: #42b983;
 }
 
+#music_player {
+    height: 100px;
+    background-color: transparent;
+    border-radius: 5px;
+}
+
 .main_panel {
     display: grid;
     grid-gap: 10px;
@@ -58,6 +64,8 @@ export default {
 }
 
 .panel_item:hover {
-    transform: scale(1.01, 1.1)
+    transform: scale(1.01, 1.05)
 }
+
+
 </style>

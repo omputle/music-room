@@ -1,9 +1,12 @@
 <template>
     <div>
-       <button @click="getPlaylist">get</button>
+       <!-- <button @click="getPlaylist">get</button>
        <button @click="addToPlaylist">add</button>
-       <button @click="removeFromPlaylist">remove</button>
-       <playlists :plays="plays" />
+       <button @click="removeFromPlaylist">remove</button> -->
+        <iframe id="music_player" scrolling="no" frameborder="0" allowTransparency="true" :src="music">
+        </iframe>
+        
+        <playlists :plays="plays" @player-music="playMusic"/>
     </div>
 </template>
 
@@ -19,20 +22,23 @@ export default {
     },
     data() {
         return {
-            plays: []
+            plays: [],
+            track: false,
+            music: ''
         }
     },
     methods: {
+        playMusic(music) {
+            console.log('up here '+music)
+            this.track = true
+            this.music = music
+        },
         getPlaylist() {
             axios({
                 method: 'get',
                 url: `http://localhost:5000/music/getPlaylist`,
                 headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`}
-            }).then(r => {
-                console.log(r.data)
-
-                this.plays = r.data
-            })
+            }).then(r => {this.plays = r.data})
             .catch(e => {console.log(e)})
         },
         addToPlaylist(){
