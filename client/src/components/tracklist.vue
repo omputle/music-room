@@ -34,7 +34,7 @@ export default {
         playMusic(track_id) {
             axios.get('http://localhost:5000/music/song-info/' + track_id)
             .then((results) => {
-                let muse = `https://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=true&color=EF5466&layout=dark&size=medium&type=tracks&id=${results.data.id}&app_id=1`
+                let muse = `https://www.deezer.com/plugins/player?format=classic&autoplay=true&playlist=true&color=EF5466&layout=dark&size=medium&type=tracks&id=${results.data.id}&app_id=1`
                 this.$emit('play-music', muse)
             }).catch((err) => {console.log(err)})
             
