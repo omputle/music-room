@@ -104,3 +104,12 @@ export async function getTracks(req, res) {
         }).catch(e => {console.log(e)})
     } catch (e) {res.send(e)}
 }
+
+export async function getplaylistInfo(req, res) {
+    try {
+        let result = await axios.get(`${deezer}/playlist/${req.params.playlist_id}`)
+        res.send(result.data)
+    } catch (error) {
+        console.log(error)
+    }
+}
