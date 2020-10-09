@@ -3,7 +3,7 @@
        <!-- <button @click="getPlaylist">get</button>
        <button @click="addToPlaylist">add</button>
        <button @click="removeFromPlaylist">remove</button> -->
-        <iframe id="music_player" scrolling="no" frameborder="0" allowTransparency="true" :src="music">
+        <iframe v-if="track" id="music_player" scrolling="no" frameborder="0" allowTransparency="true" :src="music">
         </iframe>
         
         <playlists :plays="plays" @player-music="playMusic"/>
@@ -29,7 +29,6 @@ export default {
     },
     methods: {
         playMusic(music) {
-            console.log('up here '+music)
             this.track = true
             this.music = music
         },
@@ -41,30 +40,30 @@ export default {
             }).then(r => {this.plays = r.data})
             .catch(e => {console.log(e)})
         },
-        addToPlaylist(){
-            axios({
-                method: 'post',
-                url: `http://localhost:5000/music/addToPlaylist`,
-                headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`},
-                data: {
-                    'playlist_id':8204141162,
-                    'track_id':2553265
-                }
-            }).then(r => {console.log(r.data)})
-            .catch(e => {console.log(e)})
-        },
-        removeFromPlaylist(){
-            axios({
-                method: 'delete',
-                url: `http://localhost:5000/music/removeFromPlaylist`,
-                headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`},
-                data: {
-                    'playlist_id':8204141162,
-                    'track_id':2553265
-                }
-            }).then(r => {console.log(r.data)})
-            .catch(e => {console.log(e)})
-        }
+        // addToPlaylist(){
+        //     axios({
+        //         method: 'post',
+        //         url: `http://localhost:5000/music/addToPlaylist`,
+        //         headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`},
+        //         data: {
+        //             'playlist_id':8204141162,
+        //             'track_id':2553265
+        //         }
+        //     }).then(r => {console.log(r.data)})
+        //     .catch(e => {console.log(e)})
+        // },
+        // removeFromPlaylist(){
+        //     axios({
+        //         method: 'delete',
+        //         url: `http://localhost:5000/music/removeFromPlaylist`,
+        //         headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`},
+        //         data: {
+        //             'playlist_id':8204141162,
+        //             'track_id':2553265
+        //         }
+        //     }).then(r => {console.log(r.data)})
+        //     .catch(e => {console.log(e)})
+        // }
     },
     created() {
         this.getPlaylist()
