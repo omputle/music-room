@@ -1,10 +1,8 @@
 <template>
-    <div class="profile">
+    <div>
         <profile :user="user" />
-        <div>
-            <friends :followers="followers" :followings="followings" />
-            <settings :settings="settings" />
-        </div>
+        <friends :followers="followers" :followings="followings" />
+        <settings :settings="settings" />
     </div>
     
 </template>

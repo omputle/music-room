@@ -3,17 +3,23 @@
        <button @click="getPlaylist">get</button>
        <button @click="addToPlaylist">add</button>
        <button @click="removeFromPlaylist">remove</button>
+       <playlists :plays="plays" />
     </div>
 </template>
 
 <script>
 import axios from 'axios'
 
+import playlists from '@/components/playlists'
 
 export default {
+    name: 'Music',
+    components: {
+        playlists
+    },
     data() {
         return {
-            playlists: []
+            plays: []
         }
     },
     methods: {
@@ -22,7 +28,11 @@ export default {
                 method: 'get',
                 url: `http://localhost:5000/music/getPlaylist`,
                 headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`}
-            }).then(r => {console.log(r.data)})
+            }).then(r => {
+                console.log(r.data)
+
+                this.plays = r.data
+            })
             .catch(e => {console.log(e)})
         },
         addToPlaylist(){
@@ -51,6 +61,7 @@ export default {
         }
     },
     created() {
+        this.getPlaylist()
     }
 }
 </script>

@@ -6,7 +6,7 @@ import passport from 'passport'
 import { jwtauth } from '../controllers/authController'
 import { getplaylist, getAlbumInfo, getSongInfo, searchTrack, 
     searchAlbum, searchArtist, getChart, getPlaylist2, addToPlaylist, 
-    removeFromPlaylist
+    removeFromPlaylist, getTracks
 } from '../controllers/musicController'
 
 //create & expose router to server
@@ -34,5 +34,5 @@ export default router
 .post('/addToPlaylist', jwtauth, addToPlaylist)
 //remove track from playlist
 .delete('/removeFromPlaylist', jwtauth, removeFromPlaylist)
-//add track to playlist
-
+//get playlist tracks
+.get('/getTracks/:playlist_id', jwtauth, getTracks)

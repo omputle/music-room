@@ -95,3 +95,12 @@ export async function removeFromPlaylist(req, res) {
         .catch(e => {console.log(e)})
     } catch (e) {res.send(e)}
 }
+//get playlist tracks
+export async function getTracks(req, res) {
+    try {
+        axios.get(`${deezer}/playlist/${req.params.playlist_id}/tracks?access_token=${req.token}`)
+        .then(r => {
+            res.send(r.data.data)
+        }).catch(e => {console.log(e)})
+    } catch (e) {res.send(e)}
+}

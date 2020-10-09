@@ -11,12 +11,13 @@
         <div v-else>
             <a href="http://localhost:5000/auth/google/">login</a>
         </div>
+        <br>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'header',
+    name: 'navbar',
     data() {
         return {
             login: true

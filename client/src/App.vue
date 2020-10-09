@@ -1,17 +1,17 @@
 <template>
 <div>
-  <app_header />
+  <navbar />
   <router-view/> 
 </div>
 </template>
 
 <script>
-import app_header from '@/components/header'
+import navbar from '@/components/navbar'
 
 export default {
     name: 'App',
     components: {
-        app_header
+        navbar
     }
 }
 </script>
@@ -48,7 +48,8 @@ export default {
     padding: 20px;
     margin-right: 10px;
     margin-bottom: 3px;
-    background-color:navajowhite;
+    background-color:black;
+    color: white;
     border-radius: 5px;
     border: 1px solid black;
     box-sizing: border-box;

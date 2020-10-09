@@ -1,5 +1,5 @@
 <template>
-        <div class="profile_panel">
+        <div class="panel_item">
             <h4>profile</h4>
             <p>{{user.username}}</p>
             <p>{{user.first_name}}</p>
@@ -19,7 +19,7 @@ export default {
 </script>
 <style scoped>
 
-.profile_panel {
+/* .profile_panel {
     display: flex;
     flex-direction: column;
     margin-right: 20px;
@@ -27,6 +27,6 @@ export default {
     background-color: navajowhite;
     border-radius: 5px;
     border: 1px solid grey;
-}
+} */
 
 </style>
