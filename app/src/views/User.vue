@@ -3,6 +3,7 @@
         <profile :user="user" />
         <friends :followers="followers" :followings="followings" />
         <settings :settings="settings" />
+        <settings :settings="settings" />
     </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-      
+      <hello />
   </div>
 </template>
 
@@ -8,18 +8,12 @@
 //import axios from 'axios'
 import keys from '@/configs/config'
 import { post } from '@/functions/api'
+import Hello from '@/components/HelloWorld'
 
 export default {
     name: 'Home',
-    data() {
-        return {
-        test: keys.test,
-        heroku: 'https://cors-anywhere.herokuapp.com/',
-        redirect_uri: '&redirect_uri=http://localhost:5000/auth/deezer/redirect',
-        deezer: 'https://connect.deezer.com/oauth/auth.php?',
-        app_id: 'app_id=437882',
-        perms: '&perms=basic_access,email,manage_library,manage_community,delete_library'
-        }
+    components: {
+        Hello
     },
     methods: {
         verifyUrl() {
