@@ -1,31 +1,26 @@
 <template>
     <v-app-bar app dark dense prominent flat>
-        
-<!-- <span v-if="login">
-                <router-link to="/user">User</router-link> |
-                <router-link to="/music">Music</router-link>
-            </span> -->
+        <v-toolbar-title class="headline font-weight-light">
+            Music-Room
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <searchbox v-if="login" />
         <div v-if="login">
-            <router-link to="/user">
+            <router-link to="/user" class="text-decoration-none">
                 <v-btn icon>
                     <v-icon>mdi-account</v-icon>
                 </v-btn>
-            </router-link>
-            <router-link to="/music">
+            </router-link> 
+            <router-link to="/music" class="text-decoration-none">
                 <v-btn icon>
                     <v-icon>mdi-music</v-icon>
                 </v-btn>
             </router-link>
         </div>
-        
-        <v-toolbar-title class="headline font-weight-light">
-            Music-Room
-        </v-toolbar-title>
-            
-        <v-spacer></v-spacer>
-        
         <v-btn icon v-if="login" @click="logout">
-            <v-icon>mdi-logout-variant</v-icon>
+            <v-btn icon>
+                    <v-icon>mdi-logout-variant</v-icon>
+                </v-btn>
         </v-btn>
         <v-btn icon v-else href="http://localhost:5000/auth/google">
             login
@@ -34,8 +29,13 @@
 </template>
 
 <script>
+import searchbox from '@/components/searchbox'
+
 export default {
     name: 'Navbar',
+    components: {
+        searchbox
+    },
     data() {
         return {
             login: false

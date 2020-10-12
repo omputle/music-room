@@ -1,6 +1,5 @@
 <template>
   <div>
-      <hello />
   </div>
 </template>
 
@@ -8,12 +7,10 @@
 //import axios from 'axios'
 import keys from '@/configs/config'
 import { post } from '@/functions/api'
-import Hello from '@/components/HelloWorld'
 
 export default {
     name: 'Home',
     components: {
-        Hello
     },
     methods: {
         verifyUrl() {
