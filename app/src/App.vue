@@ -39,4 +39,10 @@ export default {
     }
   }
 }
+
+#music_player {
+    height: 100px;
+    width: 100%;
+    max-width: 800px;
+}
 </style>

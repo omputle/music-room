@@ -16,6 +16,7 @@ router.beforeEach((to, from, next) => {
             verify(token).then(() => {next()})
             .catch(() => {
                 localStorage.removeItem("deez")
+                localStorage.removeItem("jwt")
                 next({path:'/'})
             })
         }

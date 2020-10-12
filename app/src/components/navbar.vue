@@ -4,7 +4,7 @@
             Music Room
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <searchbox v-if="login" />
+        <searchbox v-if="searchBox" />
         <div v-if="login">
             <router-link to="/user" class="text-decoration-none">
                 <v-btn icon>
@@ -38,7 +38,8 @@ export default {
     },
     data() {
         return {
-            login: false
+            login: false,
+            searchBox: false
         }
     },
     methods: {
@@ -50,6 +51,14 @@ export default {
             localStorage.removeItem("deez")
             this.login = false
             this.$router.push('/')
+        }
+    },
+    mounted() {
+    },
+    watch: {
+        $route (to) {
+            
+            this.searchBox = to.name === 'Music' ? true : false
         }
     },
     created() {

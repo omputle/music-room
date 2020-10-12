@@ -1,8 +1,8 @@
 <template>
     <v-form>
         <v-text-field
-            dense
             solo
+            dense
             label="song/artist/album/..."
             type="search"
             v-model="find"
@@ -21,23 +21,24 @@ export default {
     name: 'Searchbox',
     data() {
         return {
-            find: ""
+            find: null
         }
     },
     methods: {
         async search() {
-            let song = get(`/music/search-track/${this.find}`)
-            let artist = get(`/music/search-artist/${this.find}`)
-            let album = get(`/music/search-album/${this.find}`)
-            let r = await Promise.all([song,artist,album])
-                .catch(e => {console.log(e)})
-            if (r) {
-                this.music = {
-                    'songs': r[0].data.data,
-                    'artists': r[1].data.data,
-                    'albums': r[2].data.data
+            if (this.find) {
+                let song = get(`/music/search-track/${this.find}`)
+                let artist = get(`/music/search-artist/${this.find}`)
+                let album = get(`/music/search-album/${this.find}`)
+                let r = await Promise.all([song,artist,album])
+                    .catch(e => {console.log(e)})
+                if (r) {
+                    bus.$emit(`search-results`, {
+                        'songs': r[0].data.data,
+                        'artists': r[1].data.data,
+                        'albums': r[2].data.data
+                    })
                 }
-                bus.$emit(`search-results`, r)
             }
         }
     }

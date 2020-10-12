@@ -1,30 +1,63 @@
 <template>
-    <div class="">
-        <h3>playlists</h3>
+    <div>
+        <v-card max-width="800" class="mx-auto overflow-hidden">
+            <v-app-bar dark elevate-on-scroll scroll-target="#scrolling-techniques-7">
+                <v-spacer></v-spacer>
+                <v-toolbar-title class="headline font-weight-light">playlists</v-toolbar-title>
+                <v-spacer></v-spacer>
+            </v-app-bar>
+
+            <v-sheet id="scrolling-techniques-7" class="overflow-y-auto" max-height="800">
+                <v-container style="max-height: 600px">
+                    <v-list>
+                        <v-list-group v-for="(item, index) in plays" :key="index" no-action>
+                            <template v-slot:activator>
+                                <v-list-item-content>
+                                    <v-list-item-title v-text="item.title"></v-list-item-title>
+                                </v-list-item-content>
+                            </template>
+                            <v-list-item v-for="track in item.tracks" :key="track.id">
+                                <v-list-item-content>
+                                    <v-list-item-title v-text="track.title"></v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </v-list-group>
+                    </v-list>
+                </v-container>
+            </v-sheet>
+
+        </v-card>
+        <!-- <h3>playlists</h3>
         <div v-for="(play, index) in plays" :key="index">
-            <tracklist :playlist="play" @play-music="playMusic" />
-        </div>
+            <p>{{play}}</p>
+        </div> -->
     </div>
 </template>
 
 <script>
-import tracklist from '@/components/tracklist'
+import { get } from '@/functions/api'
 
 export default {
     name: 'Playlists',
     props: {
-        plays: Array
-    },
-    components: {
-        tracklist
+        plays: Array,
+        tracks: []
     },
     methods: {
         playMusic(music) {
             this.$emit('player-music', music)
+        },
+        getTracklist() {
+            for (let i in this.plays) {
+                get(`/music/getTracks/${this.plays[i].id}`)
+                .then(r => {this.plays[i].tracks = r.data
+                console.log(r.data)}).catch(e => {console.log(e)})
+            }
+            
         }
     },
     created() {
-        
+        this.getTracklist()
     }
 }
 </script>

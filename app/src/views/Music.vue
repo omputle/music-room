@@ -2,8 +2,8 @@
     <div>
         <iframe v-if="track" id="music_player" scrolling="no" frameborder="0" allowTransparency="true" :src="music">
         </iframe>
-        <results :found="found" />
-        <playlists :plays="plays" @player-music="playMusic"/>
+        <results v-if="found" :found="found" @player-music="playMusic" />
+        <playlists :plays="plays" @player-music="playMusic" />
     </div>
 </template>
 
@@ -26,7 +26,7 @@ export default {
             plays: [],
             track: false,
             music: '',
-            found: []
+            found: false
         }
     },
     methods: {
@@ -41,7 +41,6 @@ export default {
     },
     mounted() {
         bus.$on('search-results', (data) => {
-            console.log(data)
             this.found = data
         })
     },
