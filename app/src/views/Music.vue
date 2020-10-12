@@ -2,25 +2,31 @@
     <div>
         <iframe v-if="track" id="music_player" scrolling="no" frameborder="0" allowTransparency="true" :src="music">
         </iframe>
+        <results :found="found" />
         <playlists :plays="plays" @player-music="playMusic"/>
     </div>
 </template>
 
 <script>
 import playlists from '@/components/playlists'
+import results from '@/components/search_results'
 
 import { get } from '@/functions/api'
+import bus from '@/event_bus/bus'
+
 
 export default {
     name: 'Music',
     components: {
-        playlists
+        playlists,
+        results
     },
     data() {
         return {
             plays: [],
             track: false,
-            music: ''
+            music: '',
+            found: []
         }
     },
     methods: {
@@ -32,6 +38,12 @@ export default {
             this.track = true
             this.music = m
         }
+    },
+    mounted() {
+        bus.$on('search-results', (data) => {
+            console.log(data)
+            this.found = data
+        })
     },
     created() {
         this.getPlaylists()

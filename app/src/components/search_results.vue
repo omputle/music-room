@@ -1,22 +1,22 @@
 <template>
     <div class="">
-        <h3>playlists</h3>
-        <div v-for="(play, index) in plays" :key="index">
-            <tracklist :playlist="play" @play-music="playMusic" />
+        <h3>results</h3>
+        <div v-for="(find, index) in found" :key="index">
+            <div v-for="f in find.data.data" :key="f.id">
+                <p>{{f.title}}</p>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import tracklist from '@/components/tracklist'
 
 export default {
     name: 'Playlists',
     props: {
-        plays: Array
+        found: Array
     },
     components: {
-        tracklist
     },
     methods: {
         playMusic(music) {

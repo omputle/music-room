@@ -1,7 +1,7 @@
 <template>
-    <v-app-bar app dark dense prominent flat>
+    <v-app-bar app dense prominent flat>
         <v-toolbar-title class="headline font-weight-light">
-            Music-Room
+            Music Room
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <searchbox v-if="login" />
