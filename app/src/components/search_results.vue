@@ -71,6 +71,7 @@
 
 <script>
 import { get } from '@/functions/api'
+import bus from '@/event_bus/bus'
 
 export default {
     name: 'Playlists',
@@ -82,7 +83,7 @@ export default {
             get(`/music/song-info/${track_id}`)
             .then(r => {
                 let muse = `https://www.deezer.com/plugins/player?format=classic&autoplay=true&playlist=true&color=EF5466&layout=transparent&size=small&type=tracks&id=${r.data.id}&app_id=1`
-                this.$emit('player-music', muse)
+                bus.$emit('player-music', muse)
             }).catch(e => {console.log(e)})
         }
     }

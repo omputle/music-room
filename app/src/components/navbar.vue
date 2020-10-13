@@ -25,6 +25,7 @@
         <v-btn icon v-else href="http://localhost:5000/auth/google">
             login
         </v-btn>
+        
     </v-app-bar>
 </template>
 
@@ -39,7 +40,9 @@ export default {
     data() {
         return {
             login: false,
-            searchBox: false
+            searchBox: false,
+            track: false,
+            music: ''
         }
     },
     methods: {
@@ -51,6 +54,10 @@ export default {
             localStorage.removeItem("deez")
             this.login = false
             this.$router.push('/')
+        },
+        playMusic(m) {
+            this.track = true
+            this.music = m
         }
     },
     mounted() {

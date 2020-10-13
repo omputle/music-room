@@ -4,16 +4,19 @@
         <v-main>
             <router-view></router-view>
         </v-main>
+        <footbar />
     </v-app>
 </template>
 
 <script>
 import navbar from '@/components/navbar'
+import footbar from '@/components/footbar'
 
 export default {
     name: 'App',
     components: {
-        navbar
+        navbar,
+        footbar
     }
 }
 </script>
