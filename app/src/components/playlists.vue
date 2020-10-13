@@ -35,29 +35,16 @@
 </template>
 
 <script>
-import { get } from '@/functions/api'
 
 export default {
     name: 'Playlists',
     props: {
         plays: Array,
-        tracks: []
     },
     methods: {
         playMusic(music) {
             this.$emit('player-music', music)
-        },
-        getTracklist() {
-            for (let i in this.plays) {
-                get(`/music/getTracks/${this.plays[i].id}`)
-                .then(r => {this.plays[i].tracks = r.data
-                console.log(r.data)}).catch(e => {console.log(e)})
-            }
-            
         }
-    },
-    created() {
-        this.getTracklist()
     }
 }
 </script>

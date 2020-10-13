@@ -70,8 +70,20 @@ export async function getChart(req, res) {
 export async function getPlaylist2(req, res) {
     try {
         axios.get(`${deezer}/user/me/playlists?access_token=${req.token}`)
-        .then(r => {
-            res.send(r.data.data)
+        .then(async r => {
+            let play = r.data.data
+            var playlist = []
+            for (let i in play) {
+                let d = await axios.get(`${deezer}/playlist/${play[i].id}/tracks?access_token=${req.token}`)
+                .catch(e => {console.log(e)})
+                playlist.push({
+                    'id':play[i].id,
+                    'title':play[i].title,
+                    'img':play[i].picture_medium,
+                    'tracks': d.data.data
+                })
+            }
+            res.send(playlist)
         }).catch(e => {console.log(e)})
     } catch (e) {res.send(e)}
 }
