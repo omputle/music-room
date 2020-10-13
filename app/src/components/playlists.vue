@@ -6,7 +6,6 @@
                 <v-toolbar-title class="headline font-weight-light">playlists</v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-app-bar>
-
             <v-sheet id="scrolling-techniques-7" class="overflow-y-auto" max-height="800">
                 <v-container style="max-height: 600px">
                     <v-list>

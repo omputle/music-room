@@ -1,9 +1,7 @@
 <template>
     <div>
-        <iframe v-if="track" id="music_player" scrolling="no" frameborder="0" allowTransparency="true" :src="music">
-        </iframe>
         <results v-if="found" :found="found" @player-music="playMusic" />
-        <playlists :plays="plays" @player-music="playMusic" />
+        <playlists :plays="plays" />
     </div>
 </template>
 
@@ -33,10 +31,6 @@ export default {
         getPlaylists() {
             get('/music/getPlaylist').then(r => {this.plays = r.data})
             .catch(e => {console.log(e)})
-        },
-        playMusic(m) {
-            this.track = true
-            this.music = m
         }
     },
     mounted() {

@@ -36,7 +36,6 @@ export async function jwtUrl(req, res) {
 
 //oauth redirects
 export async function googleRedirect(req, res) {
-    console.log('google: '+clientUrl)
     loginUser(req.user.username)
     .then(token => {
         res.redirect(`${clientUrl}?t=${token}`)

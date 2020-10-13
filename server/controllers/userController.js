@@ -9,7 +9,7 @@ export async function getProfile(req, res) {
     try {
         axios.get(`${deezer}/user/me?access_token=${req.token}`)
         .then(r => {
-            console.log('get profile: '+req.token)
+            //console.log('get profile: '+req.token)
             res.send({
                 'username':r.data.name,
                 'first_name':r.data.firstname,
