@@ -1,31 +1,23 @@
 <template>
     <div>
-        <profile :user="user" />
-        <friends :followers="followers" :followings="followings" />
-        <settings :settings="settings" />
-        <settings :settings="settings" />
+        <profile :user="user" :friends="friends" :settings="settings" />
     </div>
 </template>
 
 <script>
 import profile from '@/components/profile'
-import friends from '@/components/friends'
-import settings from '@/components/settings'
 
 import { get } from '@/functions/api'
 
 export default {
     name: 'User',
     components: {
-        profile,
-        friends,
-        settings
+        profile
     },
     data() {
         return {
             user: {},
-            followers: [],
-            followings: [],
+            friends: [],
             settings: {}
         }
     },
@@ -36,8 +28,10 @@ export default {
         },
         getFriends() {
             get('/user/friends').then(res => {
-                this.followers = res.data.followers
-                this.followings = res.data.followings
+                this.friends = [
+                    {'title':'followers', 'friends':res.data.followers},
+                    {'title':'following', 'friends':res.data.followings}
+                ]
             }).catch(e => {console.log(e)})
         },
         getSettings() {
