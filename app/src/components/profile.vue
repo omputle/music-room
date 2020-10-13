@@ -6,15 +6,16 @@
                 <v-toolbar-title class="headline font-weight-light">profile</v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-app-bar>
+            
             <v-sheet id="scrolling-techniques-7" class="overflow-y-auto" max-height="800">
                 <v-container style="max-height: 400px">
-                    <v-list>
-                        <v-list-item v-for="(u, index) in user" :key="index">
-                            <v-list-item-content>
-                                <v-list-item-title v-text="u"></v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-                    </v-list>
+                    <v-list-item-avatar class="ma-3" size="125">
+                        <v-img :src="user.img"></v-img>
+                    </v-list-item-avatar>
+                    <v-list-item-title v-text="user.username"></v-list-item-title>
+                    <v-list-item-title v-text="user.first_name"></v-list-item-title>
+                    <v-list-item-title v-text="user.last_name"></v-list-item-title>
+                    <v-list-item-title v-text="user.email"></v-list-item-title>
                 </v-container>
             </v-sheet>
         </v-card>

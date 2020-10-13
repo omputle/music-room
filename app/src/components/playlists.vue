@@ -25,7 +25,9 @@
                                 <v-list-item-content>
                                     <v-list-item-title v-text="track.title"></v-list-item-title>
                                 </v-list-item-content>
-                                <v-list-item-icon @click="playMusic(track.id)"><v-icon>mdi-play</v-icon></v-list-item-icon>
+                                <v-list-item-icon @click="playMusic(track.id)">
+                                    <v-icon>{{playIcon(track.id)}}</v-icon>
+                                </v-list-item-icon>
                             </v-list-item>
                         </v-list-group>
                     </v-list>
@@ -38,19 +40,38 @@
 <script>
 import { get } from '@/functions/api'
 import bus from '@/event_bus/bus'
+import { mdiPlay, mdiPause } from '@mdi/js'
 
 export default {
     name: 'Playlists',
     props: {
         plays: Array,
     },
+    data() {
+        return {
+            play: {},
+            id: ''
+        }
+    },
+    computed: {
+        
+    },
     methods: {
+        playIcon(track_id) {
+            return this.id === track_id ? mdiPause : mdiPlay
+        },
         playMusic(track_id) {
+            if (this.id === track_id) {
+                this.id = ''
+                bus.$emit('kill-music')
+            } else {
+                this.id = track_id
             get(`/music/song-info/${track_id}`)
             .then(r => {
-                let muse = `https://www.deezer.com/plugins/player?format=classic&autoplay=true&playlist=true&color=EF5466&layout=transparent&size=small&type=tracks&id=${r.data.id}&app_id=1`
+                let muse = `https://www.deezer.com/plugins/player?format=classic&autoplay=true&playlist=true&color=EF5466&layout=dark&size=small&type=tracks&id=${r.data.id}&app_id=1`
                 bus.$emit('player-music', muse)
             }).catch(e => {console.log(e)})
+            }
         }
     }
 }

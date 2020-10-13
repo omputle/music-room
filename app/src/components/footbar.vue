@@ -30,7 +30,7 @@ export default {
             this.track = true
             this.music = m
         })
-        bus.$on('kill_music', () => {this.track = false})
+        bus.$on('kill-music', () => {this.track = false})
     }
 }
 </script>

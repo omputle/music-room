@@ -14,7 +14,8 @@ export async function getProfile(req, res) {
                 'username':r.data.name,
                 'first_name':r.data.firstname,
                 'last_name': r.data.lastname,
-                'email': r.data.email
+                'email': r.data.email,
+                'img':r.data.picture_medium
             })
         }).catch(e => {console.log(e)})
     } catch (e) {res.send(e)}
