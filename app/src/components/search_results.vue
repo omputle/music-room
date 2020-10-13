@@ -1,8 +1,5 @@
 <template>
     <div class="">
-        <div v-for="item in found.albums" :key="item.id">
-            <p>{{item}}</p>
-        </div>
         <v-card v-if="found.songs" max-width="800" class="mx-auto overflow-hidden">
             <v-app-bar dark elevate-on-scroll scroll-target="#scrolling-techniques-7">
                 <v-spacer></v-spacer>
