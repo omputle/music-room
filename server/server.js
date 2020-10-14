@@ -22,6 +22,21 @@ app.use(cors())
 import { init } from './models/db'
 init()
 
+//websockets init
+const WebSocket = require('ws');
+
+const websocketServer = new WebSocket.Server({ port: 5001 });
+
+websocketServer.on('connection', function connection(ws) {
+    ws.on('message', function incoming(data) {
+      websocketServer.clients.forEach(function each(client) {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(data);
+        }
+      });
+    });
+  });
+
 //api routes
 import auth from './routes/auth'
 import user from './routes/user'
