@@ -40,7 +40,7 @@
 <script>
 import { get } from '@/functions/api'
 import bus from '@/event_bus/bus'
-import { mdiPlay, mdiPause } from '@mdi/js'
+import { mdiPlay, mdiStop } from '@mdi/js'
 
 export default {
     name: 'Playlists',
@@ -58,7 +58,7 @@ export default {
     },
     methods: {
         playIcon(track_id) {
-            return this.id === track_id ? mdiPause : mdiPlay
+            return this.id === track_id ? mdiStop : mdiPlay
         },
         playMusic(track_id) {
             if (this.id === track_id) {

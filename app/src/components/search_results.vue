@@ -82,7 +82,7 @@ export default {
         playMusic(track_id) {
             get(`/music/song-info/${track_id}`)
             .then(r => {
-                let muse = `https://www.deezer.com/plugins/player?format=classic&autoplay=true&playlist=true&color=EF5466&layout=transparent&size=small&type=tracks&id=${r.data.id}&app_id=1`
+                let muse = `https://www.deezer.com/plugins/player?format=classic&autoplay=true&playlist=true&color=EF5466&layout=dark&size=small&type=tracks&id=${r.data.id}&app_id=1`
                 bus.$emit('player-music', muse)
             }).catch(e => {console.log(e)})
         }
