@@ -11,6 +11,7 @@ import Playlist from '@/views/Playlist'
 import Music from '@/views/Music'
 import RemoveSong from '@/views/RemoveSong'
 import AddSongs from '@/views/AddSongs'
+import Websock  from '@/views/WebsocketTest'
 
 const routes = [
   {
@@ -65,6 +66,10 @@ const routes = [
   {
     path: '/playlist/:id/add',
     component: AddSongs
+  },
+  {
+    path: '/websocket',
+    component: Websock
   }
 ]
 

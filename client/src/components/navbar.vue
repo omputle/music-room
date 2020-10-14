@@ -11,6 +11,7 @@
         <div v-else>
             <a href="http://localhost:5000/auth/google/">login</a>
         </div>
+        <router-link to='/websocket'>Websocket test</router-link>
         <br>
     </div>
 </template>
