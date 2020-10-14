@@ -1,13 +1,11 @@
 <template>
     <div>
-        <profile :friends="friends" :settings="settings" />
+        <profile />
     </div>
 </template>
 
 <script>
 import profile from '@/components/profile'
-
-import { get } from '@/functions/api'
 
 export default {
     name: 'User',
@@ -21,27 +19,12 @@ export default {
         }
     },
     methods: {
-        getProfile() {
-            get('/user/me').then(res => {this.$store.state.profile = res.data})
-            .catch(e => {console.log(e)})
-        },
-        getFriends() {
-            get('/user/friends').then(res => {
-                this.friends = [
-                    {'title':'followers', 'friends':res.data.followers},
-                    {'title':'following', 'friends':res.data.followings}
-                ]
-            }).catch(e => {console.log(e)})
-        },
-        getSettings() {
-            get('/user/settings').then(res => {this.settings = res.data})
-            .catch(e => {console.log(e)})
-        }
+        
     },
     created() {
-        this.getProfile()
-        this.getFriends()
-        this.getSettings()
+        this.$store.dispatch('user/getProfile')
+        this.$store.dispatch('user/getFriends')
+        this.$store.dispatch('user/getSettings')
     }
 }
 </script>

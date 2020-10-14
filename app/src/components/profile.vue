@@ -73,12 +73,16 @@
 export default {
     name: 'Profile',
     props: {
-        friends: Array,
-        settings: Object
     },
     computed: {
         user() {
-            return this.$store.state.profile
+            return this.$store.state.user.profile
+        },
+        friends() {
+            return this.$store.state.user.friends
+        },
+        settings() {
+            return this.$store.state.user.settings
         }
     },
     methods: {
