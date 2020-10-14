@@ -73,9 +73,19 @@
 export default {
     name: 'Profile',
     props: {
-        user: Object,
         friends: Array,
         settings: Object
+    },
+    computed: {
+        user() {
+            return this.$store.state.profile
+        }
+    },
+    methods: {
+        
+    },
+    created() {
+
     }
 }
 </script>

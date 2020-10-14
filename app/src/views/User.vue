@@ -1,6 +1,6 @@
 <template>
     <div>
-        <profile :user="user" :friends="friends" :settings="settings" />
+        <profile :friends="friends" :settings="settings" />
     </div>
 </template>
 
@@ -16,14 +16,13 @@ export default {
     },
     data() {
         return {
-            user: {},
             friends: [],
             settings: {}
         }
     },
     methods: {
         getProfile() {
-            get('/user/me').then(res => {this.user = res.data})
+            get('/user/me').then(res => {this.$store.state.profile = res.data})
             .catch(e => {console.log(e)})
         },
         getFriends() {
