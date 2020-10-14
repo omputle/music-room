@@ -53,9 +53,6 @@ export default {
             id: ''
         }
     },
-    computed: {
-        
-    },
     methods: {
         playIcon(track_id) {
             return this.id === track_id ? mdiStop : mdiPlay
