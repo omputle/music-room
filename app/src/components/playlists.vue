@@ -44,14 +44,14 @@ import { mdiPlay, mdiStop } from '@mdi/js'
 
 export default {
     name: 'Playlists',
-    props: {
-        plays: Array,
-    },
     data() {
         return {
             play: {},
             id: ''
         }
+    },
+    computed: {
+        plays() {return this.$store.state.music.playlists}
     },
     methods: {
         playIcon(track_id) {

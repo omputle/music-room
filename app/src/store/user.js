@@ -1,18 +1,11 @@
 import { get } from '@/functions/api'
 
-export const user = {
+export default {
     namespaced: true,
     state: {
         profile: {},
         friends: {},
         settings: {}
-    },
-    getters: {
-        // newprofile: state => {
-        //     var edit = state.profile
-        //     edit.email = 'ksefeane@gmail'
-        //     return edit 
-        // }
     },
     mutations: {
         setProfile: (state, payload) => {
@@ -27,9 +20,6 @@ export const user = {
         setSettings: (state, payload) => {
             state.settings = payload
         }
-        //   changeEmail: (state, data) => {
-        //       state.profile.email = data
-        //   }
     },
     actions: {
         getProfile: ctx => {
@@ -44,7 +34,5 @@ export const user = {
             get('/user/settings').then(res => {ctx.commit('setSettings', res.data)})
             .catch(e => {console.log(e)})
         }
-    },
-    modules: {
     }
 }

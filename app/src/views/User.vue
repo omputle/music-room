@@ -12,15 +12,6 @@ export default {
     components: {
         profile
     },
-    data() {
-        return {
-            friends: [],
-            settings: {}
-        }
-    },
-    methods: {
-        
-    },
     created() {
         this.$store.dispatch('user/getProfile')
         this.$store.dispatch('user/getFriends')
