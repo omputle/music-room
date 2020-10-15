@@ -16,6 +16,7 @@ export default {
         this.$store.dispatch('user/getProfile')
         this.$store.dispatch('user/getFriends')
         this.$store.dispatch('user/getSettings')
+        this.$store.dispatch('music/getPlaylists')
     }
 }
 </script>

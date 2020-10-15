@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
 import User from '@/views/User.vue'
 import Music from '@/views/Music.vue'
+import Friend from '@/views/Friend.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,12 @@ const routes = [
     name: 'Music',
     component: Music,
     meta: {requiresAuth: true}
+  },
+  {
+      path: '/:friend',
+      name: 'Friend',
+      component: Friend,
+      meta: {requiresAuth: true}
   }
 ]
 

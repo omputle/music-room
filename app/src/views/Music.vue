@@ -24,9 +24,6 @@ export default {
     },
     computed: {
         found() {return this.$store.state.music.found}
-    },
-    created() {
-        this.$store.dispatch('music/getPlaylists')
     }
 }
 </script>

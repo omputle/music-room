@@ -60,11 +60,8 @@ export default {
             this.music = m
         }
     },
-    mounted() {
-    },
     watch: {
         $route (to) {
-            
             this.searchBox = to.name === 'Music' ? true : false
         }
     },

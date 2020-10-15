@@ -36,7 +36,11 @@
                             </template>
                             <v-list-item v-for="f in item.friends" :key="f.id">
                                 <v-list-item-content>
-                                    <v-list-item-title v-text="f.name"></v-list-item-title>
+                                    <v-list-item-title>
+                                        <router-link :to="{path: f.name}" class="text-decoration-none black--text">
+                                            {{f.name}}
+                                        </router-link>
+                                    </v-list-item-title>
                                 </v-list-item-content>
                                 <v-list-item-avatar>
                                     <v-img :src="f.picture"></v-img>

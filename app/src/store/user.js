@@ -5,21 +5,19 @@ export default {
     state: {
         profile: {},
         friends: {},
-        settings: {}
+        settings: {},
+        friend: 'dummy'
     },
     mutations: {
-        setProfile: (state, payload) => {
-            state.profile = payload
-        },
+        setProfile: (state, payload) => {state.profile = payload},
         setFriends: (state, payload) => {
             state.friends = [
                 {'title': 'followers', 'friends': payload.followers},
                 {'title': 'following', 'friends': payload.followings}
             ]
         },
-        setSettings: (state, payload) => {
-            state.settings = payload
-        }
+        setSettings: (state, payload) => {state.settings = payload},
+        pickFriend: (state, payload) => {state.friend = payload}
     },
     actions: {
         getProfile: ctx => {
@@ -33,6 +31,7 @@ export default {
         getSettings: ctx => {
             get('/user/settings').then(res => {ctx.commit('setSettings', res.data)})
             .catch(e => {console.log(e)})
-        }
+        },
+        currentFriend: (ctx, data) => {ctx.commit('pickFriend', data)}
     }
 }
