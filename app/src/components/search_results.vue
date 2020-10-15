@@ -16,7 +16,7 @@
                             <v-list-item-content>
                                 <v-list-item-title v-text="item.title"></v-list-item-title>
                             </v-list-item-content>
-                            <v-list-item-icon @click="playMusic(item.id)"><v-icon>mdi-play</v-icon></v-list-item-icon>
+                            <v-list-item-icon @click="playMusic(item.id)"><v-icon>{{playIcon(item.id)}}</v-icon></v-list-item-icon>
                         </v-list-item>
                     </v-list>
                 </v-container>
@@ -38,7 +38,7 @@
                             <v-list-item-content>
                                 <v-list-item-title v-text="item.name"></v-list-item-title>
                             </v-list-item-content>
-                            <v-list-item-icon @click="findAlbums(item.id)"><v-icon>mdi-play</v-icon></v-list-item-icon>
+                            <v-list-item-icon @click="findAlbums(item.id)"><v-icon>{{playIcon(item.id)}}</v-icon></v-list-item-icon>
                         </v-list-item>
                     </v-list>
                 </v-container>
@@ -60,7 +60,7 @@
                             <v-list-item-content>
                                 <v-list-item-title v-text="item.title"></v-list-item-title>
                             </v-list-item-content>
-                            <v-list-item-icon @click="findTracks(item.id)"><v-icon>mdi-play</v-icon></v-list-item-icon>
+                            <v-list-item-icon @click="findTracks(item.id)"><v-icon>{{playIcon(item.id)}}</v-icon></v-list-item-icon>
                         </v-list-item>
                     </v-list>
                 </v-container>
@@ -72,19 +72,35 @@
 <script>
 import { get } from '@/functions/api'
 import bus from '@/event_bus/bus'
+import { mdiPlay, mdiStop } from '@mdi/js'
+
 
 export default {
     name: 'Playlists',
-    props: {
-        found: Object
-    },
+   data() {
+       return {
+           id: ''
+       }
+   },
+   props: {
+       found: Object
+   },
     methods: {
+        playIcon(track_id) {
+            return this.id === track_id ? mdiStop : mdiPlay
+        },
         playMusic(track_id) {
-            get(`/music/song-info/${track_id}`)
-            .then(r => {
-                let muse = `https://www.deezer.com/plugins/player?format=classic&autoplay=true&playlist=true&color=EF5466&layout=dark&size=small&type=tracks&id=${r.data.id}&app_id=1`
-                bus.$emit('player-music', muse)
-            }).catch(e => {console.log(e)})
+            if (this.id === track_id) {
+                this.id = ''
+                bus.$emit('kill-music')
+            } else {
+                this.id = track_id
+                get(`/music/song-info/${track_id}`)
+                .then(r => {
+                    let muse = `https://www.deezer.com/plugins/player?format=classic&autoplay=true&playlist=true&color=EF5466&layout=dark&size=small&type=tracks&id=${r.data.id}&app_id=1`
+                    bus.$emit('player-music', muse)
+                }).catch(e => {console.log(e)})
+            }
         }
     }
 }
