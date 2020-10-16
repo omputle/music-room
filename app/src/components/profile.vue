@@ -82,9 +82,7 @@ export default {
         settings() {return this.$store.state.user.settings}
     },
     methods: {
-        currentFriend(friend) {
-            this.$store.dispatch('user/currentFriend', friend)
-        }
+        currentFriend(friend) {this.$store.dispatch('user/currentFriend', friend)}
     }
 }
 </script>

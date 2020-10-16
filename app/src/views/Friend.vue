@@ -1,5 +1,37 @@
 <template>
-    <div v-if="friend">
+    <div>
+        <v-card max-width="800" class="mx-auto overflow-hidden">
+            <v-app-bar dark elevate-on-scroll scroll-target="#scrolling-techniques-7">
+                <v-spacer></v-spacer>
+                <v-toolbar-title class="headline font-weight-light">friends</v-toolbar-title>
+                <v-spacer></v-spacer>
+            </v-app-bar>
+            <v-sheet id="scrolling-techniques-7" class="overflow-y-auto" max-height="800">
+                <v-container style="max-height: 600px">
+                    <v-list>
+                        <v-list-group v-for="(item, index) in friends" :key="index" no-action>
+                            <template v-slot:activator>
+                                <v-list-item-content>
+                                    <v-list-item-title v-text="item.title"></v-list-item-title>
+                                </v-list-item-content>
+                            </template>
+                            <v-list-item v-for="f in item.friends" :key="f.id">
+                                <v-list-item-content>
+                                    <v-list-item-title @click="currentFriend(f)">
+                                        <router-link :to="{path: f.name}"  class="text-decoration-none black--text">
+                                            {{f.name}}
+                                        </router-link>
+                                    </v-list-item-title>
+                                </v-list-item-content>
+                                <v-list-item-avatar>
+                                    <v-img :src="f.picture"></v-img>
+                                </v-list-item-avatar>
+                            </v-list-item>
+                        </v-list-group>
+                    </v-list>
+                </v-container>
+            </v-sheet>
+        </v-card>
         <v-card max-width="800" class="mx-auto">
             <v-app-bar dark>
                 <v-spacer></v-spacer>
@@ -67,14 +99,12 @@ export default {
         }
     },
     computed: {
-        friend() {
-            return this.$store.state.user.friend
-        }
+        friend() {return this.$store.state.user.friend},
+        friends() {return this.$store.state.user.friends},
     },
     methods: {
-        playIcon(track_id) {
-            return this.id === track_id ? mdiStop : mdiPlay
-        },
+        currentFriend(friend) {this.$store.dispatch('user/currentFriend', friend)},
+        playIcon(track_id) {return this.id === track_id ? mdiStop : mdiPlay},
         playMusic(track_id) {
             if (this.id === track_id) {
                 this.id = ''
