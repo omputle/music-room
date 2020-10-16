@@ -6,7 +6,7 @@ export default {
         profile: {},
         friends: {},
         settings: {},
-        friend: 'dummy'
+        friend: null
     },
     mutations: {
         setProfile: (state, payload) => {state.profile = payload},
@@ -17,7 +17,9 @@ export default {
             ]
         },
         setSettings: (state, payload) => {state.settings = payload},
-        pickFriend: (state, payload) => {state.friend = payload}
+        pickFriend: (state, payload) => {
+            state.friend = payload
+        }
     },
     actions: {
         getProfile: ctx => {
@@ -32,6 +34,13 @@ export default {
             get('/user/settings').then(res => {ctx.commit('setSettings', res.data)})
             .catch(e => {console.log(e)})
         },
-        currentFriend: (ctx, data) => {ctx.commit('pickFriend', data)}
+        currentFriend: (ctx, data) => {
+            get(`/music/friendPlaylist/${data.id}`).then(r => {
+                ctx.commit('pickFriend', {
+                    'profile':data,
+                    'playlists':r.data
+                })
+            }).catch(e => {console.log(e)})
+        }
     }
 }

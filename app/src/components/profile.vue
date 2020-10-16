@@ -36,8 +36,8 @@
                             </template>
                             <v-list-item v-for="f in item.friends" :key="f.id">
                                 <v-list-item-content>
-                                    <v-list-item-title>
-                                        <router-link :to="{path: f.name}" class="text-decoration-none black--text">
+                                    <v-list-item-title @click="currentFriend(f)">
+                                        <router-link :to="{path: f.name}"  class="text-decoration-none black--text">
                                             {{f.name}}
                                         </router-link>
                                     </v-list-item-title>
@@ -80,6 +80,11 @@ export default {
         user() {return this.$store.state.user.profile},
         friends() {return this.$store.state.user.friends},
         settings() {return this.$store.state.user.settings}
+    },
+    methods: {
+        currentFriend(friend) {
+            this.$store.dispatch('user/currentFriend', friend)
+        }
     }
 }
 </script>

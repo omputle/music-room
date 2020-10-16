@@ -1,5 +1,3 @@
-import { insert, fetchOne } from '../models/query'
-import { getDeezerAccessToken } from "../models/userModel";
 import axios from 'axios'
 
 const deezer = 'https://api.deezer.com'

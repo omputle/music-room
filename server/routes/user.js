@@ -4,8 +4,7 @@ import passport from 'passport'
 
 //import controllers
 import { jwtauth } from '../controllers/authController'
-import { getProfile, getFriends, getplaylist, getSettings, getAlbumInfo, 
-    getSongInfo, searchTrack, searchAlbum, searchArtist, getChart
+import { getProfile, getFriends, getSettings
 } from '../controllers/userController'
 
 //create & expose router to server
