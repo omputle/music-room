@@ -3,15 +3,9 @@
         <h2>{{playlist_name}}</h2>
         <img :src="cover" alt=""> <br>
         <p>{{creator}}</p>
-        <router-link :to="'/playlist/' + playlist_id + '/add'">Add songs to {{playlist_name}}</router-link> | 
-        <router-link :to="'/playlist/' + playlist_id + '/remove'">Remove songs from {{playlist_name}}</router-link>
+        <router-link :to="'/playlist-license/' + playlist_id + '/add'">Add songs to {{playlist_name}}</router-link> | 
+        <router-link :to="'/playlist-license/' + playlist_id + '/remove'">Remove songs from {{playlist_name}}</router-link>
         <div>
-            <h3>Followers</h3>
-            <ol>
-                <div v-for="follower in followers" :key="follower">
-                    <li>{{follower.name}} => <button @click="give_license(follower.id)">Give License</button> | <button @click="remove_license(follower.id)">Remove license</button></li>
-                </div>
-            </ol>
         </div>
         <div class="songs">
             <ol>
@@ -24,7 +18,7 @@
             <iframe scrolling="yes" frameborder="0" allowTransparency="true" :src="music"></iframe>
             <!-- <audio :src="play" controls v-if="play" autoplay></audio> -->
         </div>
-        <button @click="delete_playlist">Delete playlist {{playlist_name}}</button>
+        <!-- <button @click="delete_playlist">Delete playlist {{playlist_name}}</button> -->
     </div>
 </template>
 
@@ -94,7 +88,7 @@ export default {
         give_license(user_id) {
             axios({
                 method: 'post',
-                url: `http://localhost:5000/user/give-license`,
+                url: `http://localhost:5000/user/okay`,
                 data: {
                     'user_id': user_id,
                     'playlist_id': this.playlist_id,
@@ -111,7 +105,7 @@ export default {
         remove_license(user_id) {
             axios({
                 method: 'post',
-                url: `http://localhost:5000/user/revoke-license`,
+                url: `http://localhost:5000/user/okay-too`,
                 data: {
                     'user_id': user_id,
                     'playlist_id': this.playlist_id,

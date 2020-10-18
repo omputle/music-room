@@ -1,4 +1,4 @@
-import { fetchOne, insert, delOne } from './query'
+import { fetchOne, insert, delOne, Update, delLicense, fetchOne2 } from './query'
 import axios from 'axios'
 import jwt from 'njwt'
 import keys from '../configs/keys'
@@ -15,6 +15,16 @@ export async function findOrCreate(user_data) {
         return user
     }
     return (user[0])
+}
+
+export async function addUserId(user_id, email) {
+    var user = await fetchOne('users', ['id'], 'email', email)
+    console.log(user)
+    if (Object.keys(user).length > 0) {
+        let addId = await Update('users', 'user_id', user_id, 'email', email)
+        return addId
+    }
+    return null
 }
 
 export async function fetchUser(uid) {
@@ -64,4 +74,46 @@ export async function connectDeezer(access_token) {
             yes(token)
         } catch (e) {no({'error':e})}
     })
+}
+
+export async function createLicense(token, user_id, playlist_id, playlist_name, access_token) {
+    var user = await fetchOne('tokens', ['username'], 'token', token)
+    if (Object.keys(user).length > 0) {
+        let id = await fetchOne('users', ['user_id'], 'username', user[0].username)
+        let test = await fetchOne2('*', playlist_id, user_id)
+        if (test.length > 0) {
+            return {'error':"license exists"}
+        }
+        let insertion = await insert('licenses', ['owner', 'user', 'playlist_id', 'playlist_name', 'access_key'], [id[0].user_id, user_id, playlist_id, playlist_name, access_token])
+        return insertion
+    }
+    return {'error':'no user'}
+}
+
+export async function deleteLicense(user_id, playlist_id) {
+    let user = await delLicense(user_id, playlist_id)
+    return user
+}
+
+export async function getAccessCode(token, playlist_id) {
+    var me = await fetchOne('tokens', ['username'], 'token', token)
+    if (Object.keys(me).length > 0) {
+        let id = await fetchOne('users', ['user_id'], 'username', me[0].username)
+        let code = await fetchOne2('access_key', playlist_id, id[0].user_id)
+        if (code.length > 0) {
+            return code
+        }
+        return {'error': 'no key'}
+    }
+    return {'no': 'user'}
+}
+
+export async function fetchLicensedPlaylists(token) {
+    var me = await fetchOne('tokens', ['username'], 'token', token)
+    if (Object.keys(me).length > 0) {
+        let id = await fetchOne('users', ['user_id'], 'username', me[0].username)
+        let playlists = await fetchOne('licenses', ['playlist_name', 'playlist_id'], 'user', id[0].user_id)
+        return playlists
+    }
+    return {'error':'no user'}
 }

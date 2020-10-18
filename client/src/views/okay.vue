@@ -13,6 +13,12 @@
                 </router-link>
             </div>
         </div>
+        <h4>Licensed Playlists</h4>
+        <div v-for="playlist in licensed_playlists" :key="playlist">
+            <router-link :to="'/playlist-license/' + playlist.playlist_id">
+                <p>{{playlist.playlist_name}}</p>
+            </router-link>
+        </div>
     </div>
 </template>
 
@@ -22,7 +28,8 @@ export default {
     data() {
         return {
             playlists: [],
-            playlist_name: ''
+            playlist_name: '',
+            licensed_playlists: []
         }
     },
     methods: {
@@ -52,10 +59,24 @@ export default {
             }).catch((err) => {
                 console.log(err)
             })
+        },
+        fetch_licenced_playlists() {
+            axios({
+                method: 'post',
+                url: 'http://localhost:5000/user/get-licensed-playlists',
+                data: {
+                    token: localStorage.getItem('jwt')
+                },
+                headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`},
+            }).then((result) => {
+                console.log(result)
+                this.licensed_playlists = result.data
+            })
         }
     },
     created() {
         this.fetch_list()
+        this.fetch_licenced_playlists()
     }
 }
 </script>

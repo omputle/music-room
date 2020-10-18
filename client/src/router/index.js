@@ -12,6 +12,9 @@ import Music from '@/views/Music'
 import RemoveSong from '@/views/RemoveSong'
 import AddSongs from '@/views/AddSongs'
 import Websock  from '@/views/WebsocketTest'
+import RemoveWithLicense from '@/views/RemoveSongLicensed'
+import AddWithLicense from '@/views/AddSongsLicensed'
+import PlaylistLicense from '@/views/LicensedPlaylists'
 
 const routes = [
   {
@@ -50,6 +53,10 @@ const routes = [
     component: Playlist
   },
   {
+    path: '/playlist-license/:id',
+    component: PlaylistLicense
+  },
+  {
     path: '/okay',
     component: Okay
   },
@@ -64,8 +71,16 @@ const routes = [
     component: RemoveSong
   },
   {
+    path: '/playlist-license/:id/remove',
+    component: RemoveWithLicense
+  },
+  {
     path: '/playlist/:id/add',
     component: AddSongs
+  },
+  {
+    path: '/playlist-license/:id/add',
+    component: AddWithLicense
   },
   {
     path: '/websocket',

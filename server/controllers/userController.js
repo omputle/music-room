@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { addUserId, createLicense, deleteLicense, getAccessCode, fetchLicensedPlaylists } from "../models/userModel";
 
 const deezer = 'https://api.deezer.com'
 
@@ -8,6 +9,7 @@ export async function getProfile(req, res) {
         axios.get(`${deezer}/user/me?access_token=${req.token}`)
         .then(r => {
             console.log('get profile: '+req.token)
+            addUserId(r.data.id, r.data.email)
             res.send({
                 'username':r.data.name,
                 'first_name':r.data.firstname,
@@ -105,4 +107,34 @@ export async function getChart(req, res) {
     let path = 'https://api.deezer.com/chart'
     let result = await axios.get(path)
     res.send(result.data)
+}
+
+export async function makeLicense(req, res) {
+    var token = req.body.token
+    var user_id = req.body.user_id
+    var playlist_id = req.body.playlist_id
+    var playlist_name = req.body.playlist_name
+    var access_token = req.token
+    let response = await createLicense(token, user_id, playlist_id, playlist_name,access_token)
+    res.send(response)
+}
+
+export async function removeLicense(req, res) {
+    var user_id = req.body.user_id
+    var playlist = req.body.playlist_id
+    let result = await deleteLicense(user_id, playlist)
+    res.send(result)
+}
+
+export async function getKey(req, res) {
+    let playlist_id = req.body.playlist_id
+    let user_id = req.body.user_id
+    let result = await getAccessCode(user_id, playlist_id)
+    res.send(result)
+}
+
+export async function getLicensedPlaylists(req, res) {
+    let token = req.body.token
+    let test = await fetchLicensedPlaylists(token)
+    res.send(test)
 }
