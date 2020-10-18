@@ -3,7 +3,7 @@ import { Router } from 'express'
 import passport from 'passport'
 
 //import controllers
-import { jwtauth } from '../controllers/authController'
+import { jwtauth, licenseAuth } from '../controllers/authController'
 import { getplaylist, getAlbumInfo, getSongInfo, searchTrack, searchAlbum, 
     searchArtist, getChart, getPlaylist2, addToPlaylist, removeFromPlaylist, 
     getTracks, getplaylistInfo, createPlaylist, deletePlaylist, getFriendPlaylist
@@ -34,8 +34,12 @@ export default router
 .get('/friendPlaylist/:id', jwtauth, getFriendPlaylist)
 //add track to playlist
 .post('/addToPlaylist', jwtauth, addToPlaylist)
+//add track to playlist with license
+.post('/addToPlaylist-license', jwtauth, licenseAuth, addToPlaylist)
 //remove track from playlist
 .delete('/removeFromPlaylist', jwtauth, removeFromPlaylist)
+//remove track from playlist eith license
+.delete('/removeFromPlaylist-license', jwtauth, licenseAuth, removeFromPlaylist)
 //get playlist tracks
 .get('/getTracks/:playlist_id', jwtauth, getTracks)
 
