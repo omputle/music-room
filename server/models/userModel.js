@@ -19,7 +19,7 @@ export async function findOrCreate(user_data) {
 
 export async function addUserId(user_id, email) {
     var user = await fetchOne('users', ['id'], 'email', email)
-    console.log(user)
+    //console.log(user)
     if (Object.keys(user).length > 0) {
         let addId = await Update('users', 'user_id', user_id, 'email', email)
         return addId

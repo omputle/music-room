@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-card max-width="800" class="mx-auto overflow-hidden">
+        <!-- <v-card max-width="800" class="mx-auto overflow-hidden">
             <v-app-bar dark elevate-on-scroll scroll-target="#scrolling-techniques-7">
                 <v-spacer></v-spacer>
                 <v-toolbar-title class="headline font-weight-light">friends</v-toolbar-title>
@@ -31,7 +31,7 @@
                     </v-list>
                 </v-container>
             </v-sheet>
-        </v-card>
+        </v-card> -->
         <v-card max-width="800" class="mx-auto">
             <v-app-bar dark>
                 <v-spacer></v-spacer>
@@ -40,11 +40,11 @@
             </v-app-bar>
             
             <v-sheet id="scrolling-techniques-7" class="overflow-y-auto" max-height="800">
-                <v-container style="max-height: 400px">
+                <v-container v-if="friend" style="max-height: 400px">
                     <v-list-item-avatar class="ma-3" size="125">
                         <v-img v-if="friend.profile" :src="friend.profile.picture_small"></v-img>
                     </v-list-item-avatar>
-                    <v-list-item-title v-text="friend.profile.name"></v-list-item-title>
+                    <v-list-item-title>{{friend.profile.name}}</v-list-item-title>
                 </v-container>
             </v-sheet>
         </v-card>
@@ -73,7 +73,7 @@
                                 <v-list-item-content>
                                     <v-list-item-title v-text="track.title"></v-list-item-title>
                                 </v-list-item-content>
-                                <v-list-item-icon @click="controlPlay(track.title)">
+                                <v-list-item-icon @click="controlPlay(track.id, track.title)">
                                     <v-icon>{{playIcon(track.id)}}</v-icon>
                                 </v-list-item-icon>
                             </v-list-item>
@@ -97,15 +97,20 @@ export default {
         return {
             id: '',
             cnx: '',
-            msg: ''
+            msg: '',
+            sender: ''
         }
     },
     computed: {
-        friend() {return this.$store.state.user.friend},
+        friend() {
+            return this.$store.state.user.friend
+        },
         friends() {return this.$store.state.user.friends},
     },
     methods: {
-        currentFriend(friend) {this.$store.dispatch('user/currentFriend', friend)},
+        currentFriend(friend) {
+            this.$store.dispatch('user/currentFriend', friend)
+        },
         playIcon(track_id) {return this.id === track_id ? mdiStop : mdiPlay},
         playMusic(track_id) {
             if (this.id === track_id) {
@@ -120,22 +125,33 @@ export default {
                 }).catch(e => {console.log(e)})
             }
         },
-        controlPlay(id) {
-            this.cnx.send('sending '+id)
-        } 
+        controlPlay(id, title) {
+            this.cnx.send(`{ 
+                "receiver":"/${this.$store.state.user.friend.profile.name}",
+                "title":"${title}",
+                "id":"${id}"
+            }`)
+        },
+        socket() {
+            let user = this.$store.state.user.profile.username
+            // let rec = this.$store.state.user.friend.profile.name
+            // console.log(user+rec)
+            this.cnx = new WebSocket(`ws://localhost:5001/${user}`)
+            this.cnx.onopen = () => {
+                console.log('connection open')
+            }
+            this.cnx.onmessage = (event) => {
+                let msg = JSON.parse(event.data)
+                alert(`${msg.sender} wants to play ${msg.title}`)
+                this.playMusic(msg.id)
+            }
+            this.cnx.onclose = () => {
+                console.log('close socket')
+            }
+        }
     },
     created() {
-        this.cnx = new WebSocket('ws://localhost:5001')
-        
-        this.cnx.onopen = () => {
-            console.log('connection open')
-        }
-        this.cnx.onmessage = (event) => {
-            console.log(event.data)
-        }
-        this.cnx.onclose = () => {
-            alert('close socket')
-        }
+        this.socket()
     }
 }
 </script>

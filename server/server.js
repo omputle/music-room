@@ -24,20 +24,39 @@ init()
 
 //websockets init
 const WebSocket = require('ws');
-
 const websocketServer = new WebSocket.Server({ port: 5001 });
+var sockets = {}
 
-websocketServer.on('connection', ws => {
-    console.log('client socket connected')
-    ws.on('message', data => {
-        console.log(data)
-        ws.send('server received '+data)
-        websocketServer.clients.forEach(function each(client) {
+websocketServer.on('connection', (ws, req) => {
+    //console.log('client socket connected')
+    //console.log(req.url)
+    let id = req.url.replace(/%20/g, ' ')
+    sockets[id] = ws
+    console.log('connected: ' + id + ' in ' + Object.getOwnPropertyNames(sockets))
+    ws.on('message', (msg) => {
+        try {
+            msg = JSON.parse(msg)
+            let receiver = sockets[msg.receiver]
+            if (receiver) {
+                //console.log(`${id} sending to ${msg.receiver}: ${msg.song}`)
+                receiver.send(`{
+                    "sender":"${id}",
+                    "title":"${msg.title}",
+                    "id":"${msg.id}"
+                }`)
+            }
+        } catch (e) {console.log(e)}
+        websocketServer.clients.forEach( client => {
+            console.log(client)
             if (client.readyState === WebSocket.OPEN) {
                 client.send(data);
             }
         });
-    });
+    })
+    // ws.on('message', data => {
+    //     console.log(data)
+    //     
+    // });
     ws.on('close', () => {
         console.log('client disconnected')
     })

@@ -6,7 +6,9 @@ export default {
         profile: {},
         friends: {},
         settings: {},
-        friend: {}
+        friend: {
+            'profile': {'name': ''}
+        }
     },
     mutations: {
         setProfile: (state, payload) => {state.profile = payload},
@@ -17,9 +19,7 @@ export default {
             ]
         },
         setSettings: (state, payload) => {state.settings = payload},
-        pickFriend: (state, payload) => {
-            state.friend = payload
-        }
+        pickFriend: (state, payload) => {state.friend = payload}
     },
     actions: {
         getProfile: ctx => {
