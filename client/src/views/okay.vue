@@ -77,6 +77,15 @@ export default {
     created() {
         this.fetch_list()
         this.fetch_licenced_playlists()
+        this.connection = new WebSocket('ws://localhost:5001')
+        this.connection.onmessage = (event) => {
+            console.log(event.data)
+            let res = JSON.parse(event.data)
+            if (res.type === "license") {
+                this.fetch_licenced_playlists()
+            }
+            this.texts.push(event.data)
+        }
     }
 }
 </script>

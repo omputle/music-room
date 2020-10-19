@@ -19,7 +19,8 @@ export default {
         return {
             playlist_id: this.$route.params.id,
             songs: [],
-            playlist_name: ''
+            playlist_name: '',
+            connection: null
         }
     },
     methods: {
@@ -49,13 +50,25 @@ export default {
                 console.log(results)
                 if (results.data === true) {
                     console.log("Yebo")
-                    this.fetch_data()
+                    let update = {
+                        'type': 'edit',
+                    }
+                    this.connection.send(JSON.stringify(update))
                 }
             })
         }
     },
     created() {
         this.fetch_data()
+        this.connection = new WebSocket('ws://localhost:5001')
+        this.connection.onmessage = (event) => {
+            console.log(event.data)
+            let res = JSON.parse(event.data)
+            if (res.type === "edit") {
+                console.log('an edit occured')
+                this.fetch_data()
+            }
+        }
     }
 }
 </script>
