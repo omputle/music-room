@@ -30,3 +30,25 @@ export const delOne = (t_name, param, pval) => {
         catch (e) {reject({"error":e.sqlMessage})}
     })
 }
+
+export const Update = (t_name, param, pval, field, email) => {
+    return new Promise(async (resolve, reject) => {
+        try {resolve(await query(`UPDATE ${t_name} SET ${param} = \'${pval}\' WHERE ${field} = \'${email}\'`))}
+        catch (e) {reject({"error": e.sqlMessage})}
+    })
+}
+
+export const delLicense = (user, playlist) => {
+    return new Promise(async (resolve, reject) => {
+        try {resolve(await query(`DELETE FROM licenses WHERE user =\'${user}\' AND playlist_id = \'${playlist}\'`))}
+        catch (e) {reject({"error":e.sqlMessage})}
+    })
+}
+
+//check license
+export const fetchOne2 = (data, playlist, user) => {
+    return new Promise(async (resolve, reject) => {
+        try {resolve(await query(`SELECT ${data} FROM licenses WHERE user =\'${user}\' AND playlist_id =\'${playlist}\'`))} 
+        catch (e) {reject({'error':e.sqlMessage})}
+    })
+}

@@ -1,4 +1,4 @@
-import { getDeezerAccessToken, loginUser, findUserToken, connectDeezer } from "../models/userModel";
+import { getDeezerAccessToken, loginUser, findUserToken, connectDeezer, getAccessCode } from "../models/userModel";
 import jwt from 'njwt'
 import keys from '../configs/keys'
 
@@ -56,4 +56,18 @@ export async function fetchDeezerAccessToken(req, res) {
         .then(token => {res.redirect(`${clientUrl}?d=${token}`)})
         .catch(e => {console.log(e)})
     } else if (error) {res.send("Authentication error")}
+}
+
+//license auth
+export async function licenseAuth(req, res, next) {
+    let playlist_id = req.body.playlist_id
+    let jwt_token = req.body.token
+    let result = await getAccessCode(jwt_token, playlist_id)
+    if (result.length > 0) {
+        let token = result[0].access_key
+        req.token = token
+        next()
+    } else {
+        res.send(result)
+    }
 }
