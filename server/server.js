@@ -27,15 +27,21 @@ const WebSocket = require('ws');
 
 const websocketServer = new WebSocket.Server({ port: 5001 });
 
-websocketServer.on('connection', function connection(ws) {
-    ws.on('message', function incoming(data) {
-      websocketServer.clients.forEach(function each(client) {
-        if (client.readyState === WebSocket.OPEN) {
-          client.send(data);
-        }
-      });
+websocketServer.on('connection', ws => {
+    console.log('client socket connected')
+    ws.on('message', data => {
+        console.log(data)
+        ws.send('server received '+data)
+        websocketServer.clients.forEach(function each(client) {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(data);
+            }
+        });
     });
-  });
+    ws.on('close', () => {
+        console.log('client disconnected')
+    })
+});
 
 //api routes
 import auth from './routes/auth'

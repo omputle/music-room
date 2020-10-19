@@ -6,7 +6,7 @@ export default {
         profile: {},
         friends: {},
         settings: {},
-        friend: null
+        friend: {}
     },
     mutations: {
         setProfile: (state, payload) => {state.profile = payload},

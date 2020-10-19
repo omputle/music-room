@@ -73,7 +73,7 @@
                                 <v-list-item-content>
                                     <v-list-item-title v-text="track.title"></v-list-item-title>
                                 </v-list-item-content>
-                                <v-list-item-icon @click="playMusic(track.id)">
+                                <v-list-item-icon @click="controlPlay(track.title)">
                                     <v-icon>{{playIcon(track.id)}}</v-icon>
                                 </v-list-item-icon>
                             </v-list-item>
@@ -95,7 +95,9 @@ export default {
     name: 'Friend',
     data() {
         return {
-            id: ''
+            id: '',
+            cnx: '',
+            msg: ''
         }
     },
     computed: {
@@ -117,6 +119,22 @@ export default {
                     bus.$emit('player-music', muse)
                 }).catch(e => {console.log(e)})
             }
+        },
+        controlPlay(id) {
+            this.cnx.send('sending '+id)
+        } 
+    },
+    created() {
+        this.cnx = new WebSocket('ws://localhost:5001')
+        
+        this.cnx.onopen = () => {
+            console.log('connection open')
+        }
+        this.cnx.onmessage = (event) => {
+            console.log(event.data)
+        }
+        this.cnx.onclose = () => {
+            alert('close socket')
         }
     }
 }
