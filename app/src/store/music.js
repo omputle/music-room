@@ -1,4 +1,4 @@
-import { get } from '@/functions/api'
+import { get, post, del } from '@/functions/api'
 
 export default {
     namespaced: true,
@@ -27,6 +27,16 @@ export default {
                 'albums': r[2].data.data
             }
             ctx.commit('found', data)
+        },
+        createPlaylist: (ctx, val) => {
+            post('/music/create-playlist', {'playlist_name':val})
+            .then(() => {ctx.dispatch('getPlaylists')})
+            .catch(e => {console.log(e)})
+        },
+        deletePlaylist: (ctx, val) => {
+            del('/music/delete-playlist', {'playlist_id': val})
+            .then(() => {ctx.dispatch('getPlaylists')})
+            .catch(e => {console.log(e)})
         }
     },
     modules: {

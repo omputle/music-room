@@ -5,11 +5,72 @@
                 <v-spacer></v-spacer>
                 <v-toolbar-title class="headline font-weight-light">playlists</v-toolbar-title>
                 <v-spacer></v-spacer>
+                <v-dialog v-model="dialog" width="500">
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-icon v-bind="attrs" v-on="on">mdi-note-plus</v-icon>
+                    </template>
+                    <v-card>
+                        <v-card-title class="headline font-weight-light">
+                            create new playlist
+                        </v-card-title>
+                        <form>
+                            <v-text-field v-model="name" label="playlist name"></v-text-field>
+                            <v-card-actions>
+                            <v-spacer></v-spacer>
+                                <v-btn text @click="createPlaylist">create</v-btn>
+                            </v-card-actions>
+                        </form>
+                    </v-card>
+                </v-dialog>
             </v-app-bar>
             <v-sheet id="scrolling-techniques-7" class="overflow-y-auto" max-height="800">
                 <v-container style="max-height: 600px">
                     <v-list>
                         <v-list-group v-for="(item, index) in plays" :key="index" no-action>
+                            <v-app-bar dense flat>
+
+                                <v-dialog v-model="del" width="500">
+                                    <template v-slot:activator="{ on }">
+                                        <v-icon v-on="on">mdi-note-minus</v-icon>
+                                    </template>
+                                        <v-card>
+                                            <v-card-title class="headline font-weight-light">delete playlist {{item.title}}</v-card-title>
+                                            <v-card-actions>
+                                                <v-spacer></v-spacer>
+                                                <v-btn text @click="deletePlaylist(item.id)">delete</v-btn>
+                                            </v-card-actions>
+                                        </v-card>
+                                </v-dialog>
+                                <v-spacer></v-spacer>
+
+                                <v-icon @click="playMusic(item.id)">{{playIcon(item.id)}}</v-icon>
+                                <v-spacer></v-spacer>
+
+                                <v-dialog v-model="remote" width="500">
+                                    <template v-slot:activator="{ on }">
+                                        <v-icon v-on="on">mdi-remote</v-icon>
+                                    </template>
+                                        <v-card>
+                                            <v-card-title class="headline font-weight-light">music control delegation</v-card-title>
+                                            
+                                            <v-container style="max-height: 600px">
+                                                    <v-list-item v-for="f in friends" :key="f.id">
+                                                        <v-list-item-content>
+                                                            <v-list-item-title v-text="f.name"></v-list-item-title>
+                                                        </v-list-item-content>
+                                                        <v-list-item-icon>
+                                                            <v-icon @click="giveControl(f.id)">mdi-check-circle</v-icon>
+                                                        </v-list-item-icon>
+                                                    </v-list-item>
+                                            </v-container>
+                                            <v-card-actions>
+                                                <v-spacer></v-spacer>
+                                                <v-btn text>delegate</v-btn>
+                                            </v-card-actions>
+                                        </v-card>
+                                </v-dialog>
+
+                            </v-app-bar>
                             <template v-slot:activator>
                                 <v-list-item-avatar>
                                     <v-img :src="item.img"></v-img>
@@ -47,13 +108,30 @@ export default {
     data() {
         return {
             play: {},
-            id: ''
+            id: '',
+            dialog: false,
+            del: false,
+            remote: false,
+            name: ''
         }
     },
     computed: {
-        plays() {return this.$store.state.music.playlists}
+        plays() {return this.$store.state.music.playlists},
+        friends() {return this.$store.state.user.friends[0].friends}
     },
     methods: {
+        giveControl(fid) {
+            console.log(fid)
+        },
+        createPlaylist() {
+            this.$store.dispatch('music/createPlaylist', this.name)
+            this.dialog = false
+            this.name = ''
+        },
+        deletePlaylist(pid) {
+            this.$store.dispatch('music/deletePlaylist', pid)
+            this.del = false
+        },
         playIcon(track_id) {
             return this.id === track_id ? mdiStop : mdiPlay
         },
@@ -70,6 +148,9 @@ export default {
                 }).catch(e => {console.log(e)})
             }
         }
+    },
+    created() {
+        this.$store.dispatch('music/getPlaylists')
     }
 }
 </script>

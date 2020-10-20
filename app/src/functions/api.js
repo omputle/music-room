@@ -21,3 +21,14 @@ export function get(path) {
         }).then(res => {yes(res)}).catch(e => {no(e)})
     })
 }
+
+export function del(path, data) {
+    return new Promise((yes, no) => {
+        axios({
+            method: 'delete',
+            url: `${keys.url}${path}`,
+            headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`},
+            data: data
+        }).then(res => {yes(res)}).catch(e => {no(e)})
+    })
+}
