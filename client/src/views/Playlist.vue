@@ -143,15 +143,16 @@ export default {
         this.fetch_friends()
         this.music = `https://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=true&width=700&height=1000&color=EF5466&layout=dark&size=medium&type=playlist&id=${this.playlist_id}&app_id= 437882"`
         this.connection = new WebSocket('ws://localhost:5001')
+        this.connection.onopen = () => {
+            console.log('Connection opened playlist')
+        }
         this.connection.onmessage = (event) => {
-            this.msg = ''
             console.log(event.data)
             let res = JSON.parse(event.data)
             if (res.type === "edit") {
                 console.log('an edit occured')
                 this.fetch_data()
             }
-            this.texts.push(event.data)
         }
     }
 }

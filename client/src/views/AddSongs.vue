@@ -27,7 +27,8 @@ export default {
         return {
             playlist_id: this.$route.params.id,
             track: '',
-            tracks_found: []
+            tracks_found: [],
+            connection: null
         }
     },
     methods: {
@@ -54,8 +55,15 @@ export default {
                 }
             }).then((results) => {
                 console.log(results)
+                let update = {
+                    'type': 'edit',
+                }
+                this.connection.send(JSON.stringify(update))
             })
         }
+    },
+    created() {
+        this.connection = new WebSocket('ws://localhost:5001')
     }
 }
 </script>
