@@ -34,7 +34,7 @@ export default {
             playlist_name: '',
             play: '',
             music: '',
-            followers:[]
+            connection: null
         }
     },
     methods: {
@@ -53,70 +53,6 @@ export default {
                 console.log(err)
             })
         },
-        delete_playlist() {
-            axios({
-                method: 'delete',
-                url: 'http://localhost:5000/music/delete-playlist',
-                headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`},
-                data: {
-                    'playlist_id': this.playlist_id
-                }
-            }).then((results) => {
-                console.log(results)
-                this.$router.push('/okay')
-            })
-        },
-        fetch_profile() {
-            axios({
-                method: 'get',
-                url: `http://localhost:5000/user/me`,
-                headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`}
-            }).then(res => {console.log(res)})
-            .catch(e => {console.log(e)})
-        },
-        fetch_friends() {
-            axios({
-                method: 'get',
-                url: `http://localhost:5000/user/friends`,
-                headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`}
-            }).then(res => {
-                console.log(res)
-                this.followers = res.data.followers
-            })
-            .catch(e => {console.log(e)})
-        },
-        give_license(user_id) {
-            axios({
-                method: 'post',
-                url: `http://localhost:5000/user/okay`,
-                data: {
-                    'user_id': user_id,
-                    'playlist_id': this.playlist_id,
-                    'playlist_name': this.playlist_name,
-                    'token': localStorage.getItem("jwt")
-                },
-                headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`}
-            }).then((res) => {
-                console.log(res)
-            }).catch((err) => {
-                console.log(err)
-            })
-        },
-        remove_license(user_id) {
-            axios({
-                method: 'post',
-                url: `http://localhost:5000/user/okay-too`,
-                data: {
-                    'user_id': user_id,
-                    'playlist_id': this.playlist_id,
-                },
-                headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`}
-            }).then((res) => {
-                console.log(res)
-            }).catch((err) => {
-                console.log(err)
-            })
-        },
         play_track(song) {
             this.play = song.preview
             
@@ -124,9 +60,16 @@ export default {
     },
     created() {
         this.fetch_data()
-        this.fetch_profile()
-        this.fetch_friends()
         this.music = `https://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=true&width=700&height=1000&color=EF5466&layout=dark&size=medium&type=playlist&id=${this.playlist_id}&app_id= 437882"`
+        this.connection = new WebSocket('ws://localhost:5001')
+        this.connection.onopen = () => {
+            console.log('openend in license')
+        }
+        this.connection.onmessage = (event) => {
+            console.log('on message')
+            console.log(event.data)
+            this.fetch_data()
+        }
     }
 }
 </script>
