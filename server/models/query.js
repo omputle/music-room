@@ -52,3 +52,10 @@ export const fetchOne2 = (data, playlist, user) => {
         catch (e) {reject({'error':e.sqlMessage})}
     })
 }
+
+export const fetchDelegate = (uid, fid) => {
+    return new Promise(async (resolve, reject) => {
+        try {resolve(await query(`SELECT user_id FROM delegates WHERE user_id =\'${fid}\' AND friend_id =\'${uid}\'`))} 
+        catch (e) {reject({'error':e.sqlMessage})}
+    })
+}

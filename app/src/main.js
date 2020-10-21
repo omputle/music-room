@@ -29,7 +29,11 @@ Vue.prototype.openSocket = function(username) {
     if (username && !this.ws) {
         Vue.prototype.ws = new WebSocket(`ws://localhost:5001/${username}`)
         this.ws.onopen = () => {
-            console.log('socket connected')
+            //console.log('socket connected')
+        }
+        this.ws.onmessage = (event) => {
+            let msg = JSON.parse(event.data)
+            this.playMusic(msg.id)
         }
     }
 }

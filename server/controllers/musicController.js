@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { delegateLicense, findDelegate } from '../models/userModel'
 
 const deezer = 'https://api.deezer.com'
 
@@ -171,4 +172,16 @@ export async function deletePlaylist(req, res) {
     } catch (error) {
         console.log(error)
     }
+}
+
+export async function delegateControl(req, res) {
+    try {res.send({'result':await delegateLicense(req.body.id, req.body.friends)})} 
+    catch (e) {console.log(e)}
+}
+
+export async function delegateMatch(req, res) {
+    try {
+        res.send({'result':await findDelegate(req.body.uid, req.body.fid)})
+    } 
+    catch (e) {console.log(e)}
 }

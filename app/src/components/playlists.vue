@@ -2,6 +2,26 @@
     <div>
         <v-card max-width="800" class="mx-auto overflow-hidden">
             <v-app-bar dark elevate-on-scroll scroll-target="#scrolling-techniques-7">
+                <v-dialog v-model="remote" width="500">
+                    <template v-slot:activator="{ on }">
+                        <v-icon v-on="on">mdi-remote</v-icon>
+                    </template>
+                    <v-card>
+                        <v-card-title class="headline font-weight-light">music control delegation</v-card-title>
+                        <v-container style="max-height: 600px">
+                            <v-list-item v-for="f in friends" :key="f.id">
+                                <v-list-item-content>
+                                    <v-list-item-title v-text="f.name"></v-list-item-title>
+                                </v-list-item-content>
+                                <v-checkbox v-model="check[f.id]"></v-checkbox>
+                            </v-list-item>
+                        </v-container>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn text @click="giveControl">delegate</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
                 <v-spacer></v-spacer>
                 <v-toolbar-title class="headline font-weight-light">playlists</v-toolbar-title>
                 <v-spacer></v-spacer>
@@ -28,7 +48,6 @@
                     <v-list>
                         <v-list-group v-for="(item, index) in plays" :key="index" no-action>
                             <v-app-bar dense flat>
-
                                 <v-dialog v-model="del" width="500">
                                     <template v-slot:activator="{ on }">
                                         <v-icon v-on="on">mdi-note-minus</v-icon>
@@ -42,34 +61,7 @@
                                         </v-card>
                                 </v-dialog>
                                 <v-spacer></v-spacer>
-
                                 <v-icon @click="playMusic(item.id)">{{playIcon(item.id)}}</v-icon>
-                                <v-spacer></v-spacer>
-
-                                <v-dialog v-model="remote" width="500">
-                                    <template v-slot:activator="{ on }">
-                                        <v-icon v-on="on">mdi-remote</v-icon>
-                                    </template>
-                                        <v-card>
-                                            <v-card-title class="headline font-weight-light">music control delegation</v-card-title>
-                                            
-                                            <v-container style="max-height: 600px">
-                                                    <v-list-item v-for="f in friends" :key="f.id">
-                                                        <v-list-item-content>
-                                                            <v-list-item-title v-text="f.name"></v-list-item-title>
-                                                        </v-list-item-content>
-                                                        <v-list-item-icon>
-                                                            <v-icon @click="giveControl(f.id)">mdi-check-circle</v-icon>
-                                                        </v-list-item-icon>
-                                                    </v-list-item>
-                                            </v-container>
-                                            <v-card-actions>
-                                                <v-spacer></v-spacer>
-                                                <v-btn text>delegate</v-btn>
-                                            </v-card-actions>
-                                        </v-card>
-                                </v-dialog>
-
                             </v-app-bar>
                             <template v-slot:activator>
                                 <v-list-item-avatar>
@@ -112,16 +104,25 @@ export default {
             dialog: false,
             del: false,
             remote: false,
-            name: ''
+            name: '',
+            check: {}
         }
     },
     computed: {
         plays() {return this.$store.state.music.playlists},
-        friends() {return this.$store.state.user.friends[0].friends}
+        friends() {
+            this.openSocket(this.$store.state.user.profile.username)
+            return this.$store.state.user.friends[0].friends
+        }
     },
     methods: {
-        giveControl(fid) {
-            console.log(fid)
+        giveControl() {
+            this.$store.dispatch('music/delegateControl', {
+                'id': this.$store.state.user.profile.id,
+                'friends': Object.keys(this.check)
+            })
+            this.remote = false
+            this.check = {}
         },
         createPlaylist() {
             this.$store.dispatch('music/createPlaylist', this.name)

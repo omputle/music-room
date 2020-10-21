@@ -73,9 +73,13 @@
                                 <v-list-item-content>
                                     <v-list-item-title v-text="track.title"></v-list-item-title>
                                 </v-list-item-content>
-                                <v-list-item-icon @click="controlPlay(track.id, track.title)">
+                                <v-list-item-icon v-if="control" @click="controlPlay(track.id, track.title)">
+                                    <v-icon>mdi-remote</v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-icon @click="playMusic(track.id)">
                                     <v-icon>{{playIcon(track.id)}}</v-icon>
                                 </v-list-item-icon>
+                                
                             </v-list-item>
                         </v-list-group>
                     </v-list>
@@ -98,7 +102,7 @@ export default {
             id: '',
             cnx: '',
             msg: '',
-            sender: ''
+            sender: '',
         }
     },
     computed: {
@@ -106,6 +110,10 @@ export default {
             return this.$store.state.user.friend
         },
         friends() {return this.$store.state.user.friends},
+        control() {
+            this.checkControl()
+            return this.$store.state.music.control
+        }
     },
     methods: {
         currentFriend(friend) {
@@ -126,33 +134,22 @@ export default {
             }
         },
         controlPlay(id, title) {
+            this.checkControl()
             this.ws.send(`{ 
                 "receiver":"/${this.$store.state.user.friend.profile.name}",
                 "title":"${title}",
                 "id":"${id}"
             }`)
         },
-        socket() {
-            
-            //let user = this.$store.state.user.profile.username
-            // let rec = this.$store.state.user.friend.profile.name
-            // console.log(user+rec)
-            // this.cnx = new WebSocket(`ws://localhost:5001/${user}`)
-            // this.$store.state.user.socket.onopen = () => {
-            //     console.log('connection open')
-            // }
-            this.ws.onmessage = (event) => {
-                let msg = JSON.parse(event.data)
-                alert(`${msg.sender} wants to play ${msg.title}`)
-                this.playMusic(msg.id)
-            }
-            // this.cnx.onclose = () => {
-            //     console.log('close socket')
-            // }
+        checkControl() {
+            this.$store.dispatch('music/checkControl', {
+                'uid': this.$store.state.user.profile.id,
+                'fid': this.$store.state.user.friend.profile.id
+            })
         }
     },
     created() {
-        this.socket()
+        this.openSocket(this.$store.state.user.profile.username)
     }
 }
 </script>

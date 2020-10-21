@@ -13,5 +13,5 @@ export default new Vuex.Store({
     user: user,
     music: music
   },
-  plugins: [persist]
+  plugins: [persist()]
 })

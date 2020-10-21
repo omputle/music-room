@@ -35,4 +35,12 @@ module.exports = {
         " PRIMARY KEY (`id`)" +
         ") ENGINE=InnoDB"
     ),
+    delegates : (
+        "CREATE TABLE `delegates` (" +
+        " `id` int(11) NOT NULL AUTO_INCREMENT," +
+        " `user_id` varchar(30) NOT NULL," +
+        " `friend_id` varchar(30) NOT NULL," +
+        " PRIMARY KEY (`id`)" +
+        ") ENGINE=InnoDB"
+    )
 }

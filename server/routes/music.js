@@ -6,7 +6,9 @@ import passport from 'passport'
 import { jwtauth, licenseAuth } from '../controllers/authController'
 import { getplaylist, getAlbumInfo, getSongInfo, searchTrack, searchAlbum, 
     searchArtist, getChart, getPlaylist2, addToPlaylist, removeFromPlaylist, 
-    getTracks, getplaylistInfo, createPlaylist, deletePlaylist, getFriendPlaylist
+    getTracks, getplaylistInfo, createPlaylist, deletePlaylist, getFriendPlaylist, 
+    delegateControl,
+    delegateMatch
 } from '../controllers/musicController'
 
 //create & expose router to server
@@ -254,3 +256,29 @@ export default router
  *              description: requires authentication
  */
 .delete('/delete-playlist', jwtauth, deletePlaylist)
+//delegate control
+/**
+ * @swagger
+ * /music/delegate-control:
+ *  post:
+ *      description: give playlist control to selected friends
+ *      responses:
+ *          200:
+ *              description: ran successfully
+ *          404:
+ *              description: requires authentication
+ */
+.post('/delegate-control', jwtauth, delegateControl)
+//find delegate match
+/**
+ * @swagger
+ * /music/delegate-match:
+ *  post:
+ *      description: check if user has delegate control
+ *      responses:
+ *          200:
+ *              description: ran successfully
+ *          404:
+ *              description: requires authentication
+ */
+.post('/delegate-match', jwtauth, delegateMatch)

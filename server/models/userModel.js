@@ -1,4 +1,4 @@
-import { fetchOne, insert, delOne, Update, delLicense, fetchOne2 } from './query'
+import { fetchOne, insert, delOne, Update, delLicense, fetchOne2, fetchDelegate } from './query'
 import axios from 'axios'
 import jwt from 'njwt'
 import keys from '../configs/keys'
@@ -116,4 +116,20 @@ export async function fetchLicensedPlaylists(token) {
         return playlists
     }
     return {'error':'no user'}
+}
+
+export async function delegateLicense(id, friends) {
+    delOne('delegates', 'user_id', id)
+    .catch(e => {console.log(e)})
+    for (let i in friends) {
+        insert('delegates', ['user_id', 'friend_id'], [id, friends[i]])
+        .catch(e => {return({'error':e})})
+    }
+    return ({'success':'delegates successful'})
+}
+
+export async function findDelegate(uid, fid) {
+    let r = await fetchDelegate(uid,fid)
+    .catch(e => {return({'failure':'unexpected error'})})
+    return (r.length > 0 ? true: false)
 }

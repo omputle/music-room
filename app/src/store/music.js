@@ -5,10 +5,12 @@ export default {
     state: {
         playlists: {},
         found: null,
+        control: false
     },
     mutations: {
         setPlaylists: (state, payload) => {state.playlists = payload},
-        found: (state, payload) => {state.found = payload}
+        found: (state, payload) => {state.found = payload},
+        setControl: (state, payload) => {state.control = payload}
     },
     actions: {
         getPlaylists: ctx => {
@@ -36,6 +38,15 @@ export default {
         deletePlaylist: (ctx, val) => {
             del('/music/delete-playlist', {'playlist_id': val})
             .then(() => {ctx.dispatch('getPlaylists')})
+            .catch(e => {console.log(e)})
+        },
+        delegateControl: (ctx, val) => {
+            post('/music/delegate-control', {'id': val.id, 'friends': val.friends})
+            .catch(e => {console.log(e)})
+        },
+        checkControl: (ctx, val) => {
+            post('/music/delegate-match', {'uid':val.uid, 'fid':val.fid})
+            .then(r => {ctx.commit('setControl', r.data.result)})
             .catch(e => {console.log(e)})
         }
     },

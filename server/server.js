@@ -28,17 +28,15 @@ const websocketServer = new WebSocket.Server({ port: 5001 });
 var sockets = {}
 
 websocketServer.on('connection', (ws, req) => {
-    //console.log('client socket connected')
-    //console.log(req.url)
     let id = req.url.replace(/%20/g, ' ')
     sockets[id] = ws
-    console.log('connected: ' + id + ' in ' + Object.getOwnPropertyNames(sockets))
+    //console.log('connected: ' + id + ' in ' + Object.getOwnPropertyNames(sockets))
     ws.on('message', (msg) => {
         try {
             msg = JSON.parse(msg)
             let receiver = sockets[msg.receiver]
             if (receiver) {
-                //console.log(`${id} sending to ${msg.receiver}: ${msg.song}`)
+                //console.log(`${id} sending to ${msg.receiver}: ${msg.title}`)
                 receiver.send(`{
                     "sender":"${id}",
                     "title":"${msg.title}",
@@ -60,7 +58,7 @@ websocketServer.on('connection', (ws, req) => {
     //     
     // });
     ws.on('close', () => {
-        console.log('client disconnected')
+        //console.log('client disconnected')
     })
 });
 

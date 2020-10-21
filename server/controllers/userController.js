@@ -11,6 +11,7 @@ export async function getProfile(req, res) {
             //console.log(r.data.name+': '+req.token)
             addUserId(r.data.id, r.data.email)
             res.send({
+                'id': r.data.id,
                 'username':r.data.name,
                 'first_name':r.data.firstname,
                 'last_name': r.data.lastname,
