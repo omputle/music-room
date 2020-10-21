@@ -46,12 +46,14 @@ websocketServer.on('connection', (ws, req) => {
                 }`)
             }
         } catch (e) {console.log(e)}
-        websocketServer.clients.forEach( client => {
-            console.log(client)
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(data);
-            }
-        });
+        // try {
+        //     websocketServer.clients.forEach( client => {
+        //     console.log(client)
+        //     if (client.readyState === WebSocket.OPEN) {
+        //         client.send(data);
+        //     }
+        // });
+        // } catch (e) {console.log(e)}
     })
     // ws.on('message', data => {
     //     console.log(data)

@@ -25,6 +25,15 @@ router.beforeEach((to, from, next) => {
     }
 })
 
+Vue.prototype.openSocket = function(username) {
+    if (username && !this.ws) {
+        Vue.prototype.ws = new WebSocket(`ws://localhost:5001/${username}`)
+        this.ws.onopen = () => {
+            console.log('socket connected')
+        }
+    }
+}
+
 new Vue({
   vuetify,
   router,

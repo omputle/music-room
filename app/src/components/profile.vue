@@ -77,7 +77,10 @@
 export default {
     name: 'Profile',
     computed: {
-        user() {return this.$store.state.user.profile},
+        user() {
+            this.openSocket(this.$store.state.user.profile.username)
+            return this.$store.state.user.profile
+        },
         friends() {return this.$store.state.user.friends},
         settings() {return this.$store.state.user.settings}
     },

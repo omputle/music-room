@@ -126,28 +126,29 @@ export default {
             }
         },
         controlPlay(id, title) {
-            this.cnx.send(`{ 
+            this.ws.send(`{ 
                 "receiver":"/${this.$store.state.user.friend.profile.name}",
                 "title":"${title}",
                 "id":"${id}"
             }`)
         },
         socket() {
-            let user = this.$store.state.user.profile.username
+            
+            //let user = this.$store.state.user.profile.username
             // let rec = this.$store.state.user.friend.profile.name
             // console.log(user+rec)
-            this.cnx = new WebSocket(`ws://localhost:5001/${user}`)
-            this.cnx.onopen = () => {
-                console.log('connection open')
-            }
-            this.cnx.onmessage = (event) => {
+            // this.cnx = new WebSocket(`ws://localhost:5001/${user}`)
+            // this.$store.state.user.socket.onopen = () => {
+            //     console.log('connection open')
+            // }
+            this.ws.onmessage = (event) => {
                 let msg = JSON.parse(event.data)
                 alert(`${msg.sender} wants to play ${msg.title}`)
                 this.playMusic(msg.id)
             }
-            this.cnx.onclose = () => {
-                console.log('close socket')
-            }
+            // this.cnx.onclose = () => {
+            //     console.log('close socket')
+            // }
         }
     },
     created() {

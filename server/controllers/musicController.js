@@ -95,7 +95,6 @@ export async function getFriendPlaylist(req, res) {
             let play = r.data.data
             var playlist = []
             for (let i in play) {
-                console.log(play[i].title)
                 let d = await axios.get(`${deezer}/playlist/${play[i].id}/tracks?access_token=${req.token}`)
                 .catch(e => {console.log(e)})
                 if (play[i].public === true) {
