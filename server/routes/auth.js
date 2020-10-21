@@ -12,6 +12,17 @@ const router = Router()
 export default router
 
 //jwt auth
+/**
+ * @swagger
+ * /auth/jwt:
+ *  post:
+ *      description: Returns google auth token after user is authenticates successfully
+ *      responses:
+ *          200:
+ *              description: ran successfully
+ *          404:
+ *              description: requires authentication
+ */
 .post('/jwt', jwtUrl)
 
 //google oauth
@@ -21,4 +32,15 @@ export default router
 //deezer oauth
 .get('/deezer-pass', passport.authenticate('deezer', {scope: ['profile', 'email']}))
 .get('/deezer-pass/redirect', passport.authenticate('deezer'), deezerRedirect)
+/**
+ * @swagger
+ * /auth/deezer/redirect:
+ *  get:
+ *      description: Returns deezer access token after user authenticates successfully
+ *      responses:
+ *          200:
+ *              description: ran successfully
+ *          404:
+ *              description: requires authentication
+ */
 .get('/deezer/redirect', fetchDeezerAccessToken)
