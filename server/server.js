@@ -64,6 +64,34 @@ websocketServer.on('connection', (ws, req) => {
     })
 });
 
+// swagger documentation
+const swaggerJsDocs = require('swagger-jsdoc');
+const swaggerUI = require('swagger-ui-express');
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      title: 'Music Room',
+      description: 'Music Room API documentation which shows the endpoints of our api',
+      contact: {
+        name: 'ksefeane & omputle',
+        url: 'https://github.com/ksefeane/music-room.git',
+        email: 'mahbabiez@gmail.com'
+      },
+      license: {
+        name: "READMe",
+        url: 'https://github.com/ksefeane/music-room/blob/master/README.md'
+      },
+      servers: ["http://localhost:5000"],
+      verion: '1.0.1'
+    }
+  },
+  apis: ['./routes/auth.js', './routes/music.js', './routes/user.js']
+}
+
+const swaggerDocs = swaggerJsDocs(swaggerOptions);
+app.use('/api-documentation', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+
 //api routes
 import auth from './routes/auth'
 import user from './routes/user'
