@@ -61,6 +61,27 @@
                                         </v-card>
                                 </v-dialog>
                                 <v-spacer></v-spacer>
+                                <v-dialog v-model="share" width="500">
+                                    <template v-slot:activator="{ on }">
+                                        <v-icon v-on="on">mdi-share-variant</v-icon>
+                                    </template>
+                                    <v-card>
+                                        <v-card-title class="headline font-weight-light">share playlist</v-card-title>
+                                        <v-container style="max-height: 600px">
+                                            <v-list-item v-for="f in friends" :key="f.id">
+                                                <v-list-item-content>
+                                                    <v-list-item-title v-text="f.name"></v-list-item-title>
+                                                </v-list-item-content>
+                                                <v-checkbox v-model="scheck[f.id]"></v-checkbox>
+                                            </v-list-item>
+                                        </v-container>
+                                        <v-card-actions>
+                                            <v-spacer></v-spacer>
+                                            <v-btn text @click="sharePlaylist(item.id, item.title)">share</v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-dialog>
+                                <v-spacer></v-spacer>
                                 <v-icon @click="playMusic(item.id)">{{playIcon(item.id)}}</v-icon>
                             </v-app-bar>
                             <template v-slot:activator>
@@ -103,9 +124,11 @@ export default {
             id: '',
             dialog: false,
             del: false,
+            share: false,
             remote: false,
             name: '',
-            check: {}
+            check: {},
+            scheck: {}
         }
     },
     computed: {
@@ -132,6 +155,16 @@ export default {
         deletePlaylist(pid) {
             this.$store.dispatch('music/deletePlaylist', pid)
             this.del = false
+        },
+        sharePlaylist(pid, ptitle) {
+            this.$store.dispatch('music/sharePlaylist', {
+                'playlist_id': pid,
+                'playlist_name': ptitle,
+                'friends': Object.keys(this.scheck),
+                'token': localStorage.getItem("jwt")
+            })
+            this.share = false
+            this.scheck = {}
         },
         playIcon(track_id) {
             return this.id === track_id ? mdiStop : mdiPlay

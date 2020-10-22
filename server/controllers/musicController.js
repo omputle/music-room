@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { delegateLicense, findDelegate } from '../models/userModel'
+import { delegateLicense, findDelegate, fetchLicensedPlaylists 
+} from '../models/userModel'
 
 const deezer = 'https://api.deezer.com'
 
@@ -157,9 +158,7 @@ export async function createPlaylist(req, res) {
         let access = `?access_token=${req.token}`
         let result = await axios.get(`${deezer}/user/me/playlists${access}${data}`)
         res.send(result.data)
-    } catch (error) {
-        console.log(error)
-    }
+    } catch (error) {console.log(error)}
 }
 
 export async function deletePlaylist(req, res) {
@@ -180,8 +179,25 @@ export async function delegateControl(req, res) {
 }
 
 export async function delegateMatch(req, res) {
-    try {
-        res.send({'result':await findDelegate(req.body.uid, req.body.fid)})
-    } 
+    try {res.send({'result':await findDelegate(req.body.uid, req.body.fid)})} 
     catch (e) {console.log(e)}
 }
+//get shared playlists & tracks
+export async function getLicensedPlaylists(req, res) {
+    try {
+        let plays = await fetchLicensedPlaylists(req.body.token)
+        let playlists = []
+        for (let i in plays) {
+            let path = `${deezer}/playlist/${plays[i].playlist_id}/tracks?access_token=${req.token}`
+            let d = await axios.get(path)
+            .catch(e => {console.log(e)})
+            playlists.push({
+                'id': plays[i].playlist_id,
+                'title':plays[i].playlist_name,
+                'tracks': d.data.data
+            })
+        }
+        res.send(playlists)
+    } catch (e) {console.log(e)}    
+}
+

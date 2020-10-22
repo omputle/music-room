@@ -76,18 +76,36 @@ export async function connectDeezer(access_token) {
     })
 }
 
-export async function createLicense(token, user_id, playlist_id, playlist_name, access_token) {
-    var user = await fetchOne('tokens', ['username'], 'token', token)
+export async function createLicenses(data) {
+    var user = await fetchOne('tokens', ['username'], 'token', data.token)
     if (Object.keys(user).length > 0) {
         let id = await fetchOne('users', ['user_id'], 'username', user[0].username)
-        let test = await fetchOne2('*', playlist_id, user_id)
-        if (test.length > 0) {
-            return {'error':"license exists"}
+        let holders = []
+        for (let i in data.friends) {
+            let hold = await fetchOne2('*', data.playlist_id, data.friends[i])
+            if (hold.length === 0) {
+                let params = ['owner', 'user', 'playlist_id', 'playlist_name', 'access_key']
+                let vals = [id[0].user_id, data.friends[i], data.playlist_id, data.playlist_name, data.token]
+                let ins = await insert('licenses', params, vals)
+                holders.push('created')
+            } else {
+                holders.push('exists')
+            }
         }
-        let insertion = await insert('licenses', ['owner', 'user', 'playlist_id', 'playlist_name', 'access_key'], [id[0].user_id, user_id, playlist_id, playlist_name, access_token])
-        return insertion
+        return holders
     }
-    return {'error':'no user'}
+    return ({'error': 'no user'})
+    // var user = await fetchOne('tokens', ['username'], 'token', token)
+    // if (Object.keys(user).length > 0) {
+    //     let id = await fetchOne('users', ['user_id'], 'username', user[0].username)
+    //     let test = await fetchOne2('*', playlist_id, user_id)
+    //     if (test.length > 0) {
+    //         return {'error':"license exists"}
+    //     }
+    //     let insertion = await insert('licenses', ['owner', 'user', 'playlist_id', 'playlist_name', 'access_key'], [id[0].user_id, user_id, playlist_id, playlist_name, access_token])
+    //     return insertion
+    // }
+    // return {'error':'no user'}
 }
 
 export async function deleteLicense(user_id, playlist_id) {

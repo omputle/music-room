@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { addUserId, createLicense, deleteLicense, getAccessCode, fetchLicensedPlaylists } from "../models/userModel";
+import { addUserId, createLicenses, deleteLicense, getAccessCode
+} from "../models/userModel";
 
 const deezer = 'https://api.deezer.com'
 
@@ -111,13 +112,15 @@ export async function getChart(req, res) {
 }
 
 export async function makeLicense(req, res) {
-    var token = req.body.token
-    var user_id = req.body.user_id
-    var playlist_id = req.body.playlist_id
-    var playlist_name = req.body.playlist_name
-    var access_token = req.token
-    let response = await createLicense(token, user_id, playlist_id, playlist_name,access_token)
-    res.send(response)
+    try {res.send(await createLicenses(req.body))} 
+    catch (e) {console.log(e)}
+    // var token = req.body.token
+    // var user_id = req.body.user_id
+    // var playlist_id = req.body.playlist_id
+    // var playlist_name = req.body.playlist_name
+    // var access_token = req.token
+    // let response = await createLicense(token, user_id, playlist_id, playlist_name,access_token)
+    // res.send(response)
 }
 
 export async function removeLicense(req, res) {
@@ -132,10 +135,4 @@ export async function getKey(req, res) {
     let user_id = req.body.user_id
     let result = await getAccessCode(user_id, playlist_id)
     res.send(result)
-}
-
-export async function getLicensedPlaylists(req, res) {
-    let token = req.body.token
-    let test = await fetchLicensedPlaylists(token)
-    res.send(test)
 }

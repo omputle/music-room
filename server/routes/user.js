@@ -4,7 +4,8 @@ import passport from 'passport'
 
 //import controllers
 import { jwtauth, licenseAuth } from '../controllers/authController'
-import { getProfile, getFriends, getSettings, makeLicense, removeLicense, getKey, getLicensedPlaylists
+import { getProfile, getFriends, getSettings, makeLicense, removeLicense, 
+    getKey
 } from '../controllers/userController'
 
 //create & expose router to server
@@ -76,15 +77,3 @@ export default router
  *              description: requires authentication
  */
 .post('/revoke-license',jwtauth, removeLicense)
-/**
- * @swagger
- * /user/get-licensed-playlists:
- *  post:
- *      description: Fetches playlists that a user can edit. Playlists where the user was given license(s) to edit
- *      responses:
- *          200:
- *              description: ran successfully
- *          404:
- *              description: requires authentication
- */
-.post('/get-licensed-playlists', getLicensedPlaylists)

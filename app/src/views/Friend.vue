@@ -73,12 +73,12 @@
                                 <v-list-item-content>
                                     <v-list-item-title v-text="track.title"></v-list-item-title>
                                 </v-list-item-content>
-                                <v-list-item-icon v-if="control" @click="controlPlay(track.id, track.title)">
+                                <v-btn text v-if="control" @click="controlPlay(track.id, track.title)">
                                     <v-icon>mdi-remote</v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-icon @click="playMusic(track.id)">
+                                </v-btn>
+                                <v-btn text @click="playMusic(track.id)">
                                     <v-icon>{{playIcon(track.id)}}</v-icon>
-                                </v-list-item-icon>
+                                </v-btn>
                                 
                             </v-list-item>
                         </v-list-group>
@@ -135,11 +135,13 @@ export default {
         },
         controlPlay(id, title) {
             this.checkControl()
-            this.ws.send(`{ 
-                "receiver":"/${this.$store.state.user.friend.profile.name}",
-                "title":"${title}",
-                "id":"${id}"
-            }`)
+            if (this.control) {
+                this.ws.send(`{ 
+                    "receiver":"/${this.$store.state.user.friend.profile.name}",
+                    "title":"${title}",
+                    "id":"${id}"
+                }`)
+            }
         },
         checkControl() {
             this.$store.dispatch('music/checkControl', {
