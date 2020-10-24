@@ -14,15 +14,17 @@
                                 <v-img :src="item.artist.picture_small"></v-img>
                             </v-list-item-avatar>
                             <v-list-item-content>
-                                <v-list-item-title v-text="item.title"></v-list-item-title>
+                                <v-list-item-title>{{item.title}} - {{item.artist.name}}</v-list-item-title>
                             </v-list-item-content>
-                            <v-list-item-icon @click="playMusic(item.id)"><v-icon>{{playIcon(item.id)}}</v-icon></v-list-item-icon>
+                            <v-btn text @click="playMusic(item.id)">
+                                <v-icon>{{playIcon(item.id)}}</v-icon>
+                            </v-btn>
                         </v-list-item>
                     </v-list>
                 </v-container>
             </v-sheet>
         </v-card>
-        <v-card v-if="found.artists" max-width="800" class="mx-auto overflow-hidden">
+        <!-- <v-card v-if="found.artists" max-width="800" class="mx-auto overflow-hidden">
             <v-app-bar dark elevate-on-scroll scroll-target="#scrolling-techniques-7">
                 <v-spacer></v-spacer>
                 <v-toolbar-title class="headline font-weight-light">artists</v-toolbar-title>
@@ -38,7 +40,7 @@
                             <v-list-item-content>
                                 <v-list-item-title v-text="item.name"></v-list-item-title>
                             </v-list-item-content>
-                            <v-list-item-icon @click="findAlbums(item.id)"><v-icon>{{playIcon(item.id)}}</v-icon></v-list-item-icon>
+                            <v-list-item-icon ><v-icon>{{playIcon(item.id)}}</v-icon></v-list-item-icon>
                         </v-list-item>
                     </v-list>
                 </v-container>
@@ -60,12 +62,12 @@
                             <v-list-item-content>
                                 <v-list-item-title v-text="item.title"></v-list-item-title>
                             </v-list-item-content>
-                            <v-list-item-icon @click="findTracks(item.id)"><v-icon>{{playIcon(item.id)}}</v-icon></v-list-item-icon>
+                            <v-list-item-icon ><v-icon>{{playIcon(item.id)}}</v-icon></v-list-item-icon>
                         </v-list-item>
                     </v-list>
                 </v-container>
             </v-sheet>
-        </v-card>
+        </v-card> -->
     </div>
 </template>
 
@@ -79,11 +81,16 @@ export default {
     name: 'Playlists',
    data() {
        return {
-           id: ''
+           id: '',
+           
        }
    },
    props: {
        found: Object
+   },
+   computed: {
+       playlists() {
+           return this.$store.state.music.playlists}
    },
     methods: {
         playIcon(track_id) {

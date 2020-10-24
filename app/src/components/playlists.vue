@@ -63,7 +63,7 @@
                                 <v-spacer></v-spacer>
                                 <v-dialog v-model="share" width="500">
                                     <template v-slot:activator="{ on }">
-                                        <v-icon v-on="on">mdi-share-variant</v-icon>
+                                        <v-icon v-on="on" >mdi-share-variant</v-icon>
                                     </template>
                                     <v-card>
                                         <v-card-title class="headline font-weight-light">share playlist</v-card-title>
@@ -82,7 +82,7 @@
                                     </v-card>
                                 </v-dialog>
                                 <v-spacer></v-spacer>
-                                <v-icon @click="playMusic(item.id)">{{playIcon(item.id)}}</v-icon>
+                                <addToPlaylist :playlist_id="item.id"/>
                             </v-app-bar>
                             <template v-slot:activator>
                                 <v-list-item-avatar>
@@ -115,9 +115,13 @@
 import { get } from '@/functions/api'
 import bus from '@/event_bus/bus'
 import { mdiPlay, mdiStop } from '@mdi/js'
+import addToPlaylist from '@/components/addToPlaylist'
 
 export default {
     name: 'Playlists',
+    components: {
+        addToPlaylist
+    },
     data() {
         return {
             play: {},

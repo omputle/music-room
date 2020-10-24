@@ -115,8 +115,13 @@ export async function getFriendPlaylist(req, res) {
 //add track to playlist
 export async function addToPlaylist(req, res) {
     try {
+        let tracks = ''
+        for (let i in req.body.tracks) {
+            tracks += `${req.body.tracks[i].id},`
+        }
+        tracks = tracks.slice(0, tracks.length-1)
         let url = `${deezer}/playlist/${req.body.playlist_id}/tracks?access_token=${req.token}`
-        let data = `&songs=${req.body.track_id}&request_method=POST`
+        let data = `&songs=${tracks}&request_method=POST`
         axios.get(url+data)
         .then(r => {res.send(r.data)})
         .catch(e => {console.log(e)})

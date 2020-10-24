@@ -6,13 +6,15 @@ export default {
         playlists: {},
         sharedPlaylists: {},
         found: null,
-        control: false
+        control: false,
+        songs: []
     },
     mutations: {
         setPlaylists: (state, payload) => {state.playlists = payload},
         setSharedPlaylists: (state, payload) => {state.sharedPlaylists = payload},
         found: (state, payload) => {state.found = payload},
-        setControl: (state, payload) => {state.control = payload}
+        setControl: (state, payload) => {state.control = payload},
+        foundSong: (state, payload) => {state.songs = payload}
     },
     actions: {
         getPlaylists: ctx => {
@@ -36,6 +38,11 @@ export default {
                 'albums': r[2].data.data
             }
             ctx.commit('found', data)
+        },
+        searchSong: (ctx, val) => {
+            get(`/music/search-track/${val}`)
+            .then(r => {ctx.commit('foundSong', r.data.data)})
+            .catch(e => {console.log(e)})
         },
         createPlaylist: (ctx, val) => {
             post('/music/create-playlist', {'playlist_name':val})
@@ -61,26 +68,10 @@ export default {
             .then(() => {ctx.dispatch('getSharedPlaylists')})
             .catch(e => {console.log(e)})
         },
-        // give_license(user_id) {
-        //     axios({
-        //         method: 'post',
-        //         url: `http://localhost:5000/user/give-license`,
-        //         data: {
-        //             'user_id': user_id,
-        //             'playlist_id': this.playlist_id,
-        //             'playlist_name': this.playlist_name,
-        //             'token': localStorage.getItem("jwt")
-        //         },
-        //         headers: {'Authorization': `Bearer ${localStorage.getItem("deez")}`}
-        //     }).then((res) => {
-        //         console.log(res)
-        //         let update = {
-        //             'type': 'license',
-        //         }
-        //         this.connection.send(JSON.stringify(update))
-        //     }).catch((err) => {
-        //         console.log(err)
-        //     })
-        // },
+        addToPlaylist: (ctx, val) => {
+            post('/music/addToPlaylist', val)
+            .then(() => {ctx.dispatch('getPlaylists')})
+            .catch(e => {console.log(e)})
+        }
     }
 }

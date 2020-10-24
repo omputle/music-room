@@ -143,7 +143,7 @@ export default router
  * @swagger
  * /music/addToPlaylist:
  *  post:
- *      description: adds a song to a playlist (requires authentication)          
+ *      description: adds songs to a playlist (requires authentication)          
  *      responses:
  *          201:
  *              description: song added to playlist
