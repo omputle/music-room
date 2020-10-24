@@ -64,14 +64,6 @@ export default {
       },
     },
     methods: {
-      next () {
-        this.loading = true
-        setTimeout(() => {
-          this.search = ''
-          this.selected = []
-          this.loading = false
-        }, 2000)
-      },
       searchSong() {
           if (this.search) {
               this.$store.dispatch('music/searchSong', this.search)
