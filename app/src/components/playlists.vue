@@ -99,9 +99,12 @@
                                 <v-list-item-content>
                                     <v-list-item-title v-text="track.title"></v-list-item-title>
                                 </v-list-item-content>
-                                <v-list-item-icon @click="playMusic(track.id)">
+                                <v-btn text @click="removeTrack(item.id, track.id)">
+                                    <v-icon>mdi-minus</v-icon>
+                                </v-btn>
+                                <v-btn text @click="playMusic(track.id)">
                                     <v-icon>{{playIcon(track.id)}}</v-icon>
-                                </v-list-item-icon>
+                                </v-btn>
                             </v-list-item>
                         </v-list-group>
                     </v-list>
@@ -159,6 +162,12 @@ export default {
         deletePlaylist(pid) {
             this.$store.dispatch('music/deletePlaylist', pid)
             this.del = false
+        },
+        removeTrack(pid, tid) {
+            this.$store.dispatch('music/removeFromPlaylist', {
+                'playlist_id': pid,
+                'track_id': tid
+            })
         },
         sharePlaylist(pid, ptitle) {
             this.$store.dispatch('music/sharePlaylist', {

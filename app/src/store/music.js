@@ -23,8 +23,7 @@ export default {
         },
         getSharedPlaylists: ctx => {
             post('/music/get-licensed-playlists', {token: localStorage.getItem("jwt")})
-            .then(r => {ctx.commit('setSharedPlaylists', r.data)})
-            .catch(e => {console.log(e)})
+            .then(r => {ctx.commit('setSharedPlaylists', r.data)}).catch(e => {console.log(e)})
         },
         searchAll: async (ctx, val) => {
             let song = get(`/music/search-track/${val}`)
@@ -41,18 +40,15 @@ export default {
         },
         searchSong: (ctx, val) => {
             get(`/music/search-track/${val}`)
-            .then(r => {ctx.commit('foundSong', r.data.data)})
-            .catch(e => {console.log(e)})
+            .then(r => {ctx.commit('foundSong', r.data.data)}).catch(e => {console.log(e)})
         },
         createPlaylist: (ctx, val) => {
             post('/music/create-playlist', {'playlist_name':val})
-            .then(() => {ctx.dispatch('getPlaylists')})
-            .catch(e => {console.log(e)})
+            .then(() => {ctx.dispatch('getPlaylists')}).catch(e => {console.log(e)})
         },
         deletePlaylist: (ctx, val) => {
             del('/music/delete-playlist', {'playlist_id': val})
-            .then(() => {ctx.dispatch('getPlaylists')})
-            .catch(e => {console.log(e)})
+            .then(() => {ctx.dispatch('getPlaylists')}).catch(e => {console.log(e)})
         },
         delegateControl: (ctx, val) => {
             post('/music/delegate-control', {'id': val.id, 'friends': val.friends})
@@ -60,18 +56,19 @@ export default {
         },
         checkControl: (ctx, val) => {
             post('/music/delegate-match', {'uid':val.uid, 'fid':val.fid})
-            .then(r => {ctx.commit('setControl', r.data.result)})
-            .catch(e => {console.log(e)})
+            .then(r => {ctx.commit('setControl', r.data.result)}).catch(e => {console.log(e)})
         },
         sharePlaylist: (ctx, val) => {
             post('/user/give-license', val)
-            .then(() => {ctx.dispatch('getSharedPlaylists')})
-            .catch(e => {console.log(e)})
+            .then(() => {ctx.dispatch('getSharedPlaylists')}).catch(e => {console.log(e)})
         },
         addToPlaylist: (ctx, val) => {
             post('/music/addToPlaylist', val)
-            .then(() => {ctx.dispatch('getPlaylists')})
-            .catch(e => {console.log(e)})
+            .then(() => {ctx.dispatch('getPlaylists')}).catch(e => {console.log(e)})
+        },
+        removeFromPlaylist: (ctx, val) => {
+            del('/music/removeFromPlaylist', val)
+            .then(() => {ctx.dispatch('getPlaylists')}).catch(e => {console.log(e)})
         }
     }
 }
