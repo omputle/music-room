@@ -4,7 +4,6 @@
 </template>
 
 <script>
-//import axios from 'axios'
 import keys from '@/configs/config'
 import { post } from '@/functions/api'
 

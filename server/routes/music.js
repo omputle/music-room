@@ -156,7 +156,7 @@ export default router
  * @swagger
  * /music/addToPlaylist-license:
  *  post:
- *      description: adds a song to another user's playlist. Must have license to do so(requires authentication)       
+ *      description: adds songs to another user's playlist. Must have license to do so(requires authentication)       
  *      responses:
  *          201:
  *              description: song added to playlist

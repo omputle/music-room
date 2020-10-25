@@ -12,9 +12,8 @@
                     <v-list>
                         <v-list-group v-for="(item, index) in plays" :key="index" no-action>
                             <v-app-bar dense flat>
-                                
                                 <v-spacer></v-spacer>
-                                <v-icon @click="playMusic(item.id)">{{playIcon(item.id)}}</v-icon>
+                                <addToSharedPlaylist :playlist_id="item.id"/>
                             </v-app-bar>
                             <template v-slot:activator>
                                 <v-list-item-avatar>
@@ -29,7 +28,7 @@
                                     <v-img :src="track.artist.picture_small"></v-img>
                                 </v-list-item-avatar>
                                 <v-list-item-content>
-                                    <v-list-item-title v-text="track.title"></v-list-item-title>
+                                    <v-list-item-title>{{track.title}} - {{track.artist.name}}</v-list-item-title>
                                 </v-list-item-content>
                                 <v-list-item-icon @click="playMusic(track.id)">
                                     <v-icon>{{playIcon(track.id)}}</v-icon>
@@ -47,9 +46,13 @@
 import { get } from '@/functions/api'
 import bus from '@/event_bus/bus'
 import { mdiPlay, mdiStop } from '@mdi/js'
+import addToSharedPlaylist from '@/components/addToSharedPlaylist'
 
 export default {
     name: 'Playlists',
+    components: {
+        addToSharedPlaylist
+    },
     data() {
         return {
             play: {},

@@ -76,7 +76,7 @@ export async function connectDeezer(access_token) {
     })
 }
 
-export async function createLicenses(data) {
+export async function createLicenses(data, access_token) {
     var user = await fetchOne('tokens', ['username'], 'token', data.token)
     if (Object.keys(user).length > 0) {
         let id = await fetchOne('users', ['user_id'], 'username', user[0].username)
@@ -85,7 +85,7 @@ export async function createLicenses(data) {
             let hold = await fetchOne2('*', data.playlist_id, data.friends[i])
             if (hold.length === 0) {
                 let params = ['owner', 'user', 'playlist_id', 'playlist_name', 'access_key']
-                let vals = [id[0].user_id, data.friends[i], data.playlist_id, data.playlist_name, data.token]
+                let vals = [id[0].user_id, data.friends[i], data.playlist_id, data.playlist_name, access_token]
                 let ins = await insert('licenses', params, vals)
                 holders.push('created')
             } else {
@@ -113,7 +113,8 @@ export async function deleteLicense(user_id, playlist_id) {
     return user
 }
 
-export async function getAccessCode(token, playlist_id) {
+export async function    getAccessCode(token, playlist_id) {
+    console.log('here: '+token)
     var me = await fetchOne('tokens', ['username'], 'token', token)
     if (Object.keys(me).length > 0) {
         let id = await fetchOne('users', ['user_id'], 'username', me[0].username)

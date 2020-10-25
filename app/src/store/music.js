@@ -66,6 +66,10 @@ export default {
             post('/music/addToPlaylist', val)
             .then(() => {ctx.dispatch('getPlaylists')}).catch(e => {console.log(e)})
         },
+        addToSharedPlaylist: (ctx, val) => {
+            post('/music/addToPlaylist-license', val)
+            .then(() => {ctx.dispatch('getSharedPlaylists')}).catch(e => {console.log(e)})
+        },
         removeFromPlaylist: (ctx, val) => {
             del('/music/removeFromPlaylist', val)
             .then(() => {ctx.dispatch('getPlaylists')}).catch(e => {console.log(e)})

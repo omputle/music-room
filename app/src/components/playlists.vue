@@ -97,7 +97,7 @@
                                     <v-img :src="track.artist.picture_small"></v-img>
                                 </v-list-item-avatar>
                                 <v-list-item-content>
-                                    <v-list-item-title v-text="track.title"></v-list-item-title>
+                                    <v-list-item-title >{{track.title}} - {{track.artist.name}}</v-list-item-title>
                                 </v-list-item-content>
                                 <v-btn text @click="removeTrack(item.id, track.id)">
                                     <v-icon>mdi-minus</v-icon>

@@ -9,7 +9,7 @@ export async function getProfile(req, res) {
     try {
         axios.get(`${deezer}/user/me?access_token=${req.token}`)
         .then(r => {
-            //console.log(r.data.name+': '+req.token)
+            console.log(r.data.name+': '+req.token)
             addUserId(r.data.id, r.data.email)
             res.send({
                 'id': r.data.id,
@@ -112,7 +112,11 @@ export async function getChart(req, res) {
 }
 
 export async function makeLicense(req, res) {
-    try {res.send(await createLicenses(req.body))} 
+    try {
+        let fax = await createLicenses(req.body, req.token)
+        console.log(fax)
+        res.send(fax)
+    }
     catch (e) {console.log(e)}
     // var token = req.body.token
     // var user_id = req.body.user_id
