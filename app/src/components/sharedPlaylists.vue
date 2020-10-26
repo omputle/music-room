@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="plays">
         <v-card max-width="800" class="mx-auto overflow-hidden">
             <v-app-bar dark elevate-on-scroll scroll-target="#scrolling-techniques-7">
                 <v-spacer></v-spacer>

@@ -32,6 +32,7 @@ websocketServer.on('connection', (ws, req) => {
     sockets[id] = ws
     //console.log('connected: ' + id + ' in ' + Object.getOwnPropertyNames(sockets))
     ws.on('message', (msg) => {
+        console.log(msg)
         try {
             msg = JSON.parse(msg)
             let receiver = sockets[msg.receiver]
@@ -44,21 +45,8 @@ websocketServer.on('connection', (ws, req) => {
                 }`)
             }
         } catch (e) {console.log(e)}
-        // try {
-        //     websocketServer.clients.forEach( client => {
-        //     console.log(client)
-        //     if (client.readyState === WebSocket.OPEN) {
-        //         client.send(data);
-        //     }
-        // });
-        // } catch (e) {console.log(e)}
     })
-    // ws.on('message', data => {
-    //     console.log(data)
-    //     
-    // });
     ws.on('close', () => {
-        //console.log('client disconnected')
     })
 });
 

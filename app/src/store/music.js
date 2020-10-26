@@ -4,14 +4,14 @@ export default {
     namespaced: true,
     state: {
         playlists: {},
-        sharedPlaylists: {},
+        sharedPlaylists: null,
         found: null,
         control: false,
         songs: []
     },
     mutations: {
         setPlaylists: (state, payload) => {state.playlists = payload},
-        setSharedPlaylists: (state, payload) => {state.sharedPlaylists = payload},
+        setSharedPlaylists: (state, payload) => {state.sharedPlaylists = payload.length > 0 ? payload : false},
         found: (state, payload) => {state.found = payload},
         setControl: (state, payload) => {state.control = payload},
         foundSong: (state, payload) => {state.songs = payload}

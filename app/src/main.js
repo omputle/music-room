@@ -26,14 +26,19 @@ router.beforeEach((to, from, next) => {
 })
 
 Vue.prototype.openSocket = function(username) {
+    let user = this.$store.state.user.profile.username
+    console.log('opensocket '+user)
     if (username && !this.ws) {
         Vue.prototype.ws = new WebSocket(`ws://localhost:5001/${username}`)
         this.ws.onopen = () => {
-            //console.log('socket connected')
         }
         this.ws.onmessage = (event) => {
             let msg = JSON.parse(event.data)
-            this.playMusic(msg.id)
+            console.log(msg)
+            //this.playMusic(msg.id)
+        }
+        this.ws.onclose = () => {
+            console.log('close socket '+user)
         }
     }
 }

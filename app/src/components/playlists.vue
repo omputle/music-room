@@ -4,7 +4,9 @@
             <v-app-bar dark elevate-on-scroll scroll-target="#scrolling-techniques-7">
                 <v-dialog v-model="remote" width="500">
                     <template v-slot:activator="{ on }">
-                        <v-icon v-on="on">mdi-remote</v-icon>
+                        <v-chip class="transparent" close :close-icon="allowIcon()" @click:close="allowance">
+                            <v-icon v-on="on">mdi-remote</v-icon>
+                        </v-chip>
                     </template>
                     <v-card>
                         <v-card-title class="headline font-weight-light">music control delegation</v-card-title>
@@ -117,7 +119,7 @@
 <script>
 import { get } from '@/functions/api'
 import bus from '@/event_bus/bus'
-import { mdiPlay, mdiStop } from '@mdi/js'
+import { mdiPlay, mdiStop, mdiSignalVariant, mdiCloseCircleOutline } from '@mdi/js'
 import addToPlaylist from '@/components/addToPlaylist'
 
 export default {
@@ -135,17 +137,25 @@ export default {
             remote: false,
             name: '',
             check: {},
-            scheck: {}
+            scheck: {},
+            allow: false
         }
     },
     computed: {
         plays() {return this.$store.state.music.playlists},
         friends() {
-            this.openSocket(this.$store.state.user.profile.username)
             return this.$store.state.user.friends[0].friends
-        }
+        },
     },
     methods: {
+        allowance() {
+            if (this.allow) {
+                this.openSocket(this.$store.state.user.profile.username)
+                this.allow = false
+            } else {
+                this.allow = true
+            }
+        },
         giveControl() {
             this.$store.dispatch('music/delegateControl', {
                 'id': this.$store.state.user.profile.id,
@@ -181,6 +191,9 @@ export default {
         },
         playIcon(track_id) {
             return this.id === track_id ? mdiStop : mdiPlay
+        },
+        allowIcon() {
+            return this.allow ? mdiSignalVariant : mdiCloseCircleOutline
         },
         playMusic(track_id) {
             if (this.id === track_id) {

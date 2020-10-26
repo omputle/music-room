@@ -134,7 +134,6 @@ export default {
             }
         },
         controlPlay(id, title) {
-            this.checkControl()
             if (this.control) {
                 this.ws.send(`{ 
                     "receiver":"/${this.$store.state.user.friend.profile.name}",
