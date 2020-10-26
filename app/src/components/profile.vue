@@ -5,6 +5,7 @@
                 <v-spacer></v-spacer>
                 <v-toolbar-title class="headline font-weight-light">profile</v-toolbar-title>
                 <v-spacer></v-spacer>
+                <router-link :to='"/edit-profile/" + user.id'>Edit</router-link>
             </v-app-bar>
             
             <v-sheet id="scrolling-techniques-7" class="overflow-y-auto" max-height="800">
@@ -24,6 +25,9 @@
                 <v-spacer></v-spacer>
                 <v-toolbar-title class="headline font-weight-light">friends</v-toolbar-title>
                 <v-spacer></v-spacer>
+                <v-btn>
+                    <router-link to="/test/users-others">Others</router-link>
+                </v-btn>
             </v-app-bar>
             <v-sheet id="scrolling-techniques-7" class="overflow-y-auto" max-height="800">
                 <v-container style="max-height: 600px">
