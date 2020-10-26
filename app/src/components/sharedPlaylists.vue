@@ -30,6 +30,9 @@
                                 <v-list-item-content>
                                     <v-list-item-title>{{track.title}} - {{track.artist.name}}</v-list-item-title>
                                 </v-list-item-content>
+                                <v-btn text @click="removeTrack(item.id, track.id)">
+                                    <v-icon>mdi-minus</v-icon>
+                                </v-btn>
                                 <v-list-item-icon @click="playMusic(track.id)">
                                     <v-icon>{{playIcon(track.id)}}</v-icon>
                                 </v-list-item-icon>
@@ -73,7 +76,13 @@ export default {
         }
     },
     methods: {
-        
+        removeTrack(pid, tid) {
+            this.$store.dispatch('music/removeFromSharedPlaylist', {
+                'playlist_id': pid,
+                'track_id': tid,
+                'token': localStorage.getItem("jwt")
+            })
+        },
         playIcon(track_id) {
             return this.id === track_id ? mdiStop : mdiPlay
         },

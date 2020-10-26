@@ -19,7 +19,7 @@ export async function getProfile(req, res) {
                 'email': r.data.email,
                 'img':r.data.picture_medium
             })
-        }).catch(e => {console.log(e)})
+        }).catch(e => {console.log(e.code)})
     } catch (e) {res.send(e)}
 }
 //get friends (followers & followings)
@@ -114,7 +114,6 @@ export async function getChart(req, res) {
 export async function makeLicense(req, res) {
     try {
         let fax = await createLicenses(req.body, req.token)
-        console.log(fax)
         res.send(fax)
     }
     catch (e) {console.log(e)}

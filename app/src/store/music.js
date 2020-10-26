@@ -73,6 +73,10 @@ export default {
         removeFromPlaylist: (ctx, val) => {
             del('/music/removeFromPlaylist', val)
             .then(() => {ctx.dispatch('getPlaylists')}).catch(e => {console.log(e)})
+        },
+        removeFromSharedPlaylist: (ctx, val) => {
+            del('/music/removeFromPlaylist-license', val)
+            .then(() => {ctx.dispatch('getSharedPlaylists')}).catch(e => {console.log(e)})
         }
     }
 }
