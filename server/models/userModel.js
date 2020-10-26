@@ -1,4 +1,4 @@
-import { fetchOne, insert, delOne, Update, delLicense, fetchOne2, fetchDelegate } from './query'
+import { fetchOne, insert, delOne, Update, delLicense, fetchOne2, fetchDelegate, fetchAll } from './query'
 import axios from 'axios'
 import jwt from 'njwt'
 import keys from '../configs/keys'
@@ -133,8 +133,52 @@ export async function delegateLicense(id, friends) {
     return ({'success':'delegates successful'})
 }
 
+export async function updateLicenses(user_id, token) {
+    let update = await Update('licenses', 'access_key', token, 'owner', user_id)
+    return update
+}
+
 export async function findDelegate(uid, fid) {
     let r = await fetchDelegate(uid,fid)
     .catch(e => {return({'failure':'unexpected error'})})
     return (r.length > 0 ? true: false)
+}
+
+export async function checkProfile(data) {
+    let check = await fetchOne('profiles', ['username', 'first_name', 'last_name', 'email', 'user_id'], 'email', data.email)
+    if (!check.length) {
+        let create = await createProfile(data)
+        return create
+    }
+    return check[0] 
+}
+
+async function createProfile(data) {
+    let params = ['username', 'first_name', 'last_name', 'email', 'user_id', 'pro_pic']
+    let values = [data.name, data.firstname, data.lastname, data.email, data.id, data.picture_medium]
+    let insertion = await insert('profiles', params, values)
+    console.log(insertion)
+    console.log('after create')
+    return insertion
+}
+
+export async function editProfile(data) {
+    let succ_updates = []
+    let failed_updates = []
+    let values = [data.username, data.first_name, data.last_name]
+    let params = ['username', 'first_name', 'last_name']
+    for (let index = 0; index < 3; index++) {
+        let update_element = await Update('profiles', params[index], values[index], 'email', data.email)
+        if (update_element.changedRows) {
+            succ_updates.push(params[index])
+        } else {
+            failed_updates.push(params[index])
+        }
+    }
+    return {'success': succ_updates, 'failed': failed_updates}
+}
+
+export async function fetchUsers() {
+    let users = await fetchAll('profiles')
+    return users
 }

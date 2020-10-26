@@ -59,3 +59,10 @@ export const fetchDelegate = (uid, fid) => {
         catch (e) {reject({'error':e.sqlMessage})}
     })
 }
+
+export const fetchAll = (t_name) => {
+    return new Promise(async (resolve, reject) => {
+        try {resolve(await query(`SELECT * FROM ${t_name}`))} 
+        catch (e) {reject({'error':e.sqlMessage})}
+    })
+}

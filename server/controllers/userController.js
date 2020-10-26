@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { addUserId, createLicenses, deleteLicense, getAccessCode
+import { addUserId, createLicenses, deleteLicense, getAccessCode, checkProfile, editProfile,
+    updateLicenses, fetchUsers
 } from "../models/userModel";
 
 const deezer = 'https://api.deezer.com'
@@ -7,19 +8,18 @@ const deezer = 'https://api.deezer.com'
 //get profile from deezer api
 export async function getProfile(req, res) {
     try {
-        axios.get(`${deezer}/user/me?access_token=${req.token}`)
-        .then(r => {
-            //console.log(r.data.name+': '+req.token)
-            addUserId(r.data.id, r.data.email)
-            res.send({
-                'id': r.data.id,
-                'username':r.data.name,
-                'first_name':r.data.firstname,
-                'last_name': r.data.lastname,
-                'email': r.data.email,
-                'img':r.data.picture_medium
-            })
-        }).catch(e => {console.log(e.code)})
+        let details = await axios.get(`${deezer}/user/me?access_token=${req.token}`)
+        addUserId(details.data.id, details.data.email)
+        updateLicenses(details.data.id, req.token)
+        let profile = await checkProfile(details.data)
+        res.send({
+            'id': profile.user_id,
+            'username':profile.username,
+            'first_name':profile.first_name,
+            'last_name': profile.last_name,
+            'email': profile.email,
+            'img':details.data.picture_medium
+        })
     } catch (e) {res.send(e)}
 }
 //get friends (followers & followings)
@@ -48,6 +48,34 @@ export async function getSettings(req, res) {
 }
 
 //follow a user
+export async function followUser(req, res) {
+    try {
+        let user = req.body.user_id
+        axios.get(`${deezer}/user/me/followings?access_token=${req.token}&request_method=post&user_id=${user}`)
+        .then(results => {
+            res.send(results.data)
+        }).catch(e => {
+            console.log(e)
+        })
+    } catch (error) {
+        res.send(error)
+    }
+}
+
+//unfollow a user
+export async function unfollowUser(req, res) {
+    try {
+        let user = req.body.user_id
+        axios.get(`${deezer}/user/me/followings?access_token=${req.token}&request_method=delete&user_id=${user}`)
+        .then(results => {
+            res.send(results.data)
+        }).catch(e => {
+            console.log(e)
+        })
+    } catch (error) {
+        res.send(error)
+    }
+}
 
 //add playlist
 export async function postplaylist(req, res) {
@@ -138,4 +166,22 @@ export async function getKey(req, res) {
     let user_id = req.body.user_id
     let result = await getAccessCode(user_id, playlist_id)
     res.send(result)
+}
+
+export async function editDetails(req, res) {
+    try {
+        let edit = await editProfile(req.body)
+        res.send(edit)
+    } catch (error) {
+        res.send(error)
+    }
+}
+
+export async function getUsers(req, res) {
+    try {
+        let users = await fetchUsers()
+        res.send(users)
+    } catch (error) {
+        console.log(error)
+    }
 }

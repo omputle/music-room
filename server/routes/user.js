@@ -5,7 +5,7 @@ import passport from 'passport'
 //import controllers
 import { jwtauth, licenseAuth } from '../controllers/authController'
 import { getProfile, getFriends, getSettings, makeLicense, removeLicense, 
-    getKey
+    editDetails, unfollowUser, followUser, getUsers
 } from '../controllers/userController'
 
 //create & expose router to server
@@ -77,3 +77,11 @@ export default router
  *              description: requires authentication
  */
 .post('/revoke-license',jwtauth, removeLicense)
+
+.post('/edit-details', jwtauth, editDetails)
+
+.post('/follow-user', jwtauth, followUser)
+
+.post('/unfollow-user', jwtauth, unfollowUser)
+
+.get('/get-users', jwtauth, getUsers)

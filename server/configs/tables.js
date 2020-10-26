@@ -42,5 +42,17 @@ module.exports = {
         " `friend_id` varchar(30) NOT NULL," +
         " PRIMARY KEY (`id`)" +
         ") ENGINE=InnoDB"
+    ),
+    profiles: (
+        "CREATE TABLE `profiles` (" +
+        " `id` int(11) NOT NULL AUTO_INCREMENT," +
+        " `username` varchar(20) NOT NULL," +
+        " `first_name` varchar(25) NOT NULL," +
+        " `last_name` varchar(25) NOT NULL," + 
+        " `email` varchar(60) NOT NULL," +
+        " `pro_pic` longtext," +
+        " `user_id` varchar(100)," +
+        " PRIMARY KEY (`id`)" +
+        ") ENGINE=InnoDB"
     )
 }
