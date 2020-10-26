@@ -26,7 +26,7 @@
                 <v-toolbar-title class="headline font-weight-light">friends</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn>
-                    <router-link to="/test/users-others">Others</router-link>
+                    <router-link to="/users/others">Others</router-link>
                 </v-btn>
             </v-app-bar>
             <v-sheet id="scrolling-techniques-7" class="overflow-y-auto" max-height="800">
