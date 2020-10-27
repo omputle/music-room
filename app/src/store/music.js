@@ -7,14 +7,16 @@ export default {
         sharedPlaylists: null,
         found: null,
         control: false,
-        songs: []
+        songs: [],
+        delegate: false
     },
     mutations: {
         setPlaylists: (state, payload) => {state.playlists = payload},
         setSharedPlaylists: (state, payload) => {state.sharedPlaylists = payload.length > 0 ? payload : false},
         found: (state, payload) => {state.found = payload},
         setControl: (state, payload) => {state.control = payload},
-        foundSong: (state, payload) => {state.songs = payload}
+        foundSong: (state, payload) => {state.songs = payload},
+        toggleDelegate: state => {state.delegate = state.delegate ? false : true}
     },
     actions: {
         getPlaylists: ctx => {
@@ -77,6 +79,9 @@ export default {
         removeFromSharedPlaylist: (ctx, val) => {
             del('/music/removeFromPlaylist-license', val)
             .then(() => {ctx.dispatch('getSharedPlaylists')}).catch(e => {console.log(e)})
+        },
+        allowDelegate: ctx => {
+            ctx.commit('toggleDelegate')
         }
     }
 }

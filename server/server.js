@@ -32,22 +32,39 @@ websocketServer.on('connection', (ws, req) => {
     sockets[id] = ws
     //console.log('connected: ' + id + ' in ' + Object.getOwnPropertyNames(sockets))
     ws.on('message', (msg) => {
-        console.log(msg)
         try {
             msg = JSON.parse(msg)
-            let receiver = sockets[msg.receiver]
-            if (receiver) {
-                //console.log(`${id} sending to ${msg.receiver}: ${msg.title}`)
-                receiver.send(`{
-                    "sender":"${id}",
-                    "title":"${msg.title}",
-                    "id":"${msg.id}"
-                }`)
+            let response = ''
+            switch (msg.type) {
+                case 'delegate':
+                    response = `{
+                        "sender":"${id}",
+                        "type":"delegate"
+                    }`
+                    break
+                case 'playsong':
+                    response = `{
+                        "sender":"${id}",
+                        "type":"playsong",
+                        "title":"${msg.title}",
+                        "id":"${msg.id}"
+                    }`
+                    break
+                case 'shareplaylist':
+                    response = `{
+                        "sender":"${id}",
+                        "type":"shareplaylist"
+                    }`
+                    break
+                default:
+                    response = `{
+                        "error":"no type"
+                    }`
             }
+            sockets[msg.receiver] ? sockets[msg.receiver].send(response) : 0
         } catch (e) {console.log(e)}
     })
-    ws.on('close', () => {
-    })
+    ws.on('close', () => {})
 });
 
 // swagger documentation

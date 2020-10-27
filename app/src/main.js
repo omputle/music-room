@@ -25,20 +25,32 @@ router.beforeEach((to, from, next) => {
     }
 })
 
-Vue.prototype.openSocket = function(username) {
-    let user = this.$store.state.user.profile.username
-    console.log('opensocket '+user)
+Vue.prototype.openSocket = function() {
+    let username = this.$store.state.user.profile.username
     if (username && !this.ws) {
         Vue.prototype.ws = new WebSocket(`ws://localhost:5001/${username}`)
         this.ws.onopen = () => {
+            console.log('opensocket '+username)
         }
         this.ws.onmessage = (event) => {
-            let msg = JSON.parse(event.data)
-            console.log(msg)
+            try {
+                let msg = JSON.parse(event.data)
+                switch (msg.type) {
+                    case 'delegate':
+                        this.$store.dispatch('user/getFriendProfile', this.$store.state.user.cfriend)
+                        break
+                    case 'playsong':
+                        this.$store.state.music.delegate ? this.playMusic(msg.id) : 0
+                        break
+                    case 'shareplaylist':
+                        this.$store.dispatch('music/getSharedPlaylists')
+                        break
+                }
+            } catch (e) {console.log(e)}
             //this.playMusic(msg.id)
         }
         this.ws.onclose = () => {
-            console.log('close socket '+user)
+            console.log('close socket '+username)
         }
     }
 }

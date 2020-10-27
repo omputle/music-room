@@ -82,6 +82,10 @@ export default {
                 'track_id': tid,
                 'token': localStorage.getItem("jwt")
             })
+            this.ws.send(`{
+                "receiver":"/${this.$store.state.user.friend.profile.name}",
+                "type":"shareplaylist"
+            }`)
         },
         playIcon(track_id) {
             return this.id === track_id ? mdiStop : mdiPlay

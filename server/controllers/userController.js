@@ -9,7 +9,10 @@ const deezer = 'https://api.deezer.com'
 export async function getProfile(req, res) {
     try {
         let details = await axios.get(`${deezer}/user/me?access_token=${req.token}`)
+        //console.log(details)
         addUserId(details.data.id, details.data.email)
+        //console.log('user '+req.token)
+        //console.log(details.data)
         updateLicenses(details.data.id, req.token)
         let profile = await checkProfile(details.data)
         res.send({

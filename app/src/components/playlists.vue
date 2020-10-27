@@ -119,7 +119,7 @@
 <script>
 import { get } from '@/functions/api'
 import bus from '@/event_bus/bus'
-import { mdiPlay, mdiStop, mdiSignalVariant, mdiCloseCircleOutline } from '@mdi/js'
+import { mdiPlay, mdiStop, mdiCircleOutline, mdiCircleSlice8 } from '@mdi/js'
 import addToPlaylist from '@/components/addToPlaylist'
 
 export default {
@@ -138,7 +138,6 @@ export default {
             name: '',
             check: {},
             scheck: {},
-            allow: false
         }
     },
     computed: {
@@ -146,23 +145,27 @@ export default {
         friends() {
             return this.$store.state.user.friends[0].friends
         },
+        allow() {return this.$store.state.music.delegate}
     },
     methods: {
         allowance() {
-            if (this.allow) {
-                this.openSocket(this.$store.state.user.profile.username)
-                this.allow = false
-            } else {
-                this.allow = true
-            }
+            this.$store.dispatch('music/allowDelegate')
+        },
+        allowIcon() {
+            return this.allow ? mdiCircleSlice8 : mdiCircleOutline
         },
         giveControl() {
             this.$store.dispatch('music/delegateControl', {
                 'id': this.$store.state.user.profile.id,
                 'friends': Object.keys(this.check)
             })
+            this.ws.send(`{
+                "receiver":"/${this.$store.state.user.friend.profile.name}",
+                "type":"delegate"
+            }`)
             this.remote = false
             this.check = {}
+            this.allowance()
         },
         createPlaylist() {
             this.$store.dispatch('music/createPlaylist', this.name)
@@ -186,14 +189,15 @@ export default {
                 'friends': Object.keys(this.scheck),
                 'token': localStorage.getItem("jwt")
             })
+            this.ws.send(`{
+                "receiver":"/${this.$store.state.user.friend.profile.name}",
+                "type":"shareplaylist"
+            }`)
             this.share = false
             this.scheck = {}
         },
         playIcon(track_id) {
             return this.id === track_id ? mdiStop : mdiPlay
-        },
-        allowIcon() {
-            return this.allow ? mdiSignalVariant : mdiCloseCircleOutline
         },
         playMusic(track_id) {
             if (this.id === track_id) {
@@ -211,6 +215,7 @@ export default {
     },
     created() {
         this.$store.dispatch('music/getPlaylists')
+        this.openSocket()
     }
 }
 </script>

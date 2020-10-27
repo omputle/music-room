@@ -157,8 +157,8 @@ async function createProfile(data) {
     let params = ['username', 'first_name', 'last_name', 'email', 'user_id', 'pro_pic']
     let values = [data.name, data.firstname, data.lastname, data.email, data.id, data.picture_medium]
     let insertion = await insert('profiles', params, values)
-    console.log(insertion)
-    console.log('after create')
+    // console.log(insertion)
+    // console.log('after create')
     return insertion
 }
 

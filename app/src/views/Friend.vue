@@ -107,6 +107,7 @@ export default {
     },
     computed: {
         friend() {
+            this.openSocket(this.$store.state.user.profile.username)
             return this.$store.state.user.friend
         },
         friends() {return this.$store.state.user.friends},
@@ -138,7 +139,8 @@ export default {
                 this.ws.send(`{ 
                     "receiver":"/${this.$store.state.user.friend.profile.name}",
                     "title":"${title}",
-                    "id":"${id}"
+                    "id":"${id}",
+                    "type":"playsong"
                 }`)
             }
         },
