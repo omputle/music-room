@@ -1,4 +1,5 @@
 import { get, post } from '@/functions/api'
+import keys from '@/configs/config'
 
 export default {
     namespaced: true,
@@ -20,7 +21,7 @@ export default {
                 {'title': 'following', 'friends': payload.followings}
             ]
         },
-        setSettings: (state, payload) => {state.settings = payload},
+        setSettings: (state, payload) => {state.settings = Object.assign(keys.access_rights, payload)},
         pickFriend: (state, payload) => {state.friend = payload},
         currentFriend: (state, payload) => {state.cfriend = payload},
         setLocals: (state, payload) => {state.localUsers = payload}

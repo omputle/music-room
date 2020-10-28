@@ -102,7 +102,7 @@
                     <v-list>
                         <v-list-item v-for="(u, index) in settings" :key="index">
                             <v-list-item-content>
-                                <v-list-item-title v-text="u"></v-list-item-title>
+                                <v-list-item-title>{{index}} - {{u}}</v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
                     </v-list>

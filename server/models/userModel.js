@@ -174,9 +174,8 @@ export async function editProfile(data) {
                 succ_updates.push(params[index])
             } else {
                 failed_updates.push(params[index])
-            }        
+            }
         }
-        
     }
     return {'success': succ_updates, 'failed': failed_updates}
 }
