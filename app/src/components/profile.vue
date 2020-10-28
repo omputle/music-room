@@ -5,7 +5,6 @@
                 <v-spacer></v-spacer>
                 <v-toolbar-title class="headline font-weight-light">profile</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <!-- <router-link :to='"/edit-profile/" + user.id'>Edit</router-link> -->
                 <v-dialog v-model="edit" width="500">
                     <template v-slot:activator="{ on }">
                         <v-icon v-on="on">mdi-account-edit</v-icon>
@@ -14,9 +13,8 @@
                         <v-card-title class="headline font-weight-light">edit profile</v-card-title>
                         <v-card-text>
                             <form ref="form">
-                                <v-text-field v-model="username" label="username" :rules="rules"></v-text-field>
-                                <v-text-field v-model="first_name" label="first name" :rules="rules"></v-text-field>
-                                <v-text-field v-model="last_name" label="last name" :rules="rules"></v-text-field>
+                                <v-text-field v-model="first_name" label="first name"></v-text-field>
+                                <v-text-field v-model="last_name" label="last name"></v-text-field>
                                 <v-card-actions>
                                     {{msg}}
                                 <v-spacer></v-spacer>
@@ -122,7 +120,6 @@ export default {
         return {
             people: false,
             edit: false,
-            username: '',
             first_name: '',
             last_name: '',
             msg: '',
@@ -145,12 +142,11 @@ export default {
         currentFriend(friend) {this.$store.dispatch('user/currentFriend', friend)},
         submit() {
             //this.$refs.form.submit()
-            if (this.username || this.first_name || this.last_name) {
+            if (this.first_name || this.last_name) {
                 this.edit = false
-                let user = this.validate_inputs(this.username)
                 let first = this.validate_inputs(this.first_name)
                 let last = this.validate_inputs(this.last_name)
-                if (user && last && first) {
+                if (last && first) {
                     this.editProfile()
                 } else {
                     this.msg = "check inputs for weird characters"
@@ -167,9 +163,9 @@ export default {
         },
         editProfile() {
             this.$store.dispatch('user/editProfile', {
-                "username": this.username,
                 "first_name": this.first_name,
-                "last_name":this.last_name
+                "last_name":this.last_name,
+                "id":this.$store.state.user.profile.id
             })
         },
         follow(fid) {

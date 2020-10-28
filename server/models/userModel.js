@@ -163,18 +163,20 @@ async function createProfile(data) {
 }
 
 export async function editProfile(data) {
-    console.log(data)
     let succ_updates = []
     let failed_updates = []
-    let values = [data.username, data.first_name, data.last_name]
-    let params = ['username', 'first_name', 'last_name']
-    for (let index = 0; index < 3; index++) {
-        let update_element = await Update('profiles', params[index], values[index], 'email', data.email)
-        if (update_element.changedRows) {
-            succ_updates.push(params[index])
-        } else {
-            failed_updates.push(params[index])
+    let values = [data.first_name, data.last_name]
+    let params = ['first_name', 'last_name']
+    for (let index = 0; index < 2; index++) {
+        if (values[index]) {
+            let update_element = await Update('profiles', params[index], values[index], 'user_id', data.id)
+            if (update_element.changedRows) {
+                succ_updates.push(params[index])
+            } else {
+                failed_updates.push(params[index])
+            }        
         }
+        
     }
     return {'success': succ_updates, 'failed': failed_updates}
 }

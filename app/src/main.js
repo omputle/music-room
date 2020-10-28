@@ -30,7 +30,7 @@ Vue.prototype.openSocket = function() {
     if (username && !this.ws) {
         Vue.prototype.ws = new WebSocket(`ws://localhost:5001/${username}`)
         this.ws.onopen = () => {
-            console.log('opensocket '+username)
+            //console.log('opensocket '+username)
         }
         this.ws.onmessage = (event) => {
             try {
@@ -50,7 +50,7 @@ Vue.prototype.openSocket = function() {
             //this.playMusic(msg.id)
         }
         this.ws.onclose = () => {
-            console.log('close socket '+username)
+            //console.log('close socket '+username)
         }
     }
 }

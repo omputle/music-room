@@ -13,7 +13,7 @@ export async function getProfile(req, res) {
         addUserId(details.data.id, details.data.email)
         updateLicenses(details.data.id, req.token)
         let profile = await checkProfile(details.data)
-        console.log(profile.username+': '+req.token)
+        //console.log(profile.username+': '+req.token)
         res.send({
             'id': profile.user_id,
             'username':profile.username,

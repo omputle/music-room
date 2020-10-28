@@ -61,10 +61,11 @@ export default {
             get('/user/get-users').then(r => {
                 let avail= []
                 let f = ctx.state.friends[1].friends
+                let pro = ctx.state.profile.id
+                let found = 0
                 r.data.forEach(local => {
-                    let found = 0
                     f.forEach(friend => {
-                        if (local.user_id == friend.id) {found = 1}
+                        if (local.user_id == friend.id || local.user_id == pro) {found = 1}
                     })
                     if (found == 0) {avail.push(local)}
                     found = 0
@@ -75,13 +76,11 @@ export default {
         follow: (ctx, val) => {
             post('/user/follow-user', val).then(() => {
                 ctx.dispatch('getFriends')
-                ctx.dispatch('getUsers')
             }).catch(e => {console.log(e)})
         },
         unfollow: (ctx, val) => {
             post('/user/unfollow-user', val).then(() => {
                 ctx.dispatch('getFriends')
-                ctx.dispatch('getUsers')
             }).catch (e => {console.log(e)})
         }
     }
