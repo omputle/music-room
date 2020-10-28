@@ -7,7 +7,7 @@ import { jwtauth, licenseAuth } from '../controllers/authController'
 import { getplaylist, getAlbumInfo, getSongInfo, searchTrack, searchAlbum, 
     searchArtist, getChart, getPlaylist2, addToPlaylist, removeFromPlaylist, 
     getTracks, getplaylistInfo, createPlaylist, deletePlaylist, getFriendPlaylist, 
-    delegateControl, delegateMatch, getLicensedPlaylists
+    delegateControl, delegateMatch, getLicensedPlaylists, playlistVisibility
 } from '../controllers/musicController'
 
 //create & expose router to server
@@ -293,3 +293,15 @@ export default router
  *              description: requires authentication
  */
 .post('/get-licensed-playlists', jwtauth, getLicensedPlaylists)
+/**
+ * @swagger
+ * /music/playlist-visibility:
+ *  post:
+ *      description: toggle playlist visibility
+ *      responses:
+ *          200:
+ *              description: ran successfully
+ *          404:
+ *              description: requires authentication
+ */
+.post('/playlistVisibility', jwtauth, playlistVisibility)

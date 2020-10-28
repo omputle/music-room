@@ -43,20 +43,16 @@ export default {
             searchBox: false,
             track: false,
             music: '',
-            login: false
         }
     },
-    mounted() {
-        this.islogged()
+    computed: {
+        login() {return localStorage.getItem("jwt") ? true : false}
     },
     methods: {
-        islogged() {
-            this.login = localStorage.getItem("jwt") ? true : false
-        },
+        
         logout() {
             localStorage.removeItem("jwt")
             localStorage.removeItem("deez")
-            this.islogged()
             this.$router.push('/')
         },
         playMusic(m) {
@@ -69,8 +65,5 @@ export default {
             this.searchBox = to.name === 'Music' ? true : false
         }
     },
-    created() {
-        this.islogged()
-    }
 }
 </script>

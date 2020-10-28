@@ -60,18 +60,20 @@ export default {
         },
         getUsers: ctx => {
             get('/user/get-users').then(r => {
-                let avail= []
-                let f = ctx.state.friends[1].friends
-                let pro = ctx.state.profile.id
-                let found = 0
-                r.data.forEach(local => {
-                    f.forEach(friend => {
-                        if (local.user_id == friend.id || local.user_id == pro) {found = 1}
+                try {
+                    let avail= []
+                    let f = ctx.state.friends[1].friends
+                    let pro = ctx.state.profile.id
+                    let found = 0
+                    r.data.forEach(local => {
+                        f.forEach(friend => {
+                            if (local.user_id == friend.id || local.user_id == pro) {found = 1}
+                        })
+                        if (found == 0) {avail.push(local)}
+                        found = 0
                     })
-                    if (found == 0) {avail.push(local)}
-                    found = 0
-                })
-                ctx.commit('setLocals', avail)
+                    ctx.commit('setLocals', avail)
+                } catch (e) {console.log(e)}
             })
         },
         follow: (ctx, val) => {

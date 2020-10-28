@@ -154,6 +154,7 @@ export default {
             }
         },
         validate_inputs(text) {
+            
             var format = /[`^+\-={}*[\];%:"\\|<>/~]/
             if (format.test(text) == true) {
                 return 0

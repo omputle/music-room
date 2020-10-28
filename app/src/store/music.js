@@ -82,6 +82,10 @@ export default {
         },
         allowDelegate: ctx => {
             ctx.commit('toggleDelegate')
-        }
+        },
+        playlistVisibility: (ctx, val) => {
+            post('/music/playlistVisibility', val).then(() => {ctx.dispatch('getPlaylists')})
+            .catch(e => {console.log(e)})
+        } 
     }
 }

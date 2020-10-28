@@ -106,6 +106,7 @@ export async function getPlaylist2(req, res) {
                     'id':play[i].id,
                     'title':play[i].title,
                     'img':play[i].picture_medium,
+                    "public": play[i].public,
                     'tracks': d.data.data
                 })
             }
@@ -230,3 +231,13 @@ export async function getLicensedPlaylists(req, res) {
     } catch (e) {console.log(e)}    
 }
 
+//toggle playlist visibility
+export async function playlistVisibility(req, res) {
+    try {
+        let url = `${deezer}/playlist/${req.body.id}?access_token=${req.token}`
+        let data = `&public=${req.body.vis}&request_method=POST`
+        axios.get(url+data)
+        .then(r => {res.send(r.data)})
+        .catch(e => {console.log(e)})
+    } catch(e) {console.log(e)}
+}

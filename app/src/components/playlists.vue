@@ -2,6 +2,7 @@
     <div>
         <v-card max-width="800" class="mx-auto overflow-hidden">
             <v-app-bar dark elevate-on-scroll scroll-target="#scrolling-techniques-7">
+                <!-- remote button -->
                 <v-dialog v-model="remote" width="500">
                     <template v-slot:activator="{ on }">
                         <v-chip class="transparent" close :close-icon="allowIcon()" @click:close="allowance">
@@ -27,6 +28,7 @@
                 <v-spacer></v-spacer>
                 <v-toolbar-title class="headline font-weight-light">playlists</v-toolbar-title>
                 <v-spacer></v-spacer>
+                <!-- create playlist button -->
                 <v-dialog v-model="dialog" width="500">
                     <template v-slot:activator="{ on, attrs }">
                         <v-icon v-bind="attrs" v-on="on">mdi-note-plus</v-icon>
@@ -50,6 +52,7 @@
                     <v-list>
                         <v-list-group v-for="(item, index) in plays" :key="index" no-action>
                             <v-app-bar dense flat>
+                                <!-- delete playlist button -->
                                 <v-dialog v-model="del" width="500">
                                     <template v-slot:activator="{ on }">
                                         <v-icon v-on="on">mdi-note-minus</v-icon>
@@ -63,6 +66,9 @@
                                         </v-card>
                                 </v-dialog>
                                 <v-spacer></v-spacer>
+                                <v-icon @click="visibility(item.id, !item.public)">{{visible(item.public)}}</v-icon>
+                                <v-spacer></v-spacer>
+                                <!-- share playlist button -->
                                 <v-dialog v-model="share" width="500">
                                     <template v-slot:activator="{ on }">
                                         <v-icon v-on="on" >mdi-share-variant</v-icon>
@@ -84,6 +90,7 @@
                                     </v-card>
                                 </v-dialog>
                                 <v-spacer></v-spacer>
+                                <!-- add to playlist button -->
                                 <addToPlaylist :playlist_id="item.id"/>
                             </v-app-bar>
                             <template v-slot:activator>
@@ -119,7 +126,7 @@
 <script>
 import { get } from '@/functions/api'
 import bus from '@/event_bus/bus'
-import { mdiPlay, mdiStop, mdiCircleOutline, mdiCircleSlice8 } from '@mdi/js'
+import { mdiPlay, mdiStop, mdiCircleOutline, mdiCircleSlice8, mdiLock, mdiLockOpenVariant } from '@mdi/js'
 import addToPlaylist from '@/components/addToPlaylist'
 
 export default {
@@ -145,9 +152,16 @@ export default {
         friends() {
             return this.$store.state.user.friends[0].friends
         },
-        allow() {return this.$store.state.music.delegate}
+        allow() {return this.$store.state.music.delegate},
     },
     methods: {
+        visible(v) {return v ? mdiLockOpenVariant : mdiLock},
+        visibility(pid, v) {
+            this.$store.dispatch('music/playlistVisibility', {
+                "id":pid,
+                "vis":v
+            })
+        },
         allowance() {
             this.$store.dispatch('music/allowDelegate')
         },
