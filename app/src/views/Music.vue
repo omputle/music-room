@@ -27,7 +27,6 @@ export default {
     },
     computed: {
         found() {return this.$store.state.music.found},
-        
     }
 }
 </script>

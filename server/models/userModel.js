@@ -163,6 +163,7 @@ async function createProfile(data) {
 }
 
 export async function editProfile(data) {
+    console.log(data)
     let succ_updates = []
     let failed_updates = []
     let values = [data.username, data.first_name, data.last_name]

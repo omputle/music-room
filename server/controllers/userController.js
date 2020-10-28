@@ -11,10 +11,9 @@ export async function getProfile(req, res) {
         let details = await axios.get(`${deezer}/user/me?access_token=${req.token}`)
         //console.log(details)
         addUserId(details.data.id, details.data.email)
-        //console.log('user '+req.token)
-        //console.log(details.data)
         updateLicenses(details.data.id, req.token)
         let profile = await checkProfile(details.data)
+        console.log(profile.username+': '+req.token)
         res.send({
             'id': profile.user_id,
             'username':profile.username,
@@ -60,9 +59,7 @@ export async function followUser(req, res) {
         }).catch(e => {
             console.log(e)
         })
-    } catch (error) {
-        res.send(error)
-    }
+    } catch (error) {res.send(error)}
 }
 
 //unfollow a user
@@ -72,12 +69,8 @@ export async function unfollowUser(req, res) {
         axios.get(`${deezer}/user/me/followings?access_token=${req.token}&request_method=delete&user_id=${user}`)
         .then(results => {
             res.send(results.data)
-        }).catch(e => {
-            console.log(e)
-        })
-    } catch (error) {
-        res.send(error)
-    }
+        }).catch(e => {console.log(e)})
+    } catch (error) {res.send(error)}
 }
 
 //add playlist
@@ -85,7 +78,7 @@ export async function postplaylist(req, res) {
     let path = `https://api.deezer.com/user/me/playlists`
     let access = `?access_token=${token}`
     var pay = req.body
-    console.log(pay)
+    //console.log(pay)
     axios.post(path+access, {"title":"testing2"})
     .then(res => {console.log(res.data)})
     .catch(e => {console.log(e)})

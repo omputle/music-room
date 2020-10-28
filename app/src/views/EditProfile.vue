@@ -1,15 +1,10 @@
 <template>
     <div>
         {{msg}}
-        <v-card width="80%" class="mx-auto mt-5">
-            <v-card-title >
-                <h1 class="headline font-weight-light">Edit Profile</h1>
-                
-                </v-card-title>
+        <v-card class="mx-auto mt-5">
+            <v-card-title class="headline font-weight-light">Edit Profile</v-card-title>
             <v-card-text>
-                <v-form
-                    ref="form"
-                >
+                <v-form ref="form">
                     <v-text-field
                         v-model="username"
                         label='Username'
