@@ -4,8 +4,6 @@ import Home from '@/views/Home.vue'
 import User from '@/views/User.vue'
 import Music from '@/views/Music.vue'
 import Friend from '@/views/Friend.vue'
-import OtherUsers from '@/views/Users'
-import EditProfile from '@/views/EditProfile.vue'
 
 Vue.use(VueRouter)
 
@@ -31,18 +29,6 @@ const routes = [
       path: '/:friend',
       name: 'Friend',
       component: Friend,
-      meta: {requiresAuth: true}
-  },
-  {
-      path: '/edit-profile/:id',
-      name: 'EditProfile',
-      component: EditProfile,
-      meta: {requiresAuth: true}
-  },
-  {
-      path: '/users/others',
-      name: 'OtherUsers',
-      component: OtherUsers,
       meta: {requiresAuth: true}
   }
 ]

@@ -9,8 +9,6 @@ const passportSetup = require('./configs/passport-setup');
 app.use(passport.initialize());
 app.use(passport.session());
 
-//setup path
-
 //setup middleware
 import { json, urlencoded } from 'body-parser'
 import cors from 'cors'
@@ -94,14 +92,6 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJsDocs(swaggerOptions);
 app.use('/api-documentation', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
-
-//enfore secure header
-// import enforce from 'express-sslify'
-// app.use(enforce.HTTPS({trustProtoHeader: true}))
-
-//router history
-// import history from 'connect-history-api-fallback'
-// app.use(history()) 
 
 //serve vue static
 import path from 'path'
