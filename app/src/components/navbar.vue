@@ -39,17 +39,20 @@ export default {
     },
     data() {
         return {
+            // login: false,
             searchBox: false,
             track: false,
             music: '',
         }
     },
     computed: {
-        login() {return this.$store.state.user.login}
+        login() {return localStorage.getItem("jwt") ? true : false}
     },
     methods: {
+        
         logout() {
-            this.$store.dispatch('user/loginStatus', false)
+            localStorage.removeItem("jwt")
+            localStorage.removeItem("deez")
             this.$router.push('/')
         },
         playMusic(m) {
