@@ -77,11 +77,51 @@ export default router
  *              description: requires authentication
  */
 .post('/revoke-license',jwtauth, removeLicense)
-
+/**
+ * @swagger
+ * /user/edit-details:
+ *  post:
+ *      description: Edits a user's details
+ *      responses:
+ *          200:
+ *              description: ran successfully
+ *          404:
+ *              description: requires authentication
+ */
 .post('/edit-details', jwtauth, editDetails)
-
+/**
+ * @swagger
+ * /user/follow-user:
+ *  post:
+ *      description: Allows a user to follow another user. Passes id of user to be followed
+ *      responses:
+ *          200:
+ *              description: ran successfully
+ *          404:
+ *              description: requires authentication
+ */
 .post('/follow-user', jwtauth, followUser)
-
+/**
+ * @swagger
+ * /user/unfollow-user:
+ *  post:
+ *      description: Allows a user to unfollow another user. Passes id of user to be unfollowed
+ *      responses:
+ *          200:
+ *              description: ran successfully
+ *          404:
+ *              description: requires authentication
+ */
 .post('/unfollow-user', jwtauth, unfollowUser)
-
+/**
+ * @swagger
+ * /user/get-users:
+ *  post:
+ *      description: Fetches users registered to Music Room.
+ *      responses:
+ *          200:
+ *              description: ran successfully
+ *          404:
+ *              description: requires authentication
+ */
 .get('/get-users', jwtauth, getUsers)
