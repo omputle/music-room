@@ -122,6 +122,6 @@ export default router
  *          200:
  *              description: ran successfully
  *          404:
- *              description: requires authentication
+ *              description: requires authentication.
  */
 .get('/get-users', jwtauth, getUsers)
