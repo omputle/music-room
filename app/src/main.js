@@ -15,8 +15,7 @@ router.beforeEach((to, from, next) => {
         } else {
             verify(token).then(() => {next()})
             .catch(() => {
-                localStorage.removeItem("deez")
-                localStorage.removeItem("jwt")
+                this.$store.dispatch('/user/loginStatus', false)
                 next({path:'/'})
             })
         }
