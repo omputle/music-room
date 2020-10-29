@@ -56,9 +56,3 @@ export default {
     }
 }
 </script>
-<style scoped>
-.test {
-    height: auto;
-    width: 100%;
-}
-</style>
