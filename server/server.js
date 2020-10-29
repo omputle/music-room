@@ -67,9 +67,7 @@ websocketServer.on('connection', (ws, req) => {
     ws.on('close', () => {})
 });
 
-//serve vue static
-import path from 'path'
-import serveStatic from 'serve-static'
+
 
 // swagger documentation
 const swaggerJsDocs = require('swagger-jsdoc');
@@ -99,13 +97,18 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDocs(swaggerOptions);
 app.use('/api-documentation', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
+
+//serve vue static
+import path from 'path'
+import serveStatic from 'serve-static'
+app.use('/', serveStatic(path.join(__dirname, '../app/dist')))
+app.use('/:any', serveStatic(path.join(__dirname, '../app/dist')))
+
 //api routes
 import auth from './routes/auth'
 import user from './routes/user'
 import music from './routes/music'
 
-app.use('/', serveStatic(path.join(__dirname, '../app/dist')))
-app.use('/:any', serveStatic(path.join(__dirname, '../app/dist')))
 app.use('/auth/', auth)
 app.use('/user/', user)
 app.use('/music/', music)
