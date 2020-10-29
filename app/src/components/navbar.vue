@@ -22,9 +22,15 @@
                     <v-icon>mdi-logout-variant</v-icon>
                 </v-btn>
         </v-btn>
-        <v-btn icon v-else href="http://localhost:5000/auth/google">
-            login
-        </v-btn>
+        <div v-else>
+            <v-btn icon href="http://localhost:5000/api-documentation">
+                api's
+            </v-btn> | 
+            <v-btn icon href="http://localhost:5000/auth/google">
+                login
+            </v-btn>
+        </div>
+        
         
     </v-app-bar>
 </template>
