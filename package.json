@@ -1,0 +1,45 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "backend server for music-room",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node -r esm server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ksefeane/music-room.git"
+  },
+  "keywords": [
+    "music",
+    "room"
+  ],
+  "author": "ksefeane omputle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ksefeane/music-room/issues"
+  },
+  "homepage": "https://github.com/ksefeane/music-room#readme",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "body-parser": "^1.19.0",
+    "connect-history-api-fallback": "^1.6.0",
+    "cors": "^2.8.5",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "express-sslify": "^1.2.0",
+    "install": "^0.13.0",
+    "mysql": "^2.18.1",
+    "njwt": "^1.0.0",
+    "passport": "^0.4.1",
+    "passport-deezer": "^0.2.0",
+    "passport-facebook": "^3.0.0",
+    "passport-google-oauth20": "^2.0.0",
+    "serve-static": "^1.14.1",
+    "swagger-jsdoc": "^4.3.0",
+    "swagger-ui-express": "^4.1.4",
+    "util": "^0.12.3",
+    "ws": "^7.3.1"
+  }
+}

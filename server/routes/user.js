@@ -117,7 +117,7 @@ export default router
  * @swagger
  * /user/get-users:
  *  post:
- *      description: Fetches users registered to Music Room
+ *      description: Fetches users registered to Music Room.
  *      responses:
  *          200:
  *              description: ran successfully

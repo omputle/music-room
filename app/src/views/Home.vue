@@ -1,14 +1,7 @@
 <template>
   <div>
-    <v-carousel
-    cycle
-    hide-delimiters
-    >
-        <v-carousel-item
-        v-for="(item,i) in items"
-        :key="i"
-        :src="item.src"
-        ></v-carousel-item>
+    <v-carousel cycle hide-delimiters>
+        <v-carousel-item v-for="(item,i) in items" :key="i" :src="item.src"></v-carousel-item>
     </v-carousel>
   </div>
 </template>
@@ -24,15 +17,9 @@ export default {
     data () {
       return {
         items: [
-          {
-            src: 'https://wallpapercave.com/wp/wp2587741.png',
-          },
-          {
-            src: 'https://images6.alphacoders.com/417/thumb-1920-417448.jpg',
-          },
-          {
-            src: 'https://www.chromethemer.com/download/hd-wallpapers/chimp-music-3840x2160.jpg',
-          },
+          {src: 'https://wallpapercave.com/wp/wp2587741.png',},
+          {src: 'https://images6.alphacoders.com/417/thumb-1920-417448.jpg',},
+          {src: 'https://www.chromethemer.com/download/hd-wallpapers/chimp-music-3840x2160.jpg',},
         ],
       }
     },
@@ -41,6 +28,7 @@ export default {
             post('/auth/jwt', {'url':document.URL})
             .then(res => {
                 if (res.data.google) {
+                    this.$store.dispatch('user/loginStatus', true)
                     localStorage.setItem("jwt", res.data.google)
                     let l = keys.deezer
                     window.location.href = l.path+l.app_id+l.redirect_uri+l.perms

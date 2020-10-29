@@ -95,6 +95,13 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDocs(swaggerOptions);
 app.use('/api-documentation', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
+//enfore secure header
+// import enforce from 'express-sslify'
+// app.use(enforce.HTTPS({trustProtoHeader: true}))
+
+//router history
+// import history from 'connect-history-api-fallback'
+// app.use(history()) 
 
 //serve vue static
 import path from 'path'
@@ -112,4 +119,4 @@ app.use('/user/', user)
 app.use('/music/', music)
 
 //listen
-app.listen(port, () => console.log(`server listening on port ${port}...`))
+app.listen(process.env.PORT || port, () => console.log(`server listening on port ${port}...`))
