@@ -16,6 +16,7 @@ export default {
             post('/auth/jwt', {'url':document.URL})
             .then(res => {
                 if (res.data.google) {
+                    this.$store.dispatch('user/loginStatus', true)
                     localStorage.setItem("jwt", res.data.google)
                     let l = keys.deezer
                     window.location.href = l.path+l.app_id+l.redirect_uri+l.perms

@@ -4,6 +4,7 @@ import keys from '@/configs/config'
 export default {
     namespaced: true,
     state: {
+        login: false,
         profile: {},
         friends: {},
         settings: {},
@@ -24,9 +25,17 @@ export default {
         setSettings: (state, payload) => {state.settings = Object.assign(keys.access_rights, payload)},
         pickFriend: (state, payload) => {state.friend = payload},
         currentFriend: (state, payload) => {state.cfriend = payload},
-        setLocals: (state, payload) => {state.localUsers = payload}
+        setLocals: (state, payload) => {state.localUsers = payload},
+        isLogged: (state, payload) => {state.login = payload}
     },
     actions: {
+        loginStatus: (ctx, val) => {
+            if (!val) {
+                localStorage.removeItem("jwt")
+                localStorage.removeItem("deez")
+            }
+            ctx.commit('isLogged', val)
+        },
         getProfile: ctx => {
             get('/user/me').then(res => {ctx.commit('setProfile', res.data)})
             .catch(e => {console.log(e)})
