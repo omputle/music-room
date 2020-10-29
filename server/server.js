@@ -67,6 +67,10 @@ websocketServer.on('connection', (ws, req) => {
     ws.on('close', () => {})
 });
 
+//serve vue static
+import path from 'path'
+import serveStatic from 'serve-static'
+
 // swagger documentation
 const swaggerJsDocs = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
@@ -100,9 +104,11 @@ import auth from './routes/auth'
 import user from './routes/user'
 import music from './routes/music'
 
+app.use('/', serveStatic(path.join(__dirname, '../app/dist')))
+app.use('/:any', serveStatic(path.join(__dirname, '../app/dist')))
 app.use('/auth/', auth)
 app.use('/user/', user)
-app.use('/music', music)
+app.use('/music/', music)
 
 //listen
 app.listen(port, () => console.log(`server listening on port ${port}...`))
