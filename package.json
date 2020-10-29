@@ -1,0 +1,28 @@
+{
+  "name": "music-room",
+  "version": "2.0.1",
+  "description": "launch music room",
+  "main": "index.js",
+  "dependencies": {
+    "esm": "^3.2.25",
+    "url-parse": "^1.4.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node -r esm server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ksefeane/music-room.git"
+  },
+  "keywords": [
+    "heroku"
+  ],
+  "author": "ksefeane omputle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ksefeane/music-room/issues"
+  },
+  "homepage": "https://github.com/ksefeane/music-room#readme"
+}
