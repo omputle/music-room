@@ -1,6 +1,6 @@
 # music-room
 
-a music streaming app
+A music streaming web application that uses the Deezer API. It was built using Node.js + Exress and Vue.js
 
 ##client
 1. open 'client' folder
